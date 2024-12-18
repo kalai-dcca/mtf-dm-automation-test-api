@@ -4,32 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.claimReports/feature/claimReports.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.claimReports/resources/json/TC1000.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.claimReports/resources/json/create.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.claimReports/resources/response/TC1000.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.claimReports/resources/testData/demoData.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/CommonStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/CommonStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/Hooks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/Hooks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/module/DispensingEntityEnrollmentStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/module/dispensingEntityEnrollment/DispensingEntityEnrollmentStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/module/ReportStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/module/report/ReportStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/module/UserManagementStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/module/userManagement/UserManagementStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/module/demoApiStepDefinition.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/BaseClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/BaseClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Create-DELETE-Status-Code-API.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Create-POST-Status-Code-API.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Create-POST-Status-Code-API.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-ListUsers-GET-Status-Code-API.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-SingleResource-GET-Status-Code-API.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-SingleUser-GET-Status-Code-API.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Update-PATCH-Status-Code-API.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Update-PUT-Status-Code-API.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/test.feature" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/PDEData_20240729132923-fake.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/config.properties" beforeDir="false" />
-    </list>
+    <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
