@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="" />
+    <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/runners/TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/runners/TestRunner.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,9 +38,10 @@
     "Cucumber Java.Scenario: Validate API submission Create PUT request.executor": "Run",
     "Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request.executor": "Run",
     "Cucumber Java.Scenario: Validate API submission.executor": "Run",
+    "Cucumber Java.Scenario: Validate request and response Expected values are passed as json file.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "mtf-dm-automation-farruh",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.claimReports",
     "project.structure.last.edited": "Modules",
@@ -63,7 +67,7 @@
       <recent name="mtf.dm.cms.hhs.gov.cucumber" />
     </key>
   </component>
-  <component name="RunManager" selected="Cucumber Java.Scenario: Validate API submission Create PATCH request">
+  <component name="RunManager" selected="JUnit.TestRunner">
     <configuration name="Scenario: Validate API submission Create PATCH request" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Update-PATCH-Status-Code-API.feature" />
@@ -104,26 +108,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Scenario: Validate API submission Create PUT request" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Update-PUT-Status-Code-API.feature" />
-      <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="mtf-dm-automation-test-api" />
-      <option name="NAME_FILTER" value="^Validate API submission Create PUT request$" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate API submission Create PUT request$&quot;" />
-      <option name="SUGGESTED_NAME" value="Scenario: Validate API submission Create PUT request" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Scenario: Validate API submission Create SINGLE_RESOURCE GET request" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-SingleResource-GET-Status-Code-API.feature" />
@@ -144,15 +128,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Scenario: Validate API submission" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+    <configuration name="Scenario: Validate request and response Expected values are passed as json file" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/test.feature" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" />
       <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="mtf-dm-automation-test-api" />
-      <option name="NAME_FILTER" value="^Validate API submission$" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate API submission$&quot;" />
-      <option name="SUGGESTED_NAME" value="Scenario: Validate API submission" />
+      <option name="NAME_FILTER" value="^Validate request and response Expected values are passed as json file$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate request and response Expected values are passed as json file$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Validate request and response Expected values are passed as json file" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -160,6 +144,21 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRunner" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mtf-dm-automation-test-api" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="runners.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="runners" />
+      <option name="MAIN_CLASS_NAME" value="runners.TestRunner" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -179,11 +178,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestRunner" />
+        <item itemvalue="Cucumber Java.Scenario: Validate request and response Expected values are passed as json file" />
         <item itemvalue="Cucumber Java.Scenario: Validate API submission Create PATCH request" />
         <item itemvalue="Cucumber Java.Scenario: Validate API submission Create POST request" />
         <item itemvalue="Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request" />
-        <item itemvalue="Cucumber Java.Scenario: Validate API submission Create PUT request" />
-        <item itemvalue="Cucumber Java.Scenario: Validate API submission" />
       </list>
     </recent_temporary>
   </component>
