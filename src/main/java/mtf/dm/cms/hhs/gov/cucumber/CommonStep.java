@@ -5,6 +5,12 @@ import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import mtf.dm.cms.hhs.gov.impl.DemoApi;
 import mtf.dm.cms.hhs.gov.utilities.*;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
 
 import static mtf.dm.cms.hhs.gov.utilities.BaseClass.getTestScenarioClass;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -101,5 +107,22 @@ public class CommonStep {
     public void demoapiLaunchQParamMethod(String url, String queryParam, String APICall) {
 
         getTestScenarioClass().setResponse(demoApiMethods.launchQueryDemoApiAndGetResponse(url,queryParam,APICall));
+    }
+
+    @When("TestCaseDataSetup")
+    public void testcasedatasetup(Map<String,String> keyValueMap) {
+        JSONObject jsonObject = new JSONObject();
+        for(Map.Entry<String,String> entry : keyValueMap.entrySet()){
+            jsonObject.put(entry.getKey(),entry.getValue());
+        }
+        getTestScenarioClass().setJsonObject(jsonObject);
+    }
+
+    @When("TestCaseDataSetup, JSONFile-{string}")
+    public void testcasedatasetupJSONFile(String fileName) throws IOException {
+        String fileLocation = "src/test.claimIntro/resources/json/" + fileName;
+        String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
+        JSONObject jsonObject = new JSONObject(body);
+        getTestScenarioClass().setJsonObject(jsonObject);
     }
 }
