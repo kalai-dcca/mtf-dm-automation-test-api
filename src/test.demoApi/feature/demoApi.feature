@@ -10,7 +10,6 @@ Feature: DEMO Create API Testing POST
       | C-TC001    |
 
 
-
   Scenario: Validate request and response Expected values from examples
     When TestCaseDataSetup
       | userName | testUserName |
