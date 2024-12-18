@@ -15,18 +15,4 @@ public class Hooks {
     public void tearDown() {
         LoggerUtil.logger.info("Test execution completed.");
     }
-
-    public static class Hooks {
-
-        @Before
-        public void setup() {
-            LoggerUtil.logger.info("Starting the test...");
-        }
-
-        @After
-        public void tearDown() {
-            LoggerUtil.logger.info("Test execution completed.");
-        }
-
-    }
 }
