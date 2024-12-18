@@ -13,7 +13,6 @@ Feature: DEMO Create API Testing POST
 
   Scenario Outline: Validate request and response Expected values from examples
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Create", TestCase-"<TestCaseId>"
-      ||||
     When Launch "/api/users", Method: "POST"
     Then Verify status code 201 and message "2024"
     Examples:
