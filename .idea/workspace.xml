@@ -27,27 +27,28 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Cucumber Java.Scenario: Validate API submission Create LIST-USERS GET request.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Scenario: Validate API submission Create PATCH request.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Scenario: Validate API submission Create POST request.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Scenario: Validate API submission Create PUT request.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Scenario: Validate API submission.executor&quot;: &quot;Run&quot;,
-    &quot;Cucumber Java.Scenario: Validate request and response Expected values are passed as json file.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TestRunner.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;mtf-dm-automation-farruh&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.claimReports&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.scopes&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cucumber Java.Feature: demoApi.executor": "Run",
+    "Cucumber Java.Scenario: Validate API submission Create LIST-USERS GET request.executor": "Run",
+    "Cucumber Java.Scenario: Validate API submission Create PATCH request.executor": "Run",
+    "Cucumber Java.Scenario: Validate API submission Create POST request.executor": "Run",
+    "Cucumber Java.Scenario: Validate API submission Create PUT request.executor": "Run",
+    "Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request.executor": "Run",
+    "Cucumber Java.Scenario: Validate API submission.executor": "Run",
+    "Cucumber Java.Scenario: Validate request and response Expected values are passed as json file.executor": "Run",
+    "JUnit.TestRunner.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "mtf-dm-automation-farruh",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.claimReports",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.scopes"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.claimReports" />
@@ -65,7 +66,26 @@
       <recent name="mtf.dm.cms.hhs.gov.cucumber" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestRunner">
+  <component name="RunManager" selected="Cucumber Java.Feature: demoApi">
+    <configuration name="Feature: demoApi" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" />
+      <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="mtf-dm-automation-test-api" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+      <option name="SUGGESTED_NAME" value="Feature: demoApi" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Scenario: Validate API submission Create PATCH request" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Update-PATCH-Status-Code-API.feature" />
@@ -95,26 +115,6 @@
       <option name="NAME_FILTER" value="^Validate API submission Create POST request$" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate API submission Create POST request$&quot;" />
       <option name="SUGGESTED_NAME" value="Scenario: Validate API submission Create POST request" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Scenario: Validate API submission Create SINGLE_RESOURCE GET request" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-SingleResource-GET-Status-Code-API.feature" />
-      <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="mtf-dm-automation-test-api" />
-      <option name="NAME_FILTER" value="^Validate API submission Create SINGLE_RESOURCE GET request$" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate API submission Create SINGLE_RESOURCE GET request$&quot;" />
-      <option name="SUGGESTED_NAME" value="Scenario: Validate API submission Create SINGLE_RESOURCE GET request" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -161,13 +161,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="mtf-dm-automation-test-api" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="mtf-dm-automation-test-api" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cucumber Java.Feature: demoApi" />
         <item itemvalue="JUnit.TestRunner" />
         <item itemvalue="Cucumber Java.Scenario: Validate request and response Expected values are passed as json file" />
         <item itemvalue="Cucumber Java.Scenario: Validate API submission Create PATCH request" />
         <item itemvalue="Cucumber Java.Scenario: Validate API submission Create POST request" />
-        <item itemvalue="Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request" />
       </list>
     </recent_temporary>
   </component>

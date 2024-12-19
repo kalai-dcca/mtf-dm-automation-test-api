@@ -3,9 +3,8 @@ package mtf.dm.cms.hhs.gov.utilities;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.Assertions;
@@ -222,6 +221,56 @@ public class AssertionUtils {
                 MyLogger.info(String.format("Validation passed for attribute '{%s}'. Expected to contain: {%s}", attribute, expectedValue));
             }
         }
+    }
+
+    /**
+     * Validates that the array field in the response contains all expected key-value pairs, regardless of order.
+     *
+     * @param response       The Response object.
+     * @param arrayField     The JSON path to the array (e.g., "data").
+     * @param expectedEntries The list of expected objects (key-value pairs).
+     */
+    public static void assertArrayContainsEntriesFromFile(Response response, String arrayField, List<Map<String, Object>> expectedEntries) {
+        if (Objects.isNull(response)) {
+            throw new IllegalArgumentException("Response is null");
+        }
+
+        // Fetch the array as a list of maps
+        List<Map<String, Object>> actualArray = response.jsonPath().getList(arrayField);
+        if (actualArray == null || actualArray.isEmpty()) {
+            throw new AssertionError("The array field '" + arrayField + "' is empty or does not exist.");
+        }
+
+        // Normalize actual and expected arrays: Convert maps to sorted strings for comparison
+        Set<String> actualSet = actualArray.stream()
+                .map(AssertionUtils::normalizeMap)
+                .collect(Collectors.toSet());
+
+        Set<String> expectedSet = expectedEntries.stream()
+                .map(AssertionUtils::normalizeMap)
+                .collect(Collectors.toSet());
+
+        // Compare sets
+        Assertions.assertThat(actualSet)
+                .as("The response array does not match the expected data")
+                .containsExactlyInAnyOrderElementsOf(expectedSet);
+
+        System.out.println("Validation successful: The array '" + arrayField + "' matches the expected values (unordered).");
+    }
+
+
+    /**
+     * Converts a map into a normalized string for consistent comparison.
+     *
+     * @param map The map to normalize.
+     * @return A string representation of the map with sorted keys and values.
+     */
+    private static String normalizeMap(Map<String, Object> map) {
+        return map.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining(","));
     }
 }
 
