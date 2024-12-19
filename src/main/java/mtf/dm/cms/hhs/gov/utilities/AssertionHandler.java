@@ -16,7 +16,7 @@ public class AssertionHandler {
         try{
             assertion.run();
         } catch (AssertionError e){
-            LoggerUtil.logger.error(customMessage);
+            MyLogger.error(customMessage);
             // Throw assertion error
             throw new AssertionError(customMessage, e);
         }

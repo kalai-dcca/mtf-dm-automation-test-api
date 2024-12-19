@@ -1,8 +1,12 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public abstract class BaseClass {
+
+    public static final String reportPath = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
 
     private static TestScenarioClass testScenarioClass;
 
