@@ -6,13 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/CommonStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/CommonStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/SheetType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/SheetType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/Hooks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/Hooks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/ExcelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/ExcelUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/LoggerUtil.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2OLD.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/json/TC1000.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/json/create.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/resources/request/create.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/testData/demoData.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/resources/testData/demoData.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/testData/expectedResults/expectedListUsers.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +38,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Cucumber Java.Feature: demoApi.executor": "Run",
+    "Cucumber Java.Scenario: .executor": "Run",
     "Cucumber Java.Scenario: Validate API submission Create LIST-USERS GET request.executor": "Run",
     "Cucumber Java.Scenario: Validate API submission Create PATCH request.executor": "Run",
     "Cucumber Java.Scenario: Validate API submission Create POST request.executor": "Run",
@@ -46,6 +46,7 @@
     "Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request.executor": "Run",
     "Cucumber Java.Scenario: Validate API submission.executor": "Run",
     "Cucumber Java.Scenario: Validate request and response Expected values are passed as json file.executor": "Run",
+    "Cucumber Java.Scenario: Validate request and response Expected values are passed excel file.executor": "Run",
     "Cucumber Java.Scenario: Validate request from Excel and response Expected values from json file.executor": "Run",
     "Cucumber Java.Scenario: we need examples for Request from excel and  JsonArray response validation using excel.executor": "Run",
     "JUnit.TestRunner.executor": "Run",
@@ -78,35 +79,16 @@
       <recent name="mtf.dm.cms.hhs.gov.cucumber" />
     </key>
   </component>
-  <component name="RunManager" selected="Cucumber Java.Scenario: we need examples for Request from excel and  JsonArray response validation using excel">
-    <configuration name="Feature: demoApi" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Cucumber Java.Scenario: ">
+    <configuration name="Scenario: Validate request and response Expected values are passed excel file" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" />
       <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
       <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
       <module name="mtf-dm-automation-test-api" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
-      <option name="SUGGESTED_NAME" value="Feature: demoApi" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Scenario: Validate request and response Expected values are passed as json file" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" />
-      <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="mtf-dm-automation-test-api" />
-      <option name="NAME_FILTER" value="^Validate request and response Expected values are passed as json file$" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate request and response Expected values are passed as json file$&quot;" />
-      <option name="SUGGESTED_NAME" value="Scenario: Validate request and response Expected values are passed as json file" />
+      <option name="NAME_FILTER" value="^Validate request and response Expected values are passed excel file$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate request and response Expected values are passed excel file$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: Validate request and response Expected values are passed excel file" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -158,6 +140,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Scenario: " type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" />
+      <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="mtf-dm-automation-test-api" />
+      <option name="NAME_FILTER" value="^$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: " />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TestRunner" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="mtf-dm-automation-test-api" />
       <extension name="coverage">
@@ -188,11 +190,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cucumber Java.Scenario: " />
+        <item itemvalue="Cucumber Java.Scenario: Validate request and response Expected values are passed excel file" />
         <item itemvalue="Cucumber Java.Scenario: we need examples for Request from excel and  JsonArray response validation using excel" />
         <item itemvalue="Cucumber Java.Scenario: Validate request from Excel and response Expected values from json file" />
         <item itemvalue="JUnit.TestRunner" />
-        <item itemvalue="Cucumber Java.Feature: demoApi" />
-        <item itemvalue="Cucumber Java.Scenario: Validate request and response Expected values are passed as json file" />
       </list>
     </recent_temporary>
   </component>

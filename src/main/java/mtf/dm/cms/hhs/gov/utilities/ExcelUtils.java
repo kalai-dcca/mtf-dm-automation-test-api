@@ -82,6 +82,7 @@ public class ExcelUtils {
                     throw new Exception();
             }
         }
+        MyLogger.info(js.toString());
         return js;
     }
 
