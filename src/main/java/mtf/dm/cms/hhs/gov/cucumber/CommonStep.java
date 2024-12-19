@@ -1,5 +1,6 @@
 package mtf.dm.cms.hhs.gov.cucumber;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 import static mtf.dm.cms.hhs.gov.utilities.BaseClass.getTestScenarioClass;
@@ -124,5 +126,35 @@ public class CommonStep {
         String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
         JSONObject jsonObject = new JSONObject(body);
         getTestScenarioClass().setJsonObject(jsonObject);
+    }
+
+    @Then("Verify response values:")
+    public void verifyResponseValuesWithDatatable(DataTable dataTable) {
+        List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
+
+        // Loop through the datatable rows for validation
+        for (Map<String, String> row : data) {
+            int expectedStatusCode = Integer.parseInt(row.get("statusCode"));
+            String expectedMessage = row.get("message");
+
+            // Comment about entering state
+            LoggerUtil.logger.info("Verifying status code {} and message {}", expectedStatusCode, expectedMessage);
+
+            // Validate the status code and response message using the AssertionUtils method
+            AssertionUtils.verifyStatusCodeAndMessage(getTestScenarioClass().getResponse(), expectedStatusCode, expectedMessage);
+
+            // Comment about closing state
+            LoggerUtil.logger.info("Validation completed successfully for status code {} and message {}", expectedStatusCode, expectedMessage);
+        }
+    }
+
+    @Then("Verify response values from Excel for attributes {string}")
+    public void verifyResponseValuesFromExcelForAttributes(String attributeNames) {
+        LoggerUtil.logger.info("Starting validation for response attributes: {}", attributeNames);
+
+        // Delegate validation to a helper method
+        AssertionUtils.verifyStatusCodeAndAttributesFromExcel(attributeNames);
+
+        LoggerUtil.logger.info("Validation completed successfully for attributes: {}", attributeNames);
     }
 }

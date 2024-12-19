@@ -4,7 +4,7 @@ Feature: DEMO Create API Testing POST
   Scenario Outline: Validate request and response Expected values are passed excel file
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Create", TestCase-"<TestCaseId>"
     When Launch "/api/users", Method: "POST"
-    Then Verify status code 201 and message "2024"
+    Then Verify response values from Excel for attributes "STATUS_CODE,createdAt"
     Examples:
       | TestCaseId |
       | C-TC001    |
@@ -15,7 +15,9 @@ Feature: DEMO Create API Testing POST
       | userName | testUserName |
       | userRole | Manager      |
     When Launch "/api/users", Method: "POST"
-    Then Verify status code 201 and message "2024"
+    Then Verify response values:
+      | statusCode | message |
+      | 201        | 2024    |
 
 
   Scenario: Validate response Expected values are passed as json file
