@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/resources/extent-config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/extent.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/pdf-config.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/Hooks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/Hooks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/ExtentReportListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/ExtentReportListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/MyLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/MyLogger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/runners/TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/runners/TestRunner.java" afterDir="false" />
-    </list>
+    <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,14 +24,12 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2qKOQsJnWPS6i5DqQwBqEwPDDpq" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Cucumber Java.Feature: demoApi.executor": "Run",
     "Cucumber Java.Scenario: Validate API submission Create LIST-USERS GET request.executor": "Run",
     "Cucumber Java.Scenario: Validate API submission Create PATCH request.executor": "Run",
     "Cucumber Java.Scenario: Validate API submission Create POST request.executor": "Run",
@@ -53,7 +40,7 @@
     "JUnit.TestRunner.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "mtf-dm-automation-test-api-ATURUK",
+    "git-widget-placeholder": "mtf-dm-automation-farruh",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.claimReports",
     "project.structure.last.edited": "Modules",
@@ -79,7 +66,26 @@
       <recent name="mtf.dm.cms.hhs.gov.cucumber" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestRunner">
+  <component name="RunManager" selected="Cucumber Java.Feature: demoApi">
+    <configuration name="Feature: demoApi" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" />
+      <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="mtf-dm-automation-test-api" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter" />
+      <option name="SUGGESTED_NAME" value="Feature: demoApi" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Scenario: Validate API submission Create PATCH request" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
       <option name="CUCUMBER_CORE_VERSION" value="5" />
       <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-Update-PATCH-Status-Code-API.feature" />
@@ -109,26 +115,6 @@
       <option name="NAME_FILTER" value="^Validate API submission Create POST request$" />
       <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate API submission Create POST request$&quot;" />
       <option name="SUGGESTED_NAME" value="Scenario: Validate API submission Create POST request" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="io.cucumber.core.cli.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Scenario: Validate API submission Create SINGLE_RESOURCE GET request" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
-      <option name="CUCUMBER_CORE_VERSION" value="5" />
-      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test.demoApi/feature/API-Demo-SingleResource-GET-Status-Code-API.feature" />
-      <option name="GLUE" value="mtf.dm.cms.hhs.gov.cucumber" />
-      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
-      <module name="mtf-dm-automation-test-api" />
-      <option name="NAME_FILTER" value="^Validate API submission Create SINGLE_RESOURCE GET request$" />
-      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^Validate API submission Create SINGLE_RESOURCE GET request$&quot;" />
-      <option name="SUGGESTED_NAME" value="Scenario: Validate API submission Create SINGLE_RESOURCE GET request" />
       <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
       <extension name="coverage">
         <pattern>
@@ -175,13 +161,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="mtf-dm-automation-test-api" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="mtf-dm-automation-test-api" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cucumber Java.Feature: demoApi" />
         <item itemvalue="JUnit.TestRunner" />
         <item itemvalue="Cucumber Java.Scenario: Validate request and response Expected values are passed as json file" />
         <item itemvalue="Cucumber Java.Scenario: Validate API submission Create PATCH request" />
         <item itemvalue="Cucumber Java.Scenario: Validate API submission Create POST request" />
-        <item itemvalue="Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request" />
       </list>
     </recent_temporary>
   </component>

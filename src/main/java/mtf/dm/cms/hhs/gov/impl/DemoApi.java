@@ -39,4 +39,11 @@ public class DemoApi {
         return apiRequestClient.sendApiRequest(endpoint, method);
     }
 
+    public Response launchQueryDemoApiWithDynamicParam(String endpoint, String queryParam, String queryParamValue, String method) {
+        // Dynamically append the query parameter to the endpoint
+        String finalEndpoint = endpoint + "?" + queryParam + "=" + queryParamValue;
+
+        // Reuse existing 'sendApiRequest' method for sending the request
+        return apiRequestClient.sendApiRequest(finalEndpoint, method);
+    }
 }

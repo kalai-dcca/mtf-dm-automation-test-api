@@ -22,13 +22,13 @@ Feature: DEMO Create API Testing POST
 
   Scenario: Validate response Expected values are passed as json file
     When TestCaseDataSetup, JSONFile-"create.json"
-    When Launch "/api/users", Method: "POST"
-    Then Verify status code 201 and message "2024"
+    When Fetch all pages from "/api/users" with query param "page" and method "GET"
+    Then Verify status code 200 and the response array "data" matches expected values from "expectedListUsers.json"
 
   Scenario Outline: Validate request and response Expected values are passed as json file
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Update-PATCH", TestCase-"<TestCaseId>"
-    When Launch "/api/users", Method: "PATCH"
-    Then Verify status code 200
+    When Fetch all pages from "/api/users" with query param "page" and method "GET"
+    Then Verify status code 200 and the response array "data" matches expected values from "expectedListUsers.json"
     Examples:
       | TestCaseId    |
       | U-PATCH-TC001 |
