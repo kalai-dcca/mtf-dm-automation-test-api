@@ -10,7 +10,7 @@ Feature: DEMO Create API Testing POST
       | C-TC001    |
 
 
-  Scenario: Validate request and response Expected values from examples
+  Scenario: Validate request and response Expected values from example table
     When TestCaseDataSetup
       | userName | testUserName |
       | userRole | Manager      |
@@ -20,28 +20,48 @@ Feature: DEMO Create API Testing POST
       | 201        | 2024    |
 
 
-  Scenario: Validate response Expected values are passed as json file
+  Scenario: Validate both request and response from json file
     When TestCaseDataSetup, JSONFile-"create.json"
     When Fetch all pages from "/api/users" with query param "page" and method "GET"
-    Then Verify status code 200 and the response array "data" matches expected values from "expectedListUsers.json"
+    Then Verify status code 200 and the response array "data" matches expected values from "ExpectedResponse-Page-1.json"
 
-  Scenario Outline: Validate request and response Expected values are passed as json file
-    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Update-PATCH", TestCase-"<TestCaseId>"
+
+  Scenario Outline: request from Excel and validate response Expected values from json file
+    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"List-Users", TestCase-"<TestCaseId>"
     When Fetch all pages from "/api/users" with query param "page" and method "GET"
-    Then Verify status code 200 and the response array "data" matches expected values from "expectedListUsers.json"
+    Then Verify status code 200 and the response array "data" matches expected values from "<ExpectedJson>"
     Examples:
-      | TestCaseId    |
-      | U-PATCH-TC001 |
-      | U-PATCH-TC002 |
-      | U-PATCH-TC003 |
+      | TestCaseId    | ExpectedJson |
+      | LU-TC001      |    ExpectedResponse-Page-1.json         |
 
 
-  Scenario Outline: we need examples for JsonArray request body and response validation using excel
+  Scenario Outline: Request from excel and  response validation using data table multi scenarios
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Update-PATCH", TestCase-"<TestCaseId>"
     When Launch "/api/users", Method: "PATCH"
-    Then Verify status code 200
+    Then Verify response values:
+      | statusCode | message |
+      | 200        | 2024    |
     Examples:
       | TestCaseId    |
       | U-PATCH-TC001 |
       | U-PATCH-TC002 |
       | U-PATCH-TC003 |
+
+
+  Scenario Outline: Request from excel and validate response status only
+    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Delete", TestCase-"<TestCaseId>"
+    When Launch "/api/users", Method: "DELETE"
+    Then Verify status code 204
+    Examples:
+      | TestCaseId    |
+      | DEL-TC001 |
+
+  Scenario Outline: Request from excel and  response validation using data table
+    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Update-PUT", TestCase-"<TestCaseId>"
+    When Launch "/api/users", Method: "PUT"
+    Then Verify response values:
+      | statusCode | message |
+      | 200        | 2024    |
+    Examples:
+      | TestCaseId    |
+      | U-PUT-TC001 |
