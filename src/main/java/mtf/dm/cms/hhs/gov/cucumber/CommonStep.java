@@ -1,5 +1,7 @@
 package mtf.dm.cms.hhs.gov.cucumber;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,9 +10,11 @@ import mtf.dm.cms.hhs.gov.impl.DemoApi;
 import mtf.dm.cms.hhs.gov.utilities.*;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -156,5 +160,78 @@ public class CommonStep {
         AssertionUtils.verifyStatusCodeAndAttributesFromExcel(attributeNames);
 
         MyLogger.info(String.format("Validation completed successfully for attributes: {%s}", attributeNames));
+    }
+
+    @When("Fetch all pages from {string} with query param {string} and method {string}")
+    public void fetchAllPages(String endpoint, String queryParam, String method) {
+        //MyLogger.error("Fetching all pages from endpoint '{}' using query param '{}'", endpoint, queryParam);
+
+        List<Map<String, Object>> allPagesData = new ArrayList<>();
+        int currentPage = 1;
+        int totalPages;
+
+        do {
+            // Send the request for the current page
+            getTestScenarioClass().setResponse(
+                    demoApiMethods.launchQueryDemoApiWithDynamicParam(endpoint, queryParam, String.valueOf(currentPage), method)
+            );
+            Response response = getTestScenarioClass().getResponse();
+
+            // Log the current page response
+            //MyLogger.error("Fetched page {}: {}", currentPage, response.getBody().asString());
+
+            // Retrieve total pages from the response (only on the first page)
+            if (currentPage == 1) {
+                totalPages = response.jsonPath().getInt("total_pages");
+                //MyLogger.error("Total pages: {}", totalPages);
+            } else {
+                totalPages = getTestScenarioClass().getResponse().jsonPath().getInt("total_pages");
+            }
+
+            // Extract the 'data' array from the current page and add it to allPagesData
+            List<Map<String, Object>> currentPageData = response.jsonPath().getList("data");
+            allPagesData.addAll(currentPageData);
+
+            currentPage++;
+        } while (currentPage <= totalPages);
+
+        // Store the combined data in the scenario class for validation
+        getTestScenarioClass().setCombinedData(allPagesData);
+
+        //MyLogger.error("Fetched all pages successfully. Total records: {}", allPagesData.size());
+    }
+
+    @Then("Verify status code {int} and the response array {string} matches expected values from {string}")
+    public void validateResponseArrayFromFile(int expectedStatusCode, String arrayField, String expectedFilePath) throws Exception {
+        // Log entry into the state
+        //LoggerUtil.logger.info("Verifying status code {} and response array '{}' matches expected values from '{}'",
+               // expectedStatusCode, arrayField, expectedFilePath);
+
+        // Load expected values from the JSON file
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Map<String, Object>> expectedData;
+
+        try {
+            expectedData = objectMapper.readValue(
+                    new File("src/test.demoApi/resources/testData/expectedResults/" + expectedFilePath),
+                    new TypeReference<List<Map<String, Object>>>() {});
+        } catch (Exception e) {
+            //LoggerUtil.logger.error("Failed to load expected data from file: {}", expectedFilePath, e);
+            throw new RuntimeException("Unable to load expected data from file: " + expectedFilePath, e);
+        }
+
+        // Ensure the expected data is valid
+        assertNotNull(expectedData, "Expected data file is empty or invalid!");
+
+        // Validate the status code
+        Response response = getTestScenarioClass().getResponse();
+        AssertionUtils.verifyStatusCode(response, expectedStatusCode);
+
+        // Validate the response array matches the expected values
+        AssertionUtils.assertArrayContainsEntriesFromFile(response, arrayField, expectedData);
+
+        // Log successful completion of the validation
+        //LoggerUtil.logger.info("Validation completed successfully for status code {} and response array '{}'",
+                //expectedStatusCode, arrayField);
     }
 }
