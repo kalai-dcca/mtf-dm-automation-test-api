@@ -126,7 +126,7 @@ public class CommonStep {
 
     @When("TestCaseDataSetup, JSONFile-{string}")
     public void testcasedatasetupJSONFile(String fileName) throws IOException {
-        String fileLocation = "src/test.claimIntro/resources/json/" + fileName;
+        String fileLocation = "src/test.claimIntro/resources/request/" + fileName;
         String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
         JSONObject jsonObject = new JSONObject(body);
         getTestScenarioClass().setJsonObject(jsonObject);
@@ -213,7 +213,7 @@ public class CommonStep {
 
         try {
             expectedData = objectMapper.readValue(
-                    new File("src/test.demoApi/resources/testData/expectedResults/" + expectedFilePath),
+                    new File("src/test.demoApi/resources/response/" + expectedFilePath),
                     new TypeReference<List<Map<String, Object>>>() {});
         } catch (Exception e) {
             //LoggerUtil.logger.error("Failed to load expected data from file: {}", expectedFilePath, e);
