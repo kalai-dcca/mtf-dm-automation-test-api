@@ -126,7 +126,7 @@ public class CommonStep {
 
     @When("TestCaseDataSetup, JSONFile-{string}")
     public void testcasedatasetupJSONFile(String fileName) throws IOException {
-        String fileLocation = "src/test.claimIntro/resources/request/" + fileName;
+        String fileLocation = "src/test.demoApi/resources/request/" + fileName;
         String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
         JSONObject jsonObject = new JSONObject(body);
         getTestScenarioClass().setJsonObject(jsonObject);
