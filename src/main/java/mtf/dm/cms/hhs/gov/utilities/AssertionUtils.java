@@ -21,7 +21,7 @@ public class AssertionUtils {
     public static void verifyStatusCode(Response response, int expectedStatusCode){
         //boolean status = false;
         if(Objects.isNull(response)){
-            LoggerUtil.logger.error("Error: Response is null");
+            MyLogger.error("Error: Response is null");
             throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,expectedStatusCode,false));
         }
@@ -41,11 +41,11 @@ public class AssertionUtils {
     public static void assertFieldExists(Response response, String field){
         //boolean status = false;
         if(Objects.isNull(response)){
-            LoggerUtil.logger.error("Error: Response is null");
+            MyLogger.error("Error: Response is null");
             throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,field,false));
         } else if ( StringUtils.isEmpty(field)) {
-            LoggerUtil.logger.error("Error: Field is empty");
+            MyLogger.error("Error: Field is empty");
             throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
                     "",field,false));
         }
@@ -66,11 +66,11 @@ public class AssertionUtils {
     public static void assertFieldValue(Response response, String field, Object expectedValue){
         //boolean status = false;
         if(Objects.isNull(response)){
-            LoggerUtil.logger.error("Error: Response is null");
+            MyLogger.error("Error: Response is null");
             throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,expectedValue,false));
         } else if ( StringUtils.isEmpty(field)) {
-            LoggerUtil.logger.error("Error: Field is empty");
+            MyLogger.error("Error: Field is empty");
             throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
                     "",expectedValue,false));
         }
@@ -90,7 +90,7 @@ public class AssertionUtils {
     public static void assertResponseTime(Response response, long maxResponseTime){
        // boolean status = false;
         if(Objects.isNull(response)){
-            LoggerUtil.logger.error("Error: Response is null");
+            MyLogger.error("Error: Response is null");
             throw new RuntimeException(String.format("Actual[%s]::Status[%s]%n",
                     null,false));
         }
@@ -112,7 +112,7 @@ public class AssertionUtils {
     public static void assertFieldMatchesRegex(Response response, String field, String regex){
         //boolean status = false;
         if(Objects.isNull(response)){
-            LoggerUtil.logger.error("Error: Response is null");
+            MyLogger.error("Error: Response is null");
             throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,regex,false));
         }
@@ -132,7 +132,7 @@ public class AssertionUtils {
     public static void assertMapContains(Response response, String mapField, Map<String, Object> expectedEntries){
         //boolean status = false;
         if(Objects.isNull(response)){
-            LoggerUtil.logger.error("Error: Response is null");
+            MyLogger.error("Error: Response is null");
             throw new RuntimeException(String.format("Actual[%s]::Status[%s]%n",
                     null,false));
         }
@@ -160,11 +160,11 @@ public class AssertionUtils {
         //boolean status = false;
         // Suggest separating into two granular assertion methods for fail status clarity!!!!!!!
         if(Objects.isNull(response)){
-            LoggerUtil.logger.error("Error: Response is null");
+            MyLogger.error("Error: Response is null");
             throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,expectedStatusCode,false));
         } else if (StringUtils.isEmpty(expectedMessage)) {
-            LoggerUtil.logger.error("Error: Message is empty");
+            MyLogger.error("Error: Message is empty");
             throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
                     "", expectedMessage, false));
         }
@@ -195,7 +195,7 @@ public class AssertionUtils {
             attributeValues.put(attribute.trim(), value);
         }
 
-        LoggerUtil.logger.info("Retrieved attribute values from Excel: {}", attributeValues);
+        MyLogger.error(String.format("Retrieved attribute values from Excel: {%s}", attributeValues));
 
         Response response = TestScenarioClass.getTestScenarioClass().getResponse();
 
@@ -219,7 +219,7 @@ public class AssertionUtils {
                     soft.assertAll();
                 }, String.format("Validation failed for attribute '%s'. Expected to contain: %s", attribute, expectedValue));
 
-                LoggerUtil.logger.info("Validation passed for attribute '{}'. Expected to contain: {}", attribute, expectedValue);
+                MyLogger.info(String.format("Validation passed for attribute '{%s}'. Expected to contain: {%s}", attribute, expectedValue));
             }
         }
     }

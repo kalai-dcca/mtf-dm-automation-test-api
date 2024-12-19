@@ -59,14 +59,14 @@ public class CommonStep {
     public void verifyStatusCodeAndMessage(int expectedStatusCode, String expectedMessage) {
 
         // Comment about entering state
-        LoggerUtil.logger.info("Verifying status code {} and message {}", expectedStatusCode, expectedMessage);
+        MyLogger.info(String.format("Verifying status code {%s} and message {%s}", expectedStatusCode, expectedMessage));
 
         // Validate the status code and response message using the AssertionUtils method
         AssertionUtils.verifyStatusCodeAndMessage(getTestScenarioClass().getResponse(), expectedStatusCode, expectedMessage);
 
         // Comment about closing state
-        LoggerUtil.logger.info("Validation completed successfully for status code {} and message {}",
-                expectedStatusCode, expectedMessage);
+        MyLogger.info(String.format("Validation completed successfully for status code {%s} and message {%s}",
+                expectedStatusCode, expectedMessage));
 
     }
 
@@ -96,13 +96,13 @@ public class CommonStep {
     public void verifyStatusCode(int expectedStatusCode) {
 
         // Comment about entering state
-        LoggerUtil.logger.info("Verifying status code {}", expectedStatusCode);
+        MyLogger.info(String.format("Verifying status code {%s}", expectedStatusCode));
 
         // Validate the status code
         AssertionUtils.verifyStatusCode(getTestScenarioClass().getResponse(), expectedStatusCode);
 
         // Comment about closing state
-        LoggerUtil.logger.info("Validation completed successfully for status code {}", expectedStatusCode);
+        MyLogger.info(String.format("Validation completed successfully for status code {%s}", expectedStatusCode));
     }
 
     @When("Launch {string}, QParam:{string} Method: {string}")
@@ -138,23 +138,23 @@ public class CommonStep {
             String expectedMessage = row.get("message");
 
             // Comment about entering state
-            LoggerUtil.logger.info("Verifying status code {} and message {}", expectedStatusCode, expectedMessage);
+            MyLogger.info(String.format("Verifying status code {%s} and message {%s}", expectedStatusCode, expectedMessage));
 
             // Validate the status code and response message using the AssertionUtils method
             AssertionUtils.verifyStatusCodeAndMessage(getTestScenarioClass().getResponse(), expectedStatusCode, expectedMessage);
 
             // Comment about closing state
-            LoggerUtil.logger.info("Validation completed successfully for status code {} and message {}", expectedStatusCode, expectedMessage);
+            MyLogger.info(String.format("Validation completed successfully for status code {%s} and message {%s}", expectedStatusCode, expectedMessage));
         }
     }
 
     @Then("Verify response values from Excel for attributes {string}")
     public void verifyResponseValuesFromExcelForAttributes(String attributeNames) {
-        LoggerUtil.logger.info("Starting validation for response attributes: {}", attributeNames);
+        MyLogger.info(String.format("Starting validation for response attributes: {%s}", attributeNames));
 
         // Delegate validation to a helper method
         AssertionUtils.verifyStatusCodeAndAttributesFromExcel(attributeNames);
 
-        LoggerUtil.logger.info("Validation completed successfully for attributes: {}", attributeNames);
+        MyLogger.info(String.format("Validation completed successfully for attributes: {%s}", attributeNames));
     }
 }

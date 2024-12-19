@@ -27,27 +27,27 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cucumber Java.Scenario: Validate API submission Create LIST-USERS GET request.executor": "Run",
-    "Cucumber Java.Scenario: Validate API submission Create PATCH request.executor": "Run",
-    "Cucumber Java.Scenario: Validate API submission Create POST request.executor": "Run",
-    "Cucumber Java.Scenario: Validate API submission Create PUT request.executor": "Run",
-    "Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request.executor": "Run",
-    "Cucumber Java.Scenario: Validate API submission.executor": "Run",
-    "Cucumber Java.Scenario: Validate request and response Expected values are passed as json file.executor": "Run",
-    "JUnit.TestRunner.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "mtf-dm-automation-farruh",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.claimReports",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "project.scopes"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cucumber Java.Scenario: Validate API submission Create LIST-USERS GET request.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Validate API submission Create PATCH request.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Validate API submission Create POST request.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Validate API submission Create PUT request.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Validate API submission Create SINGLE_RESOURCE GET request.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Validate API submission.executor&quot;: &quot;Run&quot;,
+    &quot;Cucumber Java.Scenario: Validate request and response Expected values are passed as json file.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestRunner.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;mtf-dm-automation-farruh&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.claimReports&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.scopes&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.claimReports" />
@@ -157,19 +157,6 @@
       <option name="PACKAGE_NAME" value="runners" />
       <option name="MAIN_CLASS_NAME" value="runners.TestRunner" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="mtf-dm-automation-test-api" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="mtf-dm-automation-test-api" />
-      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
