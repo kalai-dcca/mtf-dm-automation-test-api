@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extentreport>
+    <configuration>
+        <theme>dark</theme>
+        <encoding>UTF-8</encoding>
+        <protocol>https</protocol>
+        <documentTitle>Extent Reports</documentTitle>
+        <reportName>Automation Test Report</reportName>
+        <testViewChartLocation>bottom</testViewChartLocation>
+    </configuration>
+</extentreport>

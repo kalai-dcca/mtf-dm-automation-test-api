@@ -13,11 +13,11 @@ public class MyLogger {
     public static synchronized void startTestCase(String sTestCaseName) {
         sTestCaseName = sTestCaseName.replaceAll("[^a-zA-Z0-9]", "_").replaceAll("_+", "_");
         startLog(System.getProperty("user.dir"), sTestCaseName);
-        info("Execution Started : " + sTestCaseName);
+        info("Execution Started: " + sTestCaseName);
     }
 
     public static synchronized void endTestCase(String sTestCaseName) {
-        info("Execution End : " + sTestCaseName);
+        info("Execution Ended: " + sTestCaseName);
     }
 
     private static void startLog(String dirPath, String testCaseName) {

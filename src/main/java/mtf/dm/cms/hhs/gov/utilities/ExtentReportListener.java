@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import io.cucumber.core.exception.ExceptionUtils;
 import io.cucumber.plugin.ConcurrentEventListener;
 import io.cucumber.plugin.event.*;
 
@@ -80,13 +81,13 @@ public class ExtentReportListener implements ConcurrentEventListener {
 
 
     // Helper method to get the current Git branch name
-    private static String getGitBranch() {
+    public static String getGitBranch() {
         try {
             Process process = Runtime.getRuntime().exec("git rev-parse --abbrev-ref HEAD");
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             return reader.readLine().trim();
         } catch (Exception e) {
-            e.printStackTrace();
+            MyLogger.endTestCase(ExceptionUtils.printStackTrace(e));
             return "Unknown Branch";
         }
     }
