@@ -161,5 +161,31 @@ public class ExcelUtils {
             throw new RuntimeException("Failed to close Excel workbook: " + e.getMessage());
         }
     }
+
+    public String getStringCellData(String testCaseId, String attributeName) {
+        // Get the row for the testCaseId
+        Row row = getRow(testCaseId);
+        if (row == null) {
+            throw new RuntimeException("Test case ID not found: " + testCaseId);
+        }
+
+        // Find the column index for the attribute name
+        Row headerRow = sheet.getRow(0); // Assuming the first row contains headers
+        int columnIndex = -1;
+        for (Cell cell : headerRow) {
+            if (cell.getStringCellValue().equalsIgnoreCase(attributeName)) {
+                columnIndex = cell.getColumnIndex();
+                break;
+            }
+        }
+
+        if (columnIndex == -1) {
+            throw new RuntimeException("Attribute name not found: " + attributeName);
+        }
+
+        // Use getCellData to fetch the value
+        int rowIndex = row.getRowNum();
+        return getCellData(rowIndex, columnIndex);
+    }
 }
 

@@ -3,6 +3,7 @@ package mtf.dm.cms.hhs.gov.utilities;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -178,5 +179,49 @@ public class AssertionUtils {
         //return status;
     }
 
+    public static void verifyStatusCodeAndAttributesFromExcel(String attributeNames) {
+        // Split the comma-separated attribute names
+        String[] attributes = attributeNames.split(",");
+
+        // Retrieve test case ID and Excel utility
+        String testCaseId = TestScenarioClass.getTestScenarioClass().getTestCaseID();
+        ExcelUtils excelUtils = TestScenarioClass.getTestScenarioClass().getExcelUtils();
+
+        Map<String, String> attributeValues = new HashMap<>();
+
+        // Loop through attributes and retrieve their values
+        for (String attribute : attributes) {
+            String value = excelUtils.getStringCellData(testCaseId, attribute.trim());
+            attributeValues.put(attribute.trim(), value);
+        }
+
+        LoggerUtil.logger.info("Retrieved attribute values from Excel: {}", attributeValues);
+
+        Response response = TestScenarioClass.getTestScenarioClass().getResponse();
+
+        // Validate the status code explicitly
+        if (attributeValues.containsKey("STATUS_CODE")) {
+            int expectedStatusCode = Integer.parseInt(attributeValues.get("STATUS_CODE"));
+            AssertionUtils.verifyStatusCode(response, expectedStatusCode);
+        }
+
+        // Validate other attributes using "contains"
+        for (Map.Entry<String, String> entry : attributeValues.entrySet()) {
+            String attribute = entry.getKey();
+            String expectedValue = entry.getValue();
+
+            if (!attribute.equals("STATUS_CODE")) {
+                String actualValue = response.jsonPath().getString(attribute);
+
+                SoftAssertions soft = new SoftAssertions();
+                AssertionHandler.logAssertionError(() -> {
+                    soft.assertThat(actualValue).contains(expectedValue);
+                    soft.assertAll();
+                }, String.format("Validation failed for attribute '%s'. Expected to contain: %s", attribute, expectedValue));
+
+                LoggerUtil.logger.info("Validation passed for attribute '{}'. Expected to contain: {}", attribute, expectedValue);
+            }
+        }
+    }
 }
 
