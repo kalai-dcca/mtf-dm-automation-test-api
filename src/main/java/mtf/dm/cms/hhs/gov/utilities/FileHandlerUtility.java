@@ -196,4 +196,19 @@ public class FileHandlerUtility {
         }
         return jsonObject;
     }
+
+    public static void createJsonFile(String filePath, Map<String,String> keyValueMap, String fileName){
+        JSONObject jsonObject = new JSONObject();
+        for(Map.Entry<String,String> entry : keyValueMap.entrySet()){
+            jsonObject.put(entry.getKey(),entry.getValue());
+        }
+        createFile(filePath,fileName,".json");
+
+        try(FileWriter fileWriter = new FileWriter(fileName+".json")){
+            fileWriter.write(jsonObject.toString(4));
+        }catch (IOException e){
+            e.getStackTrace();
+        }
+
+    }
 }

@@ -4,6 +4,8 @@ import io.restassured.response.Response;
 import mtf.dm.cms.hhs.gov.utilities.ExcelUtils;
 import mtf.dm.cms.hhs.gov.utilities.SheetType;
 
+import java.util.Objects;
+
 import static mtf.dm.cms.hhs.gov.utilities.BaseClass.getTestScenarioClass;
 
 public class DemoApi {
@@ -24,8 +26,10 @@ public class DemoApi {
     }
 
     public Response launchDemoApiAndGetResponse(String endpoint, String method){
-        if(!getTestScenarioClass().getSheet().equalsIgnoreCase(SheetType.CREATE.getEnumData())){
-            endpoint = endpoint + "/" + getTestScenarioClass().getUserID();
+        if(Objects.nonNull(getTestScenarioClass().getSheet())){
+            if(!getTestScenarioClass().getSheet().equalsIgnoreCase(SheetType.CREATE.getEnumData())){
+                endpoint = endpoint + "/" + getTestScenarioClass().getUserID();
+            }
         }
         return apiRequestClient.sendApiRequest(endpoint, method);
     }
