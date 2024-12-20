@@ -194,33 +194,23 @@ public class AssertionUtils {
             attributeValues.put(attribute.trim(), value);
         }
 
-        MyLogger.error(String.format("Retrieved attribute values from Excel: {%s}", attributeValues));
+        MyLogger.info(String.format("Retrieved attribute values from Excel: {%s}", attributeValues));
 
         Response response = TestScenarioClass.getTestScenarioClass().getResponse();
 
-        // Validate the status code explicitly
-        if (attributeValues.containsKey("STATUS_CODE")) {
-            int expectedStatusCode = Integer.parseInt(attributeValues.get("STATUS_CODE"));
-            AssertionUtils.verifyStatusCode(response, expectedStatusCode);
-        }
-
-        // Validate other attributes using "contains"
-        for (Map.Entry<String, String> entry : attributeValues.entrySet()) {
-            String attribute = entry.getKey();
-            String expectedValue = entry.getValue();
-
-            if (!attribute.equals("STATUS_CODE")) {
-                String actualValue = response.jsonPath().getString(attribute);
-
-                SoftAssertions soft = new SoftAssertions();
-                AssertionHandler.logAssertionError(() -> {
-                    soft.assertThat(actualValue).contains(expectedValue);
-                    soft.assertAll();
-                }, String.format("Validation failed for attribute '%s'. Expected to contain: %s", attribute, expectedValue));
-
-                MyLogger.info(String.format("Validation passed for attribute '{%s}'. Expected to contain: {%s}", attribute, expectedValue));
+        SoftAssertions soft = new SoftAssertions();
+        //Loop through each attribute and then validate the result as a soft assert
+        attributeValues.forEach((attribute, expectedValue) -> {
+            if (attribute.equals("STATUS_CODE")) {
+                soft.assertThat(response.getStatusCode()).isEqualTo((Integer.parseInt(expectedValue)));
+            } else{
+                soft.assertThat(response.jsonPath().getString(attribute)).contains(expectedValue);
             }
-        }
+        });
+        // Verify if any soft assert has failed. Throws an MultipleFailuresError if at least one failed.
+        AssertionHandler.logAssertionError(() ->{
+            soft.assertAll();
+        }, "Error: Validation failed for one or more attributes!");
     }
 
     /**
