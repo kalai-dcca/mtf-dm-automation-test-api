@@ -1,4 +1,4 @@
-package mtf.dm.cms.hhs.gov.utilities;
+package mtf.dm.cms.hhs.gov.report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
