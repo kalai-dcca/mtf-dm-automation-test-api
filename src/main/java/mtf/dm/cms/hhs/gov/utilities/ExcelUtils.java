@@ -163,7 +163,7 @@ public class ExcelUtils {
         }
     }
 
-    public String getStringCellData(String testCaseId, String attributeName) {
+    public String getStringCellData(String testCaseId, String attributeName) throws SuppressedStackTraceException {
         // Get the row for the testCaseId
         Row row = getRow(testCaseId);
         if (row == null) {
@@ -181,7 +181,8 @@ public class ExcelUtils {
         }
 
         if (columnIndex == -1) {
-            throw new RuntimeException("Attribute name not found: " + attributeName);
+            throw new SuppressedStackTraceException(String.format(attributeName + " column was not found in excel file %s for test case ID %s %n" ,filePath, testCaseId));
+            //throw new RuntimeException("Attribute name not found: " + attributeName);
         }
 
         // Use getCellData to fetch the value

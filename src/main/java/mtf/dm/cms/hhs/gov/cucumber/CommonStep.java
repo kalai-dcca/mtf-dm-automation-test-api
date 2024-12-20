@@ -60,7 +60,7 @@ public class CommonStep {
     //}
 
     @Then("Verify status code {int} and message {string}")
-    public void verifyStatusCodeAndMessage(int expectedStatusCode, String expectedMessage) {
+    public void verifyStatusCodeAndMessage(int expectedStatusCode, String expectedMessage) throws SuppressedStackTraceException {
 
         // Comment about entering state
         MyLogger.info(String.format("Verifying status code {%s} and message {%s}", expectedStatusCode, expectedMessage));
@@ -97,7 +97,7 @@ public class CommonStep {
     }
 
     @Then("Verify status code {int}")
-    public void verifyStatusCode(int expectedStatusCode) {
+    public void verifyStatusCode(int expectedStatusCode) throws SuppressedStackTraceException {
 
         // Comment about entering state
         MyLogger.info(String.format("Verifying status code {%s}", expectedStatusCode));
@@ -133,7 +133,7 @@ public class CommonStep {
     }
 
     @Then("Verify response values:")
-    public void verifyResponseValuesWithDatatable(DataTable dataTable) {
+    public void verifyResponseValuesWithDatatable(DataTable dataTable) throws SuppressedStackTraceException {
         List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
 
         // Loop through the datatable rows for validation
@@ -153,7 +153,7 @@ public class CommonStep {
     }
 
     @Then("Verify response values from Excel for attributes {string}")
-    public void verifyResponseValuesFromExcelForAttributes(String attributeNames) {
+    public void verifyResponseValuesFromExcelForAttributes(String attributeNames) throws SuppressedStackTraceException {
         MyLogger.info(String.format("Starting validation for response attributes: {%s}", attributeNames));
 
         // Delegate validation to a helper method

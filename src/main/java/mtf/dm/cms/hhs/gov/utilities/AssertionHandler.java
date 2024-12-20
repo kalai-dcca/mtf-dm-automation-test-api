@@ -12,13 +12,13 @@ public class AssertionHandler {
      * @param assertion          The assertion call
      * @param customMessage          The customized error message to be logged.
      */
-    public static void logAssertionError(Runnable assertion, String customMessage){
+    public static void logAssertionError(Runnable assertion, String customMessage) throws SuppressedStackTraceException {
         try{
             assertion.run();
         } catch (AssertionError e){
-            MyLogger.error(customMessage);
+            MyLogger.error(customMessage,e);
             // Throw assertion error
-            throw new AssertionError(customMessage, e);
+            throw new SuppressedStackTraceException(customMessage);
         }
     }
 }
