@@ -27,10 +27,12 @@ public class ExcelUtils {
             workbook = new XSSFWorkbook(fis);
             sheet = workbook.getSheet(sheetName);
             if (sheet == null) {
+                MyLogger.error("Sheet: " + sheetName + " does not exist in the file: " + filePath);
                 throw new SuppressedStackTraceException("Sheet: " + sheetName + " does not exist in the file: " + filePath);
             }
         } catch (IOException e) {
-            throw new SuppressedStackTraceException("Failed to load Excel file: " + e.getMessage());
+            MyLogger.error("Failed to load Excel file: " + filePath, e);
+            throw new SuppressedStackTraceException("Failed to load Excel file: " + filePath);
         }
     }
 
@@ -150,7 +152,8 @@ public class ExcelUtils {
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             workbook.write(fos);
         } catch (IOException e) {
-            throw new SuppressedStackTraceException("Failed to save Excel file: " + e.getMessage());
+            MyLogger.error("Failed to load Excel file: " + filePath, e);
+            throw new SuppressedStackTraceException("Failed to save Excel file: " + filePath);
         }
     }
     // Method to close the workbook
@@ -159,7 +162,8 @@ public class ExcelUtils {
         try {
             workbook.close();
         } catch (IOException e) {
-            throw new SuppressedStackTraceException("Failed to close Excel workbook: " + e.getMessage());
+            MyLogger.error("Failed to load Excel file: " + workbook, e);
+            throw new SuppressedStackTraceException("Failed to close Excel workbook: " + workbook);
         }
     }
 
@@ -167,6 +171,7 @@ public class ExcelUtils {
         // Get the row for the testCaseId
         Row row = getRow(testCaseId);
         if (row == null) {
+            MyLogger.error("Test case ID not found: " + testCaseId);
             throw new SuppressedStackTraceException("Test case ID not found: " + testCaseId);
         }
 
@@ -181,6 +186,7 @@ public class ExcelUtils {
         }
 
         if (columnIndex == -1) {
+            MyLogger.error(String.format(attributeName + " column was not found in excel file %s for test case ID %s %n" ,filePath, testCaseId));
             throw new SuppressedStackTraceException(String.format(attributeName + " column was not found in excel file %s for test case ID %s %n" ,filePath, testCaseId));
         }
 
