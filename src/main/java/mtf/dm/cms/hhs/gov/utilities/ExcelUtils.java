@@ -19,7 +19,7 @@ public class ExcelUtils {
     private String filePath;
 
     // Constructor to initialize Excel file and sheet
-    public ExcelUtils(String filePath, String sheetName) {
+    public ExcelUtils(String filePath, String sheetName) throws SuppressedStackTraceException {
 
         this.filePath = filePath;
         try {
@@ -27,10 +27,10 @@ public class ExcelUtils {
             workbook = new XSSFWorkbook(fis);
             sheet = workbook.getSheet(sheetName);
             if (sheet == null) {
-                throw new RuntimeException("Sheet: " + sheetName + " does not exist in the file: " + filePath);
+                throw new SuppressedStackTraceException("Sheet: " + sheetName + " does not exist in the file: " + filePath);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load Excel file: " + e.getMessage());
+            throw new SuppressedStackTraceException("Failed to load Excel file: " + e.getMessage());
         }
     }
 
@@ -136,7 +136,7 @@ public class ExcelUtils {
         return data;
     }
     // Method to set data into a specific cell
-    public void setCellData(int rowNum, int colNum, String value) {
+    public void setCellData(int rowNum, int colNum, String value) throws SuppressedStackTraceException {
         Row row = sheet.getRow(rowNum);
         if (row == null) row = sheet.createRow(rowNum);
         Cell cell = row.getCell(colNum);
@@ -146,20 +146,20 @@ public class ExcelUtils {
     }
     // Method to save changes to the Excel file
 
-    private void save() {
+    private void save() throws SuppressedStackTraceException {
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             workbook.write(fos);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to save Excel file: " + e.getMessage());
+            throw new SuppressedStackTraceException("Failed to save Excel file: " + e.getMessage());
         }
     }
     // Method to close the workbook
 
-    public void close() {
+    public void close() throws SuppressedStackTraceException {
         try {
             workbook.close();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to close Excel workbook: " + e.getMessage());
+            throw new SuppressedStackTraceException("Failed to close Excel workbook: " + e.getMessage());
         }
     }
 
@@ -167,7 +167,7 @@ public class ExcelUtils {
         // Get the row for the testCaseId
         Row row = getRow(testCaseId);
         if (row == null) {
-            throw new RuntimeException("Test case ID not found: " + testCaseId);
+            throw new SuppressedStackTraceException("Test case ID not found: " + testCaseId);
         }
 
         // Find the column index for the attribute name
@@ -182,7 +182,6 @@ public class ExcelUtils {
 
         if (columnIndex == -1) {
             throw new SuppressedStackTraceException(String.format(attributeName + " column was not found in excel file %s for test case ID %s %n" ,filePath, testCaseId));
-            //throw new RuntimeException("Attribute name not found: " + attributeName);
         }
 
         // Use getCellData to fetch the value
