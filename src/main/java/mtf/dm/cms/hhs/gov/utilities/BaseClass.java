@@ -2,6 +2,7 @@ package mtf.dm.cms.hhs.gov.utilities;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 public abstract class BaseClass {
@@ -11,6 +12,7 @@ public abstract class BaseClass {
     private static TestScenarioClass testScenarioClass;
 
     public static final String TEST_DATA_PATH = "src/test.demoApi/resources/testData/";
+    public static final String FILE_HANDLER_TEST_DATA_PATH = "src/test.dataExchange/resources/testData/";
 
     public static TestScenarioClass getTestScenarioClass(){
         if(Objects.isNull(testScenarioClass)){
@@ -22,5 +24,15 @@ public abstract class BaseClass {
 
     public static void setTestScenarioClass(TestScenarioClass testScenarioClass) {
         BaseClass.testScenarioClass = testScenarioClass;
+    }
+
+    private Map<String, String> testCaseData;
+
+    public Map<String, String> getTestCaseData() {
+        return testCaseData;
+    }
+
+    public void setTestCaseData(Map<String, String> testCaseData) {
+        this.testCaseData = testCaseData;
     }
 }
