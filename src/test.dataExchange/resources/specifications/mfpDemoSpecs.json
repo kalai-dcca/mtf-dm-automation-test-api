@@ -1,0 +1,16 @@
+{
+  "MFP Pricing File - Data": {
+    "columns": {
+      "Selected Drug Name": {
+        "type": "string"
+      },
+      "MFP Effective Date": {
+        "type": "date",
+        "format": "m/d/yyyy"
+      },
+      "Single MFP per 30 DES": {
+        "type": "dollar"
+      }
+    }
+  }
+}
