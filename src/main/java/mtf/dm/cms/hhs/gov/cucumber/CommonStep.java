@@ -238,28 +238,10 @@ public class CommonStep {
 
     @Then("verify {string} data is in the {string} database")
     public void verify_data_is_in_the_database(String dataString, String databaseString) {
-        String env = System.getProperty("env", "local"); // Default to 'local' if not provided
         String configFilePath = String.format("src/test.%s/resources/database/database.config.json", databaseString);
-
         try {
-            // Load the JSON file for the database
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Map<String, String>> config = objectMapper.readValue(new File(configFilePath), new TypeReference<>() {
-            });
-
-            // Get the configuration for the selected environment
-            Map<String, String> dbConfig = config.get(env);
-            if (dbConfig == null) {
-                throw new RuntimeException("Environment not found in configuration: " + env);
-            }
-
-            // Extract connection details
-            String url = dbConfig.get("url");
-            String username = dbConfig.get("username");
-            String password = dbConfig.get("password");
-
             // Create the database connection
-            DBUtils.createConnection(url, username, password);
+            DBUtils.createConnectionFromConfig(configFilePath);
 
             ResultSet resultSet = DBUtils.runQuery("SELECT * FROM price_eff_dt");
 
