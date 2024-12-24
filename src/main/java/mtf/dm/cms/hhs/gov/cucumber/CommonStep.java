@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -243,29 +244,29 @@ public class CommonStep {
         try {
             // Load the JSON file for the database
             ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, DatabaseConfig> environments = objectMapper.readValue(new File(configFilePath), new TypeReference<Map<String, DatabaseConfig>>() {});
+            Map<String, Map<String, String>> config = objectMapper.readValue(new File(configFilePath), new TypeReference<>() {
+            });
 
             // Get the configuration for the selected environment
-            DatabaseConfig dbConfig = environments.get(env);
+            Map<String, String> dbConfig = config.get(env);
             if (dbConfig == null) {
                 throw new RuntimeException("Environment not found in configuration: " + env);
             }
 
+            // Extract connection details
+            String url = dbConfig.get("url");
+            String username = dbConfig.get("username");
+            String password = dbConfig.get("password");
+
             // Create the database connection
-            DBUtils.createConnection(dbConfig.getUrl(), dbConfig.getUsername(), dbConfig.getPassword());
+            DBUtils.createConnection(url, username, password);
 
-            // Execute the query (example query, adjust based on your logic)
-            String query = "SELECT * FROM your_table WHERE your_column = '" + dataString + "'";
-            ResultSet resultSet = DBUtils.runQuery(query);
+            ResultSet resultSet = DBUtils.runQuery("SELECT * FROM price_eff_dt");
 
-            // Validate the result
-            if (resultSet.next()) {
-                System.out.println("Data found: " + dataString);
-            } else {
-                throw new AssertionError("Data not found: " + dataString);
-            }
+            // Display results
+            DBUtils.displayAllData();
 
-            // Destroy the connection
+            // Close resources
             DBUtils.destroy();
         } catch (Exception e) {
             throw new RuntimeException("Error verifying data in the database: " + e.getMessage(), e);
