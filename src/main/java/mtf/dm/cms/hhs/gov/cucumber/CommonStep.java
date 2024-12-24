@@ -239,5 +239,37 @@ public class CommonStep {
     public void verify_data_is_in_the_database(String dataString, String databaseString) {
         String env = System.getProperty("env", "local"); // Default to 'local' if not provided
         String configFilePath = String.format("src/test.%s/resources/database/database.config.json", databaseString);
+
+        try {
+            // Load the JSON file for the database
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, DatabaseConfig> environments = objectMapper.readValue(new File(configFilePath), new TypeReference<Map<String, DatabaseConfig>>() {});
+
+            // Get the configuration for the selected environment
+            DatabaseConfig dbConfig = environments.get(env);
+            if (dbConfig == null) {
+                throw new RuntimeException("Environment not found in configuration: " + env);
+            }
+
+            // Create the database connection
+            DBUtils.createConnection(dbConfig.getUrl(), dbConfig.getUsername(), dbConfig.getPassword());
+
+            // Execute the query (example query, adjust based on your logic)
+            String query = "SELECT * FROM your_table WHERE your_column = '" + dataString + "'";
+            ResultSet resultSet = DBUtils.runQuery(query);
+
+            // Validate the result
+            if (resultSet.next()) {
+                System.out.println("Data found: " + dataString);
+            } else {
+                throw new AssertionError("Data not found: " + dataString);
+            }
+
+            // Destroy the connection
+            DBUtils.destroy();
+        } catch (Exception e) {
+            throw new RuntimeException("Error verifying data in the database: " + e.getMessage(), e);
+        }
+
     }
 }
