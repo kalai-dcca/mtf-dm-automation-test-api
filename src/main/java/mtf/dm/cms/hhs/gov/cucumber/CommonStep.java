@@ -234,4 +234,10 @@ public class CommonStep {
         //LoggerUtil.logger.info("Validation completed successfully for status code {} and response array '{}'",
                 //expectedStatusCode, arrayField);
     }
+
+    @Then("verify {string} data is in the {string} database")
+    public void verify_data_is_in_the_database(String dataString, String databaseString) {
+        String env = System.getProperty("env", "local"); // Default to 'local' if not provided
+        String configFilePath = String.format("src/test.%s/resources/database/database.config.json", databaseString);
+    }
 }
