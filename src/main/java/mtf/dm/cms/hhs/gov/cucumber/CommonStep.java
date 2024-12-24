@@ -243,6 +243,7 @@ public class CommonStep {
             // Create the database connection
             DBUtils.createConnectionFromConfig(configFilePath);
 
+            // Run query against database
             ResultSet resultSet = DBUtils.runQuery("SELECT * FROM price_eff_dt");
 
             // Display results
