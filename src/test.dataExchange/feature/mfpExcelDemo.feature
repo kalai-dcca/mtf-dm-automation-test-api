@@ -1,4 +1,4 @@
-@FILE-HANDLER
+@FILE-HANDLER @smoke
 Feature: Data Exchange MFP Excel File Ingestion
 
   Scenario Outline: Dynamically validate MFP Excel File against Database per Excel Test File
