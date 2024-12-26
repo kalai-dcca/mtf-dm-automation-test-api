@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -235,11 +236,33 @@ public class CommonStep {
                 //expectedStatusCode, arrayField);
     }
 
-    @When("FileHandler-TestCaseDataSetup, File-{string}, Sheet-{string}, TestCase-{string}")
-    public void testCaseDataSetupFileSheetTestCase(String fileName, String sheet, String testCase) {
+    @Then("verify {string} data is in the {string} database")
+    public void verify_data_is_in_the_database(String dataString, String directoryString) {
+        String configFilePath = String.format("src/test.%s/resources/database/database.config.json", directoryString);
+        try {
+            // Create the database connection
+            DBUtils.createConnectionFromConfig(configFilePath);
+
+            // Run query against database
+            ResultSet resultSet = DBUtils.runQuery("SELECT * FROM price_eff_dt");
+
+            // Display results
+            DBUtils.displayAllData();
+
+            // Close resources
+            DBUtils.destroy();
+        } catch (Exception e) {
+            throw new RuntimeException("Error verifying data in the database: " + e.getMessage(), e);
+        }
+
+    }
+
+    @When("TestCaseDataSetup-{string}, File-{string}, Sheet-{string}, TestCase-{string}")
+    public void testCaseDataSetupFileSheetTestCase(String directoryString, String fileName, String sheet, String testCase) {
+        String testCaseFileName = String.format("src/test.%s/resources/testData/%s", directoryString, fileName);
         try {
             // Initialize ExcelUtils
-            ExcelUtils excelUtils = new ExcelUtils(BaseClass.FILE_HANDLER_TEST_DATA_PATH + fileName, sheet);
+            ExcelUtils excelUtils = new ExcelUtils(testCaseFileName, sheet);
             getTestScenarioClass().setExcelUtils(excelUtils);
 
             // Retrieve all data from the row as a HashMap
@@ -254,5 +277,4 @@ public class CommonStep {
             throw new RuntimeException("Error during test case data setup: " + e.getMessage());
         }
     }
-
 }

@@ -12,7 +12,6 @@ public abstract class BaseClass {
     private static TestScenarioClass testScenarioClass;
 
     public static final String TEST_DATA_PATH = "src/test.demoApi/resources/testData/";
-    public static final String FILE_HANDLER_TEST_DATA_PATH = "src/test.dataExchange/resources/testData/";
 
     public static TestScenarioClass getTestScenarioClass(){
         if(Objects.isNull(testScenarioClass)){
