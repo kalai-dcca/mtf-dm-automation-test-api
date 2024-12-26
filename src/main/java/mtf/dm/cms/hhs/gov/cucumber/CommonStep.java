@@ -256,4 +256,24 @@ public class CommonStep {
         }
 
     }
+
+    @When("FileHandler-TestCaseDataSetup, File-{string}, Sheet-{string}, TestCase-{string}")
+    public void testCaseDataSetupFileSheetTestCase(String fileName, String sheet, String testCase) {
+        try {
+            // Initialize ExcelUtils
+            ExcelUtils excelUtils = new ExcelUtils(BaseClass.FILE_HANDLER_TEST_DATA_PATH + fileName, sheet);
+            getTestScenarioClass().setExcelUtils(excelUtils);
+
+            // Retrieve all data from the row as a HashMap
+            Map<String, String> testCaseData = ExcelUtils.getAllDataFromRow(testCase);
+            getTestScenarioClass().setTestCaseData(testCaseData); // Save the data for subsequent steps
+
+            // Set other test context values
+            getTestScenarioClass().setTestCaseID(testCase);
+            getTestScenarioClass().setSheet(sheet);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error during test case data setup: " + e.getMessage());
+        }
+    }
 }
