@@ -237,8 +237,8 @@ public class CommonStep {
     }
 
     @Then("verify {string} data is in the {string} database")
-    public void verify_data_is_in_the_database(String dataString, String databaseString) {
-        String configFilePath = String.format("src/test.%s/resources/database/database.config.json", databaseString);
+    public void verify_data_is_in_the_database(String dataString, String directoryString) {
+        String configFilePath = String.format("src/test.%s/resources/database/database.config.json", directoryString);
         try {
             // Create the database connection
             DBUtils.createConnectionFromConfig(configFilePath);
@@ -257,11 +257,12 @@ public class CommonStep {
 
     }
 
-    @When("FileHandler-TestCaseDataSetup, File-{string}, Sheet-{string}, TestCase-{string}")
-    public void testCaseDataSetupFileSheetTestCase(String fileName, String sheet, String testCase) {
+    @When("TestCaseDataSetup-{string}, File-{string}, Sheet-{string}, TestCase-{string}")
+    public void testCaseDataSetupFileSheetTestCase(String directoryString, String fileName, String sheet, String testCase) {
+        String testCaseFileName = String.format("src/test.%s/resources/testData/%s", directoryString, fileName);
         try {
             // Initialize ExcelUtils
-            ExcelUtils excelUtils = new ExcelUtils(BaseClass.FILE_HANDLER_TEST_DATA_PATH + fileName, sheet);
+            ExcelUtils excelUtils = new ExcelUtils(testCaseFileName, sheet);
             getTestScenarioClass().setExcelUtils(excelUtils);
 
             // Retrieve all data from the row as a HashMap
