@@ -1,4 +1,4 @@
-@REG-API-CREATE-POST @REG-API
+@REG-API-CREATE-POST @REG-API @smoke
 Feature: DEMO Create API Testing POST
 
   Scenario Outline: Validate request and response Expected values are passed excel file
