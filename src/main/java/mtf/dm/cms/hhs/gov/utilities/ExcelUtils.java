@@ -151,7 +151,7 @@ public class ExcelUtils {
     }
 
     // Method to get all data from the sheet
-    public List<List<String>> getSheetData() {
+    public List<List<String>> getSheetDataByRow() {
 
         List<List<String>> data = new ArrayList<>();
         for (Row row : sheet) {
@@ -163,6 +163,47 @@ public class ExcelUtils {
         }
         return data;
     }
+
+    public List<List<String>> getSheetDataByColumn() {
+        List<List<String>> dataByColumn = new ArrayList<>();
+        Row headerRow = sheet.getRow(0); // Assuming the first row contains headers
+
+        if (headerRow == null) {
+            throw new RuntimeException("Header row is missing in the sheet.");
+        }
+
+        // Initialize columns based on the headers
+        int columnCount = headerRow.getLastCellNum();
+        for (int colIndex = 0; colIndex < columnCount; colIndex++) {
+            Cell headerCell = headerRow.getCell(colIndex);
+            String header = (headerCell == null) ? "" : headerCell.toString().trim();
+
+            if (!header.isEmpty()) {
+                dataByColumn.add(new ArrayList<>()); // Create a new list for each non-empty header
+            } else {
+                dataByColumn.add(null); // Mark this column as empty to ignore it later
+            }
+        }
+
+        // Process all rows, including the header row
+        for (Row row : sheet) {
+            for (int colIndex = 0; colIndex < columnCount; colIndex++) {
+                if (dataByColumn.get(colIndex) == null) {
+                    continue; // Skip columns with empty headers
+                }
+
+                Cell cell = row.getCell(colIndex);
+                String cellValue = (cell == null) ? "" : cell.toString().trim();
+                dataByColumn.get(colIndex).add(cellValue);
+            }
+        }
+
+        // Remove null columns from the final result
+        dataByColumn.removeIf(Objects::isNull);
+
+        return dataByColumn;
+    }
+
     // Method to set data into a specific cell
     public void setCellData(int rowNum, int colNum, String value) {
         Row row = sheet.getRow(rowNum);

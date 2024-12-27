@@ -4,7 +4,7 @@ Feature: Data Exchange MFP Excel File Ingestion
   Scenario Outline: Dynamically validate MFP Excel File against Database per Excel Test File
     Given TestCaseDataSetup-"dataExchange", File-"dataExchangeDemoData.xlsx", Sheet-"MFP", TestCase-"<TestCaseId>"
     # Given the file "mfpDemo.xlsx" is downloaded from the S3 bucket //WILL IMPLEMENT AFTER WE CONFIRM DEVELOPMENT IMPLEMENTATION
-    #And the "dataExchange" file "mfpDemo.xlsx" follows the specification in "mfpDemo"
+    And the "dataExchange" file "mfpDemo.xlsx" follows the specification in "mfpDemo"
     And the "dataExchange" file "mfpDemo.xlsx" follows the specification in "mfpDemo" in sheet "MFP Pricing File - Data"
     # When the "dataExchange" microservice processes the file //WILL IMPLEMENT AFTER WE CONFIRM DEVELOPMENT IMPLEMENTATION
     Then verify "mfpDemo.xlsx" data is in the "dataExchange" database
