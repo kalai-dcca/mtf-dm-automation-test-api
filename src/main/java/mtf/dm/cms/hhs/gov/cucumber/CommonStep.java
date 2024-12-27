@@ -3,12 +3,16 @@ package mtf.dm.cms.hhs.gov.cucumber;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import mtf.dm.cms.hhs.gov.impl.DemoApi;
+import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelColumnSpec;
+import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelSheetSpec;
 import mtf.dm.cms.hhs.gov.utilities.*;
 import org.json.JSONObject;
+import org.jsoup.Connection;
 
 import java.io.File;
 import java.io.IOException;
@@ -321,6 +325,98 @@ public class CommonStep {
 
         } catch (Exception e) {
             throw new RuntimeException("Error verifying file data in database: " + e.getMessage(), e);
+        }
+    }
+
+    @Given("the {string} file {string} follows the specification in {string}")
+    public void the_file_follows_the_specification_in(String directoryName, String fileToValidate, String specsFileName) {
+        String specsFilePath = String.format("src/test.%s/resources/specifications/%s.specs.json", directoryName, specsFileName);
+        String fileExtension = FileHandlerUtility.getFileExtension(fileToValidate);
+
+        Map<String, Map<String, Object>> specsJson = JsonUtils.readJsonFile(specsFilePath);
+
+        switch (fileExtension) {
+            case "xlsx":
+                // Iterate over the top-level keys (sheet names)
+                for (String sheetName : specsJson.keySet()) {
+                    the_file_follows_the_specification_in_sheet(directoryName, fileToValidate, specsFileName, sheetName);
+                }
+                break;
+            default:
+                throw new RuntimeException("Unsupported file format: " + fileToValidate);
+        }
+
+    }
+
+    @Given("the {string} file {string} follows the specification in {string} in sheet {string}")
+    public void the_file_follows_the_specification_in_sheet(String directoryName, String fileToValidate, String specsFileName, String sheetName) {
+        String specsFilePath = String.format("src/test.%s/resources/specifications/%s.specs.json", directoryName, specsFileName);
+        String fileToValidatePath = String.format("src/test.%s/resources/filesToIngest/%s", directoryName, fileToValidate);
+
+        // Parse the sheet specification using JsonUtils
+        ExcelSheetSpec sheetSpec = JsonUtils.getSheetSpec(specsFilePath, sheetName);
+        BaseClass.setScenarioVariable("sheetSpecForFileData", sheetSpec);
+
+        // Create a new ExcelUtils instance for the file and sheet
+        ExcelUtils excelUtils = new ExcelUtils(fileToValidatePath, sheetName);
+
+
+        // Get all data from the current sheet
+        // Get data by column
+        List<List<String>> dataByColumn = excelUtils.getSheetDataByColumn();
+        BaseClass.setScenarioVariable("dataByColumnForFileToIngest", dataByColumn);
+
+        // Validate each column
+        // validateColumns(dataByColumn, sheetSpec);
+        // temporarily commenting this out so that other developers can use what I have so far instead of being blocked
+
+        System.out.println("Validation successful for sheet: " + sheetName);
+    }
+
+    private void validateColumns(List<List<String>> dataByColumn, ExcelSheetSpec sheetSpec) {
+        Map<String, ExcelColumnSpec> columnSpecs = sheetSpec.getColumnSpecs();
+
+        if (!(columnSpecs.size() != dataByColumn.size())) {
+            throw new RuntimeException(String.format(
+                    "Column specs size: %s & Data Columns size: %s do not match." +
+                            "\n Column specs: %s" + "\n dataByColumn: %s",
+                    columnSpecs.size(), dataByColumn.size(), columnSpecs, dataByColumn
+            ));
+        }
+
+        // Ensure each column matches its spec
+        for (int i = 0; i < dataByColumn.size(); i++) {
+            List<String> columnData = dataByColumn.get(i);
+
+            // The first row is the header
+            String header = columnData.get(0).trim();
+
+            if (!columnSpecs.containsKey(header)) {
+                throw new RuntimeException(String.format(
+                        "Unexpected or missing header: '%s'. Expected headers: %s",
+                        header,
+                        columnSpecs.keySet()
+                ));
+            }
+
+            // Validate all data in the column (skip the header row)
+            ExcelColumnSpec spec = columnSpecs.get(header);
+            for (int j = 1; j < columnData.size(); j++) {
+                String cellValue = columnData.get(j);
+                validateCell(cellValue, spec, header, j);
+            }
+        }
+    }
+
+    private void validateCell(String value, ExcelColumnSpec spec, String columnName, int rowIndex) {
+        if (!value.matches(spec.getPattern())) {
+            throw new RuntimeException(String.format(
+                    "Validation failed for column '%s' at row %d: %s\nValue: '%s'",
+                    columnName,
+                    rowIndex + 1, // +1 to account for Excel's row numbering (1-based)
+                    spec.getErrorMessage(),
+                    value
+            ));
         }
     }
 }

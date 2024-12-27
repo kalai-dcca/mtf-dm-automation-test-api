@@ -216,6 +216,7 @@ public class FileHandlerUtility {
 
     }
 
+    //DONT NEED THIS CODE. REMOVE BEFORE COMMITTING
     public static Map<String, Object> loadJsonSpecification(String jsonFilePath) throws IOException {
         // Use a JSON library like Jackson or Gson to parse the specification
         ObjectMapper objectMapper = new ObjectMapper();
@@ -274,5 +275,15 @@ public class FileHandlerUtility {
         if (!fileDataMap.equals(dbDataMap)) {
             throw new AssertionError("File data and database data do not match.");
         }
+    }
+
+    /**
+     * Determine extension of file
+     * @param fileName
+     * @return extension after final period
+     */
+    public static String getFileExtension(String fileName) {
+        int lastIndex = fileName.lastIndexOf('.');
+        return (lastIndex == -1) ? "" : fileName.substring(lastIndex + 1).toLowerCase();
     }
 }
