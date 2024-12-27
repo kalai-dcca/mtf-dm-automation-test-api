@@ -3,6 +3,7 @@ package mtf.dm.cms.hhs.gov.cucumber;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
@@ -276,5 +277,36 @@ public class CommonStep {
         } catch (Exception e) {
             throw new RuntimeException("Error during test case data setup: " + e.getMessage());
         }
+    }
+
+    @Given("the {string} file {string} follows the specification in {string}")
+    public void the_file_follows_the_specification_in(String directoryName, String fileToValidate, String specsFileName) {
+        String specsFilePath = String.format("src/test.%s/resources/specifications/%s.specs.json", directoryName, specsFileName);
+        String fileToValidatePath = String.format("src/test.%s/resources/filesToIngest/%s", directoryName, fileToValidate);
+        String fileExtension = FileHandlerUtility.getFileExtension(fileToValidate);
+
+        Map<String, Map<String, Object>> specsJson = JsonUtils.readJsonFile(specsFilePath);
+
+        switch (fileExtension) {
+            case "xlsx":
+                // Iterate over the top-level keys (sheet names)
+                for (String sheetName : specsJson.keySet()) {
+                    // Create a new ExcelUtils instance for the current sheet
+                    ExcelUtils excelUtils = new ExcelUtils(fileToValidatePath, sheetName);
+
+                    // Get all data from the current sheet
+                    List<List<String>> excelSheet = excelUtils.getSheetData();
+
+                    // Get the specifications for the current sheet
+                    Map<String, Object> sheetSpec = (Map<String, Object>) specsJson.get(sheetName).get("columns");
+
+                    // Validate the data against the specifications
+                    excelUtils.validateDataAgainstSpecs(excelSheet, sheetSpec);
+                }
+                break;
+            default:
+                throw new RuntimeException("Unsupported file format: " + fileToValidate);
+        }
+
     }
 }
