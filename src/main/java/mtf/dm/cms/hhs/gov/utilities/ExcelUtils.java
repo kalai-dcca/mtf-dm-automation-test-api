@@ -185,8 +185,12 @@ public class ExcelUtils {
             }
         }
 
-        // Process all rows, including the header row
-        for (Row row : sheet) {
+        // Process rows up to the last meaningful row
+        int lastRowNum = getLastMeaningfulRow();
+        for (int rowIndex = 0; rowIndex <= lastRowNum; rowIndex++) {
+            Row row = sheet.getRow(rowIndex);
+            if (row == null) continue;
+
             for (int colIndex = 0; colIndex < columnCount; colIndex++) {
                 if (dataByColumn.get(colIndex) == null) {
                     continue; // Skip columns with empty headers
@@ -202,6 +206,25 @@ public class ExcelUtils {
         dataByColumn.removeIf(Objects::isNull);
 
         return dataByColumn;
+    }
+
+    // Helper method to find the last meaningful row
+    private int getLastMeaningfulRow() {
+        int lastMeaningfulRow = sheet.getLastRowNum();
+
+        // Iterate from the last row upwards to find the last non-empty row
+        for (int rowIndex = lastMeaningfulRow; rowIndex >= 0; rowIndex--) {
+            Row row = sheet.getRow(rowIndex);
+            if (row != null) {
+                for (Cell cell : row) {
+                    if (cell != null && !cell.toString().trim().isEmpty()) {
+                        return rowIndex; // Found a meaningful row
+                    }
+                }
+            }
+        }
+
+        return 0; // Default to the header row if no meaningful rows are found
     }
 
     // Method to set data into a specific cell
