@@ -211,4 +211,14 @@ public class FileHandlerUtility {
         }
 
     }
+
+    /**
+     * Determine extension of file
+     * @param fileName
+     * @return extension after final period
+     */
+    public static String getFileExtension(String fileName) {
+        int lastIndex = fileName.lastIndexOf('.');
+        return (lastIndex == -1) ? "" : fileName.substring(lastIndex + 1).toLowerCase();
+    }
 }
