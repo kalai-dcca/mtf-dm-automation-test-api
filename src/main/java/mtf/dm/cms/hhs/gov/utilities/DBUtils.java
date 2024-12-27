@@ -353,4 +353,10 @@ public class DBUtils {
             resetCursor();
             return allRowListOfMap;
         }
+
+    public static ResultSet executeSqlQuery(String configFilePath, String sqlQuery) throws SQLException {
+        // Establish connection to the database and execute the query
+        DBUtils.createConnectionFromConfig(configFilePath);
+        return DBUtils.runQuery(sqlQuery);
+    }
 }

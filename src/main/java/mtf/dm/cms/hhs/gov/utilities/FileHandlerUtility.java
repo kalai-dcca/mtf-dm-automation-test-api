@@ -1,5 +1,7 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -7,6 +9,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -210,5 +214,65 @@ public class FileHandlerUtility {
             e.getStackTrace();
         }
 
+    }
+
+    public static Map<String, Object> loadJsonSpecification(String jsonFilePath) throws IOException {
+        // Use a JSON library like Jackson or Gson to parse the specification
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(new File(jsonFilePath), new TypeReference<Map<String, Object>>() {});
+    }
+
+    public static Map<String, Object> transformResultSetToHashMap(ResultSet resultSet, Map<String, Object> jsonSpec) throws SQLException {
+        Map<String, Object> dbDataMap = new HashMap<>();
+
+        resultSet.last(); // Moves to the last row
+        int rowCount = resultSet.getRow(); // Get the row count
+        System.out.println("Row count in ResultSet: " + rowCount);
+        resultSet.beforeFirst(); // Reset cursor to before the first row for iteration
+
+
+        while (resultSet.next()) {
+            for (Map.Entry<String, Object> entry : jsonSpec.entrySet()) {
+                String columnName = entry.getKey();
+                Map<String, String> columnSpec = (Map<String, String>) entry.getValue();
+                String columnType = columnSpec.get("type");
+                String pattern = columnSpec.get("pattern");
+
+                Object value = transformDatabaseValue(resultSet, columnName, columnType, pattern);
+                dbDataMap.put(columnName, value);
+            }
+        }
+
+        return dbDataMap;
+    }
+
+    private static Object transformDatabaseValue(ResultSet resultSet, String columnName, String columnType, String pattern) throws SQLException {
+        Object value;
+
+        switch (columnType.toLowerCase()) {
+            case "string":
+                value = resultSet.getString(columnName);
+                break;
+            case "date":
+                value = resultSet.getDate(columnName).toString();
+                break;
+            case "dollar":
+                value = String.format("$%.2f", resultSet.getDouble(columnName));
+                break;
+            case "number":
+                value = resultSet.getInt(columnName);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported column type: " + columnType);
+        }
+
+        return value; // Apply further transformation based on the pattern if needed
+    }
+
+    public static void compareHashMaps(Map<String, Object> fileDataMap, Map<String, Object> dbDataMap) {
+        // Compare the two hashmaps and log/report mismatches
+        if (!fileDataMap.equals(dbDataMap)) {
+            throw new AssertionError("File data and database data do not match.");
+        }
     }
 }

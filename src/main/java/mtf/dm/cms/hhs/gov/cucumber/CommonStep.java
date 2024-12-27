@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import static mtf.dm.cms.hhs.gov.utilities.BaseClass.getTestScenarioClass;
+import static mtf.dm.cms.hhs.gov.utilities.DBUtils.executeSqlQuery;
+import static mtf.dm.cms.hhs.gov.utilities.FileHandlerUtility.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CommonStep {
@@ -275,6 +277,50 @@ public class CommonStep {
 
         } catch (Exception e) {
             throw new RuntimeException("Error during test case data setup: " + e.getMessage());
+        }
+    }
+
+    @Then("verify file data is in the {string} database")
+    public void verifyFileDataIsInDatabase(String directoryString) {
+        try {
+            // Step 1: Retrieve Test Case Data Setup
+            String testCaseId = getTestScenarioClass().getTestCaseID(); // Implement method to retrieve TestCase ID
+
+            Map<String, String> testCaseData = getTestScenarioClass().getTestCaseData();
+
+            String sheet = getTestScenarioClass().getSheet();
+
+            //Get database json file
+            String configFilePath = String.format("src/test.%s/resources/database/database.config.json", directoryString);
+
+            //Need to change implementation to get spec file
+            String specFilePath = String.format("src/test.%s/resources/specifications/" + sheet + ".json", directoryString);
+
+            if (!testCaseData.containsKey("sql_query")) {
+                throw new IllegalArgumentException("SQL not found in Test Case Data.");
+            }
+
+            String sqlQuery = testCaseData.get("sql_query");
+
+            // Step 2: Execute SQL Query
+            ResultSet resultSet = executeSqlQuery(configFilePath, sqlQuery);
+            // Display results
+            DBUtils.displayAllData();
+
+            // Step 3: Load JSON Specification
+            Map<String, Object> jsonSpec = loadJsonSpecification(specFilePath);
+
+            // Step 4: Transform ResultSet to HashMap
+            Map<String, Object> dbDataMap = transformResultSetToHashMap(resultSet, jsonSpec);
+
+            // Step 5: Retrieve and Transform File Data for Comparison
+            //Map<String, Object> fileDataMap = getTransformedFileData("path/to/test/file.xlsx", jsonSpec);
+
+            // Step 6: Compare HashMaps
+            //compareHashMaps(fileDataMap, dbDataMap);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error verifying file data in database: " + e.getMessage(), e);
         }
     }
 }
