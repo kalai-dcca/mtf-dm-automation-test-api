@@ -320,59 +320,8 @@ public class CommonStep {
         BaseClass.setScenarioVariable("dataByColumnForFileToIngest", dataByColumn);
 
         // Validate each column
-        validateColumns(dataByColumn, sheetSpec);
+        sheetSpec.validateSheetData(dataByColumn);
 
         System.out.println("Validation successful for sheet: " + sheetName);
-    }
-
-    private void validateColumns(List<List<String>> dataByColumn, ExcelSheetSpec sheetSpec) {
-        Map<String, ExcelColumnSpec> columnSpecs = sheetSpec.getColumnSpecs();
-
-        if (columnSpecs.size() != dataByColumn.size()) {
-            throw new RuntimeException(String.format(
-                    "Column specs size: %s & Data Columns size: %s do not match." +
-                            "\n Column specs: %s" + "\n dataByColumn: %s",
-                    columnSpecs.size(), dataByColumn.size(), columnSpecs, dataByColumn
-            ));
-        }
-        System.out.println("Columns size matches spec file");
-
-        // Ensure each column matches its spec
-        for (int i = 0; i < dataByColumn.size(); i++) {
-            List<String> columnData = dataByColumn.get(i);
-
-            // The first row is the header
-            String header = columnData.get(0).trim();
-
-            if (!columnSpecs.containsKey(header)) {
-                throw new RuntimeException(String.format(
-                        "Unexpected or missing header: '%s'. Expected headers: %s",
-                        header,
-                        columnSpecs.keySet()
-                ));
-            }
-            System.out.println("Column headers match for header: " + header);
-
-            // Validate all data in the column (skip the header row)
-            ExcelColumnSpec spec = columnSpecs.get(header);
-            for (int j = 1; j < columnData.size(); j++) {
-                String cellValue = columnData.get(j);
-                validateCell(cellValue, spec, header, j);
-            }
-            System.out.println("Column values match for column: " + header);
-        }
-    }
-
-    private void validateCell(String value, ExcelColumnSpec spec, String columnName, int rowIndex) {
-        if (!value.matches(spec.getPattern())) {
-            throw new RuntimeException(String.format(
-                    "Validation failed for column '%s' at row %d: \nValue: '%s' \nSpec: %s",
-                    columnName,
-                    rowIndex + 1, // +1 to account for Excel's row numbering (1-based)
-                    value,
-                    spec
-            ));
-        }
-        System.out.println("Value matches for value: " + value);
     }
 }
