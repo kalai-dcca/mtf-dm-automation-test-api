@@ -65,7 +65,7 @@ public class CommonStep {
     //}
 
     @Then("Verify status code {int} and message {string}")
-    public void verifyStatusCodeAndMessage(int expectedStatusCode, String expectedMessage) {
+    public void verifyStatusCodeAndMessage(int expectedStatusCode, String expectedMessage) throws SuppressedStackTraceException {
 
         // Comment about entering state
         MyLogger.info(String.format("Verifying status code {%s} and message {%s}", expectedStatusCode, expectedMessage));
@@ -81,7 +81,7 @@ public class CommonStep {
 
 
     @When("TestCaseDataSetup, File-{string}, Sheet-{string}, TestCase-{string}")
-    public void testcasedatasetupFileSheetTestCase(String fileName, String sheet, String testCase) {
+    public void testcasedatasetupFileSheetTestCase(String fileName, String sheet, String testCase) throws SuppressedStackTraceException {
         try{
             ExcelUtils excelUtils = new ExcelUtils(BaseClass.TEST_DATA_PATH+fileName,sheet);
             getTestScenarioClass().setExcelUtils(excelUtils);
@@ -92,7 +92,8 @@ public class CommonStep {
                 getTestScenarioClass().setUserID(ExcelUtils.getUserId(testCase));
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            MyLogger.error("Failed to setup test case: " + fileName, e);
+            throw new SuppressedStackTraceException("Failed to setup test case: " + fileName);
         }
     }
 
@@ -102,7 +103,7 @@ public class CommonStep {
     }
 
     @Then("Verify status code {int}")
-    public void verifyStatusCode(int expectedStatusCode) {
+    public void verifyStatusCode(int expectedStatusCode) throws SuppressedStackTraceException {
 
         // Comment about entering state
         MyLogger.info(String.format("Verifying status code {%s}", expectedStatusCode));
@@ -115,7 +116,7 @@ public class CommonStep {
     }
 
     @When("Launch {string}, QParam:{string} Method: {string}")
-    public void demoapiLaunchQParamMethod(String url, String queryParam, String APICall) {
+    public void demoapiLaunchQParamMethod(String url, String queryParam, String APICall) throws SuppressedStackTraceException {
 
         getTestScenarioClass().setResponse(demoApiMethods.launchQueryDemoApiAndGetResponse(url,queryParam,APICall));
     }
@@ -130,15 +131,21 @@ public class CommonStep {
     }
 
     @When("TestCaseDataSetup, JSONFile-{string}")
-    public void testcasedatasetupJSONFile(String fileName) throws IOException {
-        String fileLocation = "src/test.demoApi/resources/request/" + fileName;
-        String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
-        JSONObject jsonObject = new JSONObject(body);
-        getTestScenarioClass().setJsonObject(jsonObject);
+    public void testcasedatasetupJSONFile(String fileName) throws SuppressedStackTraceException {
+        try{
+            String fileLocation = "src/test.demoApi/resources/request/" + fileName;
+            String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
+            JSONObject jsonObject = new JSONObject(body);
+            getTestScenarioClass().setJsonObject(jsonObject);
+        } catch (Exception e) {
+            MyLogger.error("Failed to load JSON file: " + fileName, e);
+            throw new SuppressedStackTraceException("Failed to load JSON file: " + fileName);
+        }
+
     }
 
     @Then("Verify response values:")
-    public void verifyResponseValuesWithDatatable(DataTable dataTable) {
+    public void verifyResponseValuesWithDatatable(DataTable dataTable) throws SuppressedStackTraceException {
         List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
 
         // Loop through the datatable rows for validation
@@ -158,7 +165,7 @@ public class CommonStep {
     }
 
     @Then("Verify response values from Excel for attributes {string}")
-    public void verifyResponseValuesFromExcelForAttributes(String attributeNames) {
+    public void verifyResponseValuesFromExcelForAttributes(String attributeNames) throws SuppressedStackTraceException {
         MyLogger.info(String.format("Starting validation for response attributes: {%s}", attributeNames));
 
         // Delegate validation to a helper method
@@ -208,9 +215,6 @@ public class CommonStep {
 
     @Then("Verify status code {int} and the response array {string} matches expected values from {string}")
     public void validateResponseArrayFromFile(int expectedStatusCode, String arrayField, String expectedFilePath) throws Exception {
-        // Log entry into the state
-        //LoggerUtil.logger.info("Verifying status code {} and response array '{}' matches expected values from '{}'",
-               // expectedStatusCode, arrayField, expectedFilePath);
 
         // Load expected values from the JSON file
         ObjectMapper objectMapper = new ObjectMapper();
@@ -221,8 +225,8 @@ public class CommonStep {
                     new File("src/test.demoApi/resources/response/" + expectedFilePath),
                     new TypeReference<List<Map<String, Object>>>() {});
         } catch (Exception e) {
-            //LoggerUtil.logger.error("Failed to load expected data from file: {}", expectedFilePath, e);
-            throw new RuntimeException("Unable to load expected data from file: " + expectedFilePath, e);
+            MyLogger.error("Unable to load expected data from file: " + expectedFilePath, e);
+            throw new SuppressedStackTraceException("Unable to load expected data from file: " + expectedFilePath);
         }
 
         // Ensure the expected data is valid
@@ -241,7 +245,7 @@ public class CommonStep {
     }
 
     @Then("verify {string} data is in the {string} database")
-    public void verify_data_is_in_the_database(String dataString, String directoryString) {
+    public void verify_data_is_in_the_database(String dataString, String directoryString) throws SuppressedStackTraceException {
         String configFilePath = String.format("src/test.%s/resources/database/database.config.json", directoryString);
         try {
             // Create the database connection
@@ -256,13 +260,14 @@ public class CommonStep {
             // Close resources
             DBUtils.destroy();
         } catch (Exception e) {
-            throw new RuntimeException("Error verifying data in the database: " + e.getMessage(), e);
+            MyLogger.error("Error verifying data in the database: " + e.getMessage(), e);
+            throw new SuppressedStackTraceException("Error verifying data in the database: " + e.getMessage());
         }
 
     }
 
     @When("TestCaseDataSetup-{string}, File-{string}, Sheet-{string}, TestCase-{string}")
-    public void testCaseDataSetupFileSheetTestCase(String directoryString, String fileName, String sheet, String testCase) {
+    public void testCaseDataSetupFileSheetTestCase(String directoryString, String fileName, String sheet, String testCase) throws SuppressedStackTraceException {
         String testCaseFileName = String.format("src/test.%s/resources/testData/%s", directoryString, fileName);
         try {
             // Initialize ExcelUtils
@@ -278,12 +283,13 @@ public class CommonStep {
             getTestScenarioClass().setSheet(sheet);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error during test case data setup: " + e.getMessage());
+            MyLogger.error("Error during test case data setup: " + e.getMessage(), e);
+            throw new SuppressedStackTraceException("Error during test case data setup: " + e.getMessage());
         }
     }
 
     @Given("the {string} file {string} follows the specification in {string}")
-    public void the_file_follows_the_specification_in(String directoryName, String fileToValidate, String specsFileName) {
+    public void the_file_follows_the_specification_in(String directoryName, String fileToValidate, String specsFileName) throws SuppressedStackTraceException {
         String specsFilePath = String.format("src/test.%s/resources/specifications/%s.specs.json", directoryName, specsFileName);
         String fileExtension = FileHandlerUtility.getFileExtension(fileToValidate);
 
@@ -297,13 +303,13 @@ public class CommonStep {
                 }
                 break;
             default:
-                throw new RuntimeException("Unsupported file format: " + fileToValidate);
+                throw new SuppressedStackTraceException("Unsupported file format: " + fileToValidate);
         }
 
     }
 
     @Given("the {string} file {string} follows the specification in {string} in sheet {string}")
-    public void the_file_follows_the_specification_in_sheet(String directoryName, String fileToValidate, String specsFileName, String sheetName) {
+    public void the_file_follows_the_specification_in_sheet(String directoryName, String fileToValidate, String specsFileName, String sheetName) throws SuppressedStackTraceException {
         String specsFilePath = String.format("src/test.%s/resources/specifications/%s.specs.json", directoryName, specsFileName);
         String fileToValidatePath = String.format("src/test.%s/resources/filesToIngest/%s", directoryName, fileToValidate);
 
@@ -327,11 +333,11 @@ public class CommonStep {
         System.out.println("Validation successful for sheet: " + sheetName);
     }
 
-    private void validateColumns(List<List<String>> dataByColumn, ExcelSheetSpec sheetSpec) {
+    private void validateColumns(List<List<String>> dataByColumn, ExcelSheetSpec sheetSpec) throws SuppressedStackTraceException {
         Map<String, ExcelColumnSpec> columnSpecs = sheetSpec.getColumnSpecs();
 
         if (!(columnSpecs.size() != dataByColumn.size())) {
-            throw new RuntimeException(String.format(
+            throw new SuppressedStackTraceException(String.format(
                     "Column specs size: %s & Data Columns size: %s do not match." +
                             "\n Column specs: %s" + "\n dataByColumn: %s",
                     columnSpecs.size(), dataByColumn.size(), columnSpecs, dataByColumn
@@ -346,7 +352,7 @@ public class CommonStep {
             String header = columnData.get(0).trim();
 
             if (!columnSpecs.containsKey(header)) {
-                throw new RuntimeException(String.format(
+                throw new SuppressedStackTraceException(String.format(
                         "Unexpected or missing header: '%s'. Expected headers: %s",
                         header,
                         columnSpecs.keySet()
@@ -362,9 +368,9 @@ public class CommonStep {
         }
     }
 
-    private void validateCell(String value, ExcelColumnSpec spec, String columnName, int rowIndex) {
+    private void validateCell(String value, ExcelColumnSpec spec, String columnName, int rowIndex) throws SuppressedStackTraceException {
         if (!value.matches(spec.getPattern())) {
-            throw new RuntimeException(String.format(
+            throw new SuppressedStackTraceException(String.format(
                     "Validation failed for column '%s' at row %d: %s\nValue: '%s'",
                     columnName,
                     rowIndex + 1, // +1 to account for Excel's row numbering (1-based)

@@ -17,16 +17,17 @@ public class AssertionUtils {
      * @param response          The Response object.
      * @param expectedStatusCode The expected status code.
      */
-    public static void verifyStatusCode(Response response, int expectedStatusCode){
+    public static void verifyStatusCode(Response response, int expectedStatusCode) throws SuppressedStackTraceException {
         //boolean status = false;
         if(Objects.isNull(response)){
-            MyLogger.error("Error: Response is null");
-            throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
+                    null,expectedStatusCode,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,expectedStatusCode,false));
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.getStatusCode()).isEqualTo((expectedStatusCode));
-        },"Error: Received status code " + response.getStatusCode() + " instead of " + expectedStatusCode);
+        },"-- failure -- \n" + "expected: " +  + expectedStatusCode + "\n" + "but was: " + response.getStatusCode());
         //return status;
 
     }
@@ -37,20 +38,22 @@ public class AssertionUtils {
      * @param response The Response object.
      * @param field    The field to check.
      */
-    public static void assertFieldExists(Response response, String field){
+    public static void assertFieldExists(Response response, String field) throws SuppressedStackTraceException {
         //boolean status = false;
         if(Objects.isNull(response)){
-            MyLogger.error("Error: Response is null");
-            throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
+                    null,field,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,field,false));
         } else if ( StringUtils.isEmpty(field)) {
-            MyLogger.error("Error: Field is empty");
-            throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
+                    "",field,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     "",field,false));
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).isNotNull();
-        },"Field '" + field + "' is missing in the response!");
+        },"-- failure -- \n" + "Expecting actual: " + response.jsonPath().toString() + "\n" + "to contain: " + field);
         //return status;
     }
 
@@ -62,21 +65,23 @@ public class AssertionUtils {
      * @param field      The field to check.
      * @param expectedValue The expected value of the field.
      */
-    public static void assertFieldValue(Response response, String field, Object expectedValue){
+    public static void assertFieldValue(Response response, String field, Object expectedValue) throws SuppressedStackTraceException {
         //boolean status = false;
         if(Objects.isNull(response)){
-            MyLogger.error("Error: Response is null");
-            throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
+                    null,expectedValue,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,expectedValue,false));
         } else if ( StringUtils.isEmpty(field)) {
-            MyLogger.error("Error: Field is empty");
-            throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
+                    "",expectedValue,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     "",expectedValue,false));
         }
 
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).isEqualTo(expectedValue);
-        },"Field '" + field + "' does not have the expected value " + expectedValue + "!");
+        },"-- failure -- \n" + "Expecting actual: " + field + "\n" + "to contain: " + expectedValue);
         //return status;
     }
 
@@ -86,16 +91,17 @@ public class AssertionUtils {
      * @param response        The Response object.
      * @param maxResponseTime The maximum acceptable response time in milliseconds.
      */
-    public static void assertResponseTime(Response response, long maxResponseTime){
+    public static void assertResponseTime(Response response, long maxResponseTime) throws SuppressedStackTraceException {
        // boolean status = false;
         if(Objects.isNull(response)){
-            MyLogger.error("Error: Response is null");
-            throw new RuntimeException(String.format("Actual[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Status[%s]%n",
+                    null,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Status[%s]%n",
                     null,false));
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.getTime()).isLessThanOrEqualTo(maxResponseTime);
-        },"Response time exceeded " + maxResponseTime);
+        },"-- failure -- \n" + "Response time exceeded: " + maxResponseTime);
        // return status;
     }
 
@@ -108,16 +114,17 @@ public class AssertionUtils {
      * @param field    The field to check.
      * @param regex    The regular expression to match.
      */
-    public static void assertFieldMatchesRegex(Response response, String field, String regex){
+    public static void assertFieldMatchesRegex(Response response, String field, String regex) throws SuppressedStackTraceException {
         //boolean status = false;
         if(Objects.isNull(response)){
-            MyLogger.error("Error: Response is null");
-            throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
+                    null,regex,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,regex,false));
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).matches(regex);
-        },"Field '" + field + "' does not match the regex " + regex + "!");
+        },"-- failure -- \n" + "Expecting actual: " + field + "\n" + "to contain: " + regex);
         //return status;
     }
 
@@ -128,22 +135,23 @@ public class AssertionUtils {
      * @param mapField      The map field to check.
      * @param expectedEntries The expected key-value pairs.
      */
-    public static void assertMapContains(Response response, String mapField, Map<String, Object> expectedEntries){
+    public static void assertMapContains(Response response, String mapField, Map<String, Object> expectedEntries) throws SuppressedStackTraceException {
         //boolean status = false;
         if(Objects.isNull(response)){
-            MyLogger.error("Error: Response is null");
-            throw new RuntimeException(String.format("Actual[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Status[%s]%n",
+                    null,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Status[%s]%n",
                     null,false));
         }
+        SoftAssertions soft = new SoftAssertions();
 
         Map<String, Object> actualEntries = response.jsonPath().getMap(mapField);
         expectedEntries.forEach((key, value) -> {
-            AssertionHandler.logAssertionError(() ->{
-                Object actualValue = response.jsonPath().get(key);
-                Assertions.assertThat(actualValue).isEqualTo(value);
-            },"Map '" + mapField + "' does not contain expected entry " + value);
+            Object actualValue = response.jsonPath().get(key);
+            soft.assertThat(actualValue).isEqualTo(value);
         });
 
+        AssertionHandler.handleSoftAssertFailures(soft);
         //return status;
     }
 
@@ -155,30 +163,31 @@ public class AssertionUtils {
      * @param expectedMessage    The expected message value.
      */
 
-    public static void verifyStatusCodeAndMessage(Response response, int expectedStatusCode, String expectedMessage) {
+    public static void verifyStatusCodeAndMessage(Response response, int expectedStatusCode, String expectedMessage) throws SuppressedStackTraceException {
         //boolean status = false;
         // Suggest separating into two granular assertion methods for fail status clarity!!!!!!!
         if(Objects.isNull(response)){
-            MyLogger.error("Error: Response is null");
-            throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
+                    null,expectedStatusCode,false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     null,expectedStatusCode,false));
         } else if (StringUtils.isEmpty(expectedMessage)) {
-            MyLogger.error("Error: Message is empty");
-            throw new RuntimeException(String.format("Actual[%s]::Expected[%s]::Status[%s]%n",
+            MyLogger.error(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
+                    "", expectedMessage, false));
+            throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     "", expectedMessage, false));
         }
 
         SoftAssertions soft = new SoftAssertions();
-        AssertionHandler.logAssertionError(() ->{
-            soft.assertThat(response.getStatusCode()).isEqualTo((expectedStatusCode));
-            soft.assertThat(response.getBody().asString()).contains((expectedMessage));
-            soft.assertAll();
-        }, "Error: Status code or message validation failed!");
 
+        soft.assertThat(response.getStatusCode()).isEqualTo((expectedStatusCode));
+        soft.assertThat(response.getBody().asString()).contains((expectedMessage));
+
+        AssertionHandler.handleSoftAssertFailures(soft);
         //return status;
     }
 
-    public static void verifyStatusCodeAndAttributesFromExcel(String attributeNames) {
+    public static void verifyStatusCodeAndAttributesFromExcel(String attributeNames) throws SuppressedStackTraceException {
         // Split the comma-separated attribute names
         String[] attributes = attributeNames.split(",");
 
@@ -194,33 +203,22 @@ public class AssertionUtils {
             attributeValues.put(attribute.trim(), value);
         }
 
-        MyLogger.error(String.format("Retrieved attribute values from Excel: {%s}", attributeValues));
+        MyLogger.info(String.format("Retrieved attribute values from Excel: {%s}", attributeValues));
 
         Response response = TestScenarioClass.getTestScenarioClass().getResponse();
 
-        // Validate the status code explicitly
-        if (attributeValues.containsKey("STATUS_CODE")) {
-            int expectedStatusCode = Integer.parseInt(attributeValues.get("STATUS_CODE"));
-            AssertionUtils.verifyStatusCode(response, expectedStatusCode);
-        }
+        SoftAssertions soft = new SoftAssertions();
 
-        // Validate other attributes using "contains"
-        for (Map.Entry<String, String> entry : attributeValues.entrySet()) {
-            String attribute = entry.getKey();
-            String expectedValue = entry.getValue();
-
-            if (!attribute.equals("STATUS_CODE")) {
-                String actualValue = response.jsonPath().getString(attribute);
-
-                SoftAssertions soft = new SoftAssertions();
-                AssertionHandler.logAssertionError(() -> {
-                    soft.assertThat(actualValue).contains(expectedValue);
-                    soft.assertAll();
-                }, String.format("Validation failed for attribute '%s'. Expected to contain: %s", attribute, expectedValue));
-
-                MyLogger.info(String.format("Validation passed for attribute '{%s}'. Expected to contain: {%s}", attribute, expectedValue));
+        //Loop through each attribute and then validate the result as a soft assert
+        attributeValues.forEach((attribute, expectedValue) -> {
+            if (attribute.equals("STATUS_CODE")) {
+                soft.assertThat(response.getStatusCode()).isEqualTo((Integer.parseInt(expectedValue)));
+            } else{
+                soft.assertThat(response.jsonPath().getString(attribute)).contains(expectedValue);
             }
-        }
+        });
+
+        AssertionHandler.handleSoftAssertFailures(soft);
     }
 
     /**
@@ -230,15 +228,15 @@ public class AssertionUtils {
      * @param arrayField     The JSON path to the array (e.g., "data").
      * @param expectedEntries The list of expected objects (key-value pairs).
      */
-    public static void assertArrayContainsEntriesFromFile(Response response, String arrayField, List<Map<String, Object>> expectedEntries) {
+    public static void assertArrayContainsEntriesFromFile(Response response, String arrayField, List<Map<String, Object>> expectedEntries) throws SuppressedStackTraceException {
         if (Objects.isNull(response)) {
-            throw new IllegalArgumentException("Response is null");
+            throw new SuppressedStackTraceException("Error: Response is null");
         }
 
         // Fetch the array as a list of maps
         List<Map<String, Object>> actualArray = response.jsonPath().getList(arrayField);
         if (actualArray == null || actualArray.isEmpty()) {
-            throw new AssertionError("The array field '" + arrayField + "' is empty or does not exist.");
+            throw new SuppressedStackTraceException("Error: The array field named '" + arrayField + "' is empty or does not exist.");
         }
 
         // Normalize actual and expected arrays: Convert maps to sorted strings for comparison
@@ -251,11 +249,10 @@ public class AssertionUtils {
                 .collect(Collectors.toSet());
 
         // Compare sets
-        Assertions.assertThat(actualSet)
-                .as("The response array does not match the expected data")
-                .containsExactlyInAnyOrderElementsOf(expectedSet);
+        AssertionHandler.logAssertionError(() ->{
+            Assertions.assertThat(actualSet).containsExactlyInAnyOrderElementsOf(expectedSet);
+        },"-- failure -- \n" + "Expecting actual: " + actualSet + "\n" + "to contain: " + expectedSet);
 
-        System.out.println("Validation successful: The array '" + arrayField + "' matches the expected values (unordered).");
     }
 
 
