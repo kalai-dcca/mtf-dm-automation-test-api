@@ -8,11 +8,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import mtf.dm.cms.hhs.gov.impl.DemoApi;
-import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelColumnSpec;
 import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelSheetSpec;
 import mtf.dm.cms.hhs.gov.utilities.*;
 import org.json.JSONObject;
-import org.jsoup.Connection;
 
 import java.io.File;
 import java.io.IOException;
@@ -320,7 +318,7 @@ public class CommonStep {
         BaseClass.setScenarioVariable("dataByColumnForFileToIngest", dataByColumn);
 
         // Validate each column
-        sheetSpec.validateSheetData(dataByColumn);
+        sheetSpec.validateSheetDataByColumn(dataByColumn);
 
         System.out.println("Validation successful for sheet: " + sheetName);
     }

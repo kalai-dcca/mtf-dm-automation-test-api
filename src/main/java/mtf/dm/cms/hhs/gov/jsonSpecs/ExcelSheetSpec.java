@@ -41,7 +41,7 @@ public class ExcelSheetSpec {
         return String.format("Sheet: %s, Columns: %s", sheetName, columnSpecs.toString());
     }
 
-    public void validateSheetData(List<List<String>> dataByColumn) {
+    public void validateSheetDataByColumn(List<List<String>> dataByColumn) {
         if (dataByColumn.size() != columnSpecs.size()) {
             throw new RuntimeException(String.format(
                     "Column specs size: %s & Data Columns size: %s do not match.\nSpec: %s\nData: %s",
@@ -51,7 +51,6 @@ public class ExcelSheetSpec {
                     dataByColumn
             ));
         }
-
         System.out.println("Columns size matches spec file");
 
         for (int i = 0; i < dataByColumn.size(); i++) {
@@ -73,10 +72,20 @@ public class ExcelSheetSpec {
             ExcelColumnSpec spec = columnSpecs.get(header);
             for (int j = 1; j < columnData.size(); j++) {
                 String cellValue = columnData.get(j);
-                spec.validateCell(cellValue, header, j);
+                if (!spec.cellMatchesPattern(cellValue)) {
+                    throw new RuntimeException(String.format(
+                            "Validation failed for column '%s' at row %d: \nValue: '%s' \nSpec: %s",
+                            header,
+                            j + 1, // +1 for Excel's 1-based row numbering
+                            cellValue,
+                            this.toString()
+                    ));
+                }
+                System.out.println("Value matches for value: " + cellValue);
             }
             System.out.println("Column values match for column: " + header);
         }
     }
-
 }
+
+
