@@ -34,7 +34,7 @@ public class ExcelUtils {
         }
     }
 
-    public static Row getRow(String testCase) {
+    public static Row getRow(String testCase) throws SuppressedStackTraceException {
         Row row = null;
 
         for (Row cells : sheet) {
@@ -58,7 +58,7 @@ public class ExcelUtils {
                 case BLANK:
                     continue; // Skip blank cells
                 default:
-                    throw new RuntimeException("Unsupported cell type: " + cell.getCellType());
+                    throw new SuppressedStackTraceException("Unsupported cell type: " + cell.getCellType());
             }
 
             // Compare cell value with the provided test case ID
@@ -68,19 +68,19 @@ public class ExcelUtils {
         }
 
         if (row == null) {
-            throw new RuntimeException("Row not found for test case: " + testCase);
+            throw new SuppressedStackTraceException("Row not found for test case: " + testCase);
         }
 
         return row;
     }
 
 
-    public static int getUserId(String testCase){
+    public static int getUserId(String testCase) throws SuppressedStackTraceException {
         Row row = getRow(testCase);
         return (int)row.getCell(1).getNumericCellValue();
     }
 
-    public static JSONObject getDataBasedOnTestCaseAndCallType(String testCase, String sheetType) throws Exception {
+    public static JSONObject getDataBasedOnTestCaseAndCallType(String testCase, String sheetType) throws SuppressedStackTraceException {
         JSONObject js = new JSONObject();
         Row row = getRow(testCase);
         if(Objects.nonNull(row)){
@@ -108,8 +108,6 @@ public class ExcelUtils {
                 case SINGLE_USER:
                 case SINGLE_RESOURCE:
                     break;
-                default:
-                    throw new Exception();
             }
         }
         MyLogger.info(js.toString());
@@ -166,12 +164,12 @@ public class ExcelUtils {
         return data;
     }
 
-    public List<List<String>> getSheetDataByColumn() {
+    public List<List<String>> getSheetDataByColumn() throws SuppressedStackTraceException {
         List<List<String>> dataByColumn = new ArrayList<>();
         Row headerRow = sheet.getRow(0); // Assuming the first row contains headers
 
         if (headerRow == null) {
-            throw new RuntimeException("Header row is missing in the sheet.");
+            throw new SuppressedStackTraceException("Header row is missing in the sheet.");
         }
 
         // Initialize columns based on the headers
@@ -287,7 +285,7 @@ public class ExcelUtils {
         return getCellData(rowIndex, columnIndex);
     }
 
-    public static Map<String, String> getAllDataFromRow(String testCase) {
+    public static Map<String, String> getAllDataFromRow(String testCase) throws SuppressedStackTraceException {
         Map<String, String> dataMap = new HashMap<>();
         Row row = getRow(testCase);
 
@@ -328,7 +326,7 @@ public class ExcelUtils {
                 dataMap.put(key, value);
             }
         } else {
-            throw new RuntimeException("Row not found for test case: " + testCase);
+            throw new SuppressedStackTraceException("Row not found for test case: " + testCase);
         }
 
         return dataMap;
