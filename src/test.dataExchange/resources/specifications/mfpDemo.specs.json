@@ -1,0 +1,90 @@
+{
+  "MFP Pricing File - Data": {
+    "columns": {
+      "IPAY": {
+        "type": "integer",
+        "format": "YYYY",
+        "pattern": "^\\d{4}$",
+        "errorMessage": "IPAY must be a 4-digit year."
+      },
+      "Selected Drug Name": {
+        "type": "string",
+        "format": "XXXXX-XXXX",
+        "pattern": "^[A-Za-z0-9\\s\\-]+$",
+        "errorMessage": "Selected Drug Name must only contain letters, numbers, spaces, and hyphens, and cannot be empty."
+      },
+      "Active Ingredient Name or Active Moiety Name": {
+        "type": "string",
+        "format": "Plain Text",
+        "pattern": "^[A-Za-z0-9\\s]+$",
+        "errorMessage": "Active Ingredient Name must only contain letters, numbers, and spaces, and cannot be empty."
+      },
+      "NDC-9": {
+        "type": "string",
+        "format": "XXXXX-XXXX",
+        "pattern": "^\\d{5}-\\d{4}$",
+        "errorMessage": "NDC-9 must follow the pattern XXXXX-XXXX and cannot be empty."
+      },
+      "NDC-11": {
+        "type": "string",
+        "format": "XXXXX-XXX-XX",
+        "pattern": "^\\d{5}-\\d{3}-\\d{2}$",
+        "errorMessage": "NDC-11 must follow the pattern XXXXX-XXX-XX and cannot be empty."
+      },
+      "XREF NDC-11": {
+        "type": "string",
+        "format": "XXXXX-XXX-XX",
+        "pattern": "^(\\d{5}-\\d{3}-\\d{2})?$",
+        "errorMessage": "XREF NDC-11 must follow the pattern XXXXX-XXX-XX or be empty."
+      },
+      "MFP Effective Date": {
+        "type": "date",
+        "format": "M/D/YYYY",
+        "pattern": "^\\d{1,2}/\\d{1,2}/\\d{4}$",
+        "errorMessage": "MFP Effective Date must follow the format MM/DD/YYYY and cannot be empty."
+      },
+      "MFP End Date": {
+        "type": "date",
+        "format": "M/D/YYYY",
+        "pattern": "^(\\d{1,2}/\\d{1,2}/\\d{4})?$",
+        "errorMessage": "MFP End Date must follow the format MM/DD/YYYY or be empty."
+      },
+      "Single MFP per 30 DES": {
+        "type": "dollar",
+        "format": "$0.00",
+        "pattern": "^\\$?\\d+(\\.\\d{2})$",
+        "errorMessage": "Single MFP per 30 DES must be a valid dollar amount and cannot be empty."
+      },
+      "NDC-9 MFP per Unit Price": {
+        "type": "dollar",
+        "format": "$0.00",
+        "pattern": "^\\$?\\d+(\\.\\d{2})$",
+        "errorMessage": "NDC-9 MFP per Unit Price must be a valid dollar amount and cannot be empty."
+      },
+      "NDC-11 MFP per Package Price": {
+        "type": "dollar",
+        "format": "$0.00",
+        "pattern": "^\\$?\\d+(\\.\\d{2})$",
+        "errorMessage": "NDC-11 MFP per Package Price must be a valid dollar amount and cannot be empty."
+      },
+      "As of Date": {
+        "type": "date",
+        "format": "M/D/YYYY",
+        "pattern": "^\\d{1,2}/\\d{1,2}/\\d{4}$",
+        "errorMessage": "As of Date must follow the format MM/DD/YYYY and cannot be empty."
+      },
+      "Type of Update": {
+        "type": "string",
+        "format": "Enum",
+        "pattern": "^(Added|Updated|Deleted)$",
+        "errorMessage": "Type of Update must be one of: Added, Updated, Deleted, and cannot be empty."
+      },
+      "Remarks": {
+        "type": "string",
+        "format": "Plain Text",
+        "pattern": "^.+$",
+        "errorMessage": "Remarks must not be empty."
+      }
+    }
+  }
+}

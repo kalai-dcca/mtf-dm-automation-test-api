@@ -7,9 +7,7 @@ import org.json.JSONObject;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class ExcelUtils {
@@ -36,16 +34,46 @@ public class ExcelUtils {
         }
     }
 
-    public static Row getRow(String testCase){
+    public static Row getRow(String testCase) {
         Row row = null;
+
         for (Row cells : sheet) {
             row = cells;
-            if (row.getCell(0).getStringCellValue().equals(testCase)) {
+
+            Cell cell = row.getCell(0); // Assuming the first column contains the test case ID
+            if (cell == null) {
+                continue; // Skip if the cell is empty
+            }
+
+            String cellValue;
+
+            // Handle cell types dynamically
+            switch (cell.getCellType()) {
+                case STRING:
+                    cellValue = cell.getStringCellValue(); // Get string value directly
+                    break;
+                case NUMERIC:
+                    cellValue = String.valueOf((int) cell.getNumericCellValue()); // Convert numeric to string
+                    break;
+                case BLANK:
+                    continue; // Skip blank cells
+                default:
+                    throw new RuntimeException("Unsupported cell type: " + cell.getCellType());
+            }
+
+            // Compare cell value with the provided test case ID
+            if (cellValue.equals(testCase)) {
                 break;
             }
         }
+
+        if (row == null) {
+            throw new RuntimeException("Row not found for test case: " + testCase);
+        }
+
         return row;
     }
+
 
     public static int getUserId(String testCase){
         Row row = getRow(testCase);
@@ -125,7 +153,7 @@ public class ExcelUtils {
     }
 
     // Method to get all data from the sheet
-    public List<List<String>> getSheetData() {
+    public List<List<String>> getSheetDataByRow() {
 
         List<List<String>> data = new ArrayList<>();
         for (Row row : sheet) {
@@ -137,6 +165,70 @@ public class ExcelUtils {
         }
         return data;
     }
+
+    public List<List<String>> getSheetDataByColumn() {
+        List<List<String>> dataByColumn = new ArrayList<>();
+        Row headerRow = sheet.getRow(0); // Assuming the first row contains headers
+
+        if (headerRow == null) {
+            throw new RuntimeException("Header row is missing in the sheet.");
+        }
+
+        // Initialize columns based on the headers
+        int columnCount = headerRow.getLastCellNum();
+        for (int colIndex = 0; colIndex < columnCount; colIndex++) {
+            Cell headerCell = headerRow.getCell(colIndex);
+            String header = (headerCell == null) ? "" : headerCell.toString().trim();
+
+            if (!header.isEmpty()) {
+                dataByColumn.add(new ArrayList<>()); // Create a new list for each non-empty header
+            } else {
+                dataByColumn.add(null); // Mark this column as empty to ignore it later
+            }
+        }
+
+        // Process rows up to the last meaningful row
+        int lastRowNum = getLastMeaningfulRow();
+        for (int rowIndex = 0; rowIndex <= lastRowNum; rowIndex++) {
+            Row row = sheet.getRow(rowIndex);
+            if (row == null) continue;
+
+            for (int colIndex = 0; colIndex < columnCount; colIndex++) {
+                if (dataByColumn.get(colIndex) == null) {
+                    continue; // Skip columns with empty headers
+                }
+
+                Cell cell = row.getCell(colIndex);
+                String cellValue = (cell == null) ? "" : cell.toString().trim();
+                dataByColumn.get(colIndex).add(cellValue);
+            }
+        }
+
+        // Remove null columns from the final result
+        dataByColumn.removeIf(Objects::isNull);
+
+        return dataByColumn;
+    }
+
+    // Helper method to find the last meaningful row
+    private int getLastMeaningfulRow() {
+        int lastMeaningfulRow = sheet.getLastRowNum();
+
+        // Iterate from the last row upwards to find the last non-empty row
+        for (int rowIndex = lastMeaningfulRow; rowIndex >= 0; rowIndex--) {
+            Row row = sheet.getRow(rowIndex);
+            if (row != null) {
+                for (Cell cell : row) {
+                    if (cell != null && !cell.toString().trim().isEmpty()) {
+                        return rowIndex; // Found a meaningful row
+                    }
+                }
+            }
+        }
+
+        return 0; // Default to the header row if no meaningful rows are found
+    }
+
     // Method to set data into a specific cell
     public void setCellData(int rowNum, int colNum, String value) throws SuppressedStackTraceException {
         Row row = sheet.getRow(rowNum);
@@ -194,5 +286,54 @@ public class ExcelUtils {
         int rowIndex = row.getRowNum();
         return getCellData(rowIndex, columnIndex);
     }
+
+    public static Map<String, String> getAllDataFromRow(String testCase) {
+        Map<String, String> dataMap = new HashMap<>();
+        Row row = getRow(testCase);
+
+        if (row != null) {
+            Row headerRow = sheet.getRow(0); // Assuming the first row contains headers
+            for (int i = 0; i < row.getLastCellNum(); i++) {
+                String key = headerRow.getCell(i).getStringCellValue(); // Column header
+                Cell cell = row.getCell(i);
+
+                // Handle different cell types
+                String value;
+                if (cell == null) {
+                    value = ""; // Handle null cells
+                } else {
+                    switch (cell.getCellType()) {
+                        case STRING:
+                            value = cell.getStringCellValue();
+                            break;
+                        case NUMERIC:
+                            if (DateUtil.isCellDateFormatted(cell)) {
+                                value = cell.getDateCellValue().toString(); // Format date cells if needed
+                            } else {
+                                value = String.valueOf(cell.getNumericCellValue()); // Convert numeric values to string
+                            }
+                            break;
+                        case BOOLEAN:
+                            value = String.valueOf(cell.getBooleanCellValue());
+                            break;
+                        case FORMULA:
+                            value = cell.getCellFormula(); // Retrieve formula as string
+                            break;
+                        default:
+                            value = ""; // Handle unexpected cell types
+                            break;
+                    }
+                }
+
+                dataMap.put(key, value);
+            }
+        } else {
+            throw new RuntimeException("Row not found for test case: " + testCase);
+        }
+
+        return dataMap;
+    }
+
+
 }
 
