@@ -1,5 +1,7 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.StringUtils;
 
@@ -212,8 +214,10 @@ public class AssertionUtils {
         //Loop through each attribute and then validate the result as a soft assert
         attributeValues.forEach((attribute, expectedValue) -> {
             if (attribute.equals("STATUS_CODE")) {
+                ExtentCucumberAdapter.addTestStepLog("<pre>"+ "STATUS_CODE : " +expectedValue + "</pre>");
                 soft.assertThat(response.getStatusCode()).isEqualTo((Integer.parseInt(expectedValue)));
             } else{
+                ExtentCucumberAdapter.addTestStepLog("<pre>"+ attribute + " : " + expectedValue + "</pre>");
                 soft.assertThat(response.jsonPath().getString(attribute)).contains(expectedValue);
             }
         });
