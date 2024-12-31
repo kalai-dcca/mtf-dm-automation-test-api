@@ -226,8 +226,9 @@ public class CommonStep {
         // Load expected values from the JSON file
         ObjectMapper objectMapper = new ObjectMapper();
         List<Map<String, Object>> expectedData;
-        String body = new String(Files.readAllBytes(Paths.get("src/test.demoApi/resources/response/" + expectedFilePath)));
+        String body;
         try {
+            body = new String(Files.readAllBytes(Paths.get("src/test.demoApi/resources/response/" + expectedFilePath)));
             expectedData = objectMapper.readValue(body,
                     new TypeReference<List<Map<String, Object>>>() {});
         } catch (Exception e) {
