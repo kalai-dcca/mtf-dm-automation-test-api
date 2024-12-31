@@ -1,5 +1,7 @@
 package mtf.dm.cms.hhs.gov.cucumber;
 
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
@@ -14,7 +16,6 @@ import mtf.dm.cms.hhs.gov.utilities.*;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -91,6 +92,9 @@ public class CommonStep {
             if(!sheet.equalsIgnoreCase(SheetType.CREATE.getEnumData())){
                 getTestScenarioClass().setUserID(ExcelUtils.getUserId(testCase));
             }
+            //extentReports.createTest("Data Table").info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
+
         } catch (Exception e) {
             MyLogger.error("Failed to setup test case: " + fileName, e);
             throw new SuppressedStackTraceException("Failed to setup test case: " + fileName);
@@ -137,11 +141,11 @@ public class CommonStep {
             String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
             JSONObject jsonObject = new JSONObject(body);
             getTestScenarioClass().setJsonObject(jsonObject);
+            ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
         } catch (Exception e) {
             MyLogger.error("Failed to load JSON file: " + fileName, e);
             throw new SuppressedStackTraceException("Failed to load JSON file: " + fileName);
         }
-
     }
 
     @Then("Verify response values:")
@@ -219,15 +223,15 @@ public class CommonStep {
         // Load expected values from the JSON file
         ObjectMapper objectMapper = new ObjectMapper();
         List<Map<String, Object>> expectedData;
-
+        String body = new String(Files.readAllBytes(Paths.get("src/test.demoApi/resources/response/" + expectedFilePath)));
         try {
-            expectedData = objectMapper.readValue(
-                    new File("src/test.demoApi/resources/response/" + expectedFilePath),
+            expectedData = objectMapper.readValue(body,
                     new TypeReference<List<Map<String, Object>>>() {});
         } catch (Exception e) {
             MyLogger.error("Unable to load expected data from file: " + expectedFilePath, e);
             throw new SuppressedStackTraceException("Unable to load expected data from file: " + expectedFilePath);
         }
+        ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
 
         // Ensure the expected data is valid
         assertNotNull(expectedData, "Expected data file is empty or invalid!");
@@ -316,7 +320,6 @@ public class CommonStep {
         // Parse the sheet specification using JsonUtils
         ExcelSheetSpec sheetSpec = JsonUtils.getSheetSpec(specsFilePath, sheetName);
         BaseClass.setScenarioVariable("sheetSpecForFileData", sheetSpec);
-
         // Create a new ExcelUtils instance for the file and sheet
         ExcelUtils excelUtils = new ExcelUtils(fileToValidatePath, sheetName);
 
