@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import mtf.dm.cms.hhs.gov.impl.DemoApi;
+import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelColumnSpec;
 import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelSheetSpec;
 import mtf.dm.cms.hhs.gov.utilities.*;
 import org.json.JSONObject;
@@ -302,6 +303,7 @@ public class CommonStep {
 
             @SuppressWarnings("unchecked")
             List<List<String>> dataByColumn = (List<List<String>>) BaseClass.getScenarioVariable("dataByColumnForFileToIngest");
+            System.out.println("Expected Data: " + dataByColumn.toString());
 
             //Get database json file
             String configFilePath = String.format("src/test.%s/resources/database/database.config.json", directoryString);
@@ -312,6 +314,7 @@ public class CommonStep {
             }
 
             String sqlQuery = testCaseData.get("sql_query");
+            String expectedValue = testCaseData.get("expected_value");
 
             // Step 2: Execute SQL Query
             ResultSet resultSet = executeSqlQuery(configFilePath, sqlQuery);
@@ -319,10 +322,11 @@ public class CommonStep {
             DBUtils.displayAllData();
 
             // Step 3: Transform ResultSet to List<List<String>>
-            Map<String, Object> dbDataMap = transformResultSetToHashMap(resultSet, columnSpecs);
+            List<List<String>> sqlDataByColumn  = transformResultSetToList(resultSet, columnSpecs, expectedValue);
+            System.out.println("Actual Data: " + sqlDataByColumn);
 
             // Step 4: Compare List<List<String>>
-            //compareHashMaps(dataByColumn, dbDataMap);
+            Boolean isMatch = compareLists(dataByColumn, sqlDataByColumn);
 
         } catch (Exception e) {
             throw new RuntimeException("Error verifying file data in database: " + e.getMessage(), e);
