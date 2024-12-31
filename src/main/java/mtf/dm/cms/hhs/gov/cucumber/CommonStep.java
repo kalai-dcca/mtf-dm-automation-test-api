@@ -294,11 +294,15 @@ public class CommonStep {
 
             String sheet = getTestScenarioClass().getSheet();
 
+            ExcelSheetSpec sheetSpec = (ExcelSheetSpec) BaseClass.getScenarioVariable("sheetSpecForFileData");
+            Map<String, ExcelColumnSpec> columnSpecs = sheetSpec.getColumnSpecs();
+
+            @SuppressWarnings("unchecked")
+            List<List<String>> dataByColumn = (List<List<String>>) BaseClass.getScenarioVariable("dataByColumnForFileToIngest");
+
             //Get database json file
             String configFilePath = String.format("src/test.%s/resources/database/database.config.json", directoryString);
 
-            //Need to change implementation to get spec file
-            String specFilePath = String.format("src/test.%s/resources/specifications/" + sheet + ".json", directoryString);
 
             if (!testCaseData.containsKey("sql_query")) {
                 throw new IllegalArgumentException("SQL not found in Test Case Data.");
@@ -311,17 +315,11 @@ public class CommonStep {
             // Display results
             DBUtils.displayAllData();
 
-            // Step 3: Load JSON Specification
-            Map<String, Object> jsonSpec = loadJsonSpecification(specFilePath);
+            // Step 3: Transform ResultSet to List<List<String>>
+            Map<String, Object> dbDataMap = transformResultSetToHashMap(resultSet, columnSpecs);
 
-            // Step 4: Transform ResultSet to HashMap
-            Map<String, Object> dbDataMap = transformResultSetToHashMap(resultSet, jsonSpec);
-
-            // Step 5: Retrieve and Transform File Data for Comparison
-            //Map<String, Object> fileDataMap = getTransformedFileData("path/to/test/file.xlsx", jsonSpec);
-
-            // Step 6: Compare HashMaps
-            //compareHashMaps(fileDataMap, dbDataMap);
+            // Step 4: Compare List<List<String>>
+            //compareHashMaps(dataByColumn, dbDataMap);
 
         } catch (Exception e) {
             throw new RuntimeException("Error verifying file data in database: " + e.getMessage(), e);

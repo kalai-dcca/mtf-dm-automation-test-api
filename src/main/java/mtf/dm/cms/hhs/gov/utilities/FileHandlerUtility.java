@@ -2,6 +2,7 @@ package mtf.dm.cms.hhs.gov.utilities;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelColumnSpec;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -216,14 +217,14 @@ public class FileHandlerUtility {
 
     }
 
-    //DONT NEED THIS CODE. REMOVE BEFORE COMMITTING
+    //DON'T NEED THIS CODE. REMOVE BEFORE COMMITTING
     public static Map<String, Object> loadJsonSpecification(String jsonFilePath) throws IOException {
         // Use a JSON library like Jackson or Gson to parse the specification
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(new File(jsonFilePath), new TypeReference<Map<String, Object>>() {});
     }
 
-    public static Map<String, Object> transformResultSetToHashMap(ResultSet resultSet, Map<String, Object> jsonSpec) throws SQLException {
+    public static Map<String, Object> transformResultSetToHashMap(ResultSet resultSet, Map<String, ExcelColumnSpec> columnSpecMap) throws SQLException {
         Map<String, Object> dbDataMap = new HashMap<>();
 
         resultSet.last(); // Moves to the last row
@@ -231,18 +232,20 @@ public class FileHandlerUtility {
         System.out.println("Row count in ResultSet: " + rowCount);
         resultSet.beforeFirst(); // Reset cursor to before the first row for iteration
 
+        System.out.println(columnSpecMap.toString());
 
-        while (resultSet.next()) {
-            for (Map.Entry<String, Object> entry : jsonSpec.entrySet()) {
-                String columnName = entry.getKey();
-                Map<String, String> columnSpec = (Map<String, String>) entry.getValue();
-                String columnType = columnSpec.get("type");
-                String pattern = columnSpec.get("pattern");
 
-                Object value = transformDatabaseValue(resultSet, columnName, columnType, pattern);
-                dbDataMap.put(columnName, value);
-            }
-        }
+//        while (resultSet.next()) {
+//            for (Map.Entry<String, Object> entry : jsonSpec.entrySet()) {
+//                String columnName = entry.getKey();
+//                Map<String, String> columnSpec = (Map<String, String>) entry.getValue();
+//                String columnType = columnSpec.get("type");
+//                String pattern = columnSpec.get("pattern");
+//
+//                Object value = transformDatabaseValue(resultSet, columnName, columnType, pattern);
+//                dbDataMap.put(columnName, value);
+//            }
+//        }
 
         return dbDataMap;
     }
