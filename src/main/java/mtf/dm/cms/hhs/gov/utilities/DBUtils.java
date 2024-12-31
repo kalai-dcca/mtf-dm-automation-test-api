@@ -359,4 +359,23 @@ public class DBUtils {
         DBUtils.createConnectionFromConfig(configFilePath);
         return DBUtils.runQuery(sqlQuery);
     }
+
+    public static Object getAllDataAsMap() {
+        Map<Integer,String> data = new HashMap<>();
+        int row = 1;
+        int columnCount = getColumnCount();
+        resetCursor();
+        try {
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    data.put(row,resultSet.getString(i));
+                    row++;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR OCCURRED WHILE RUNNING displayAllData()  " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return data;
+    }
 }
