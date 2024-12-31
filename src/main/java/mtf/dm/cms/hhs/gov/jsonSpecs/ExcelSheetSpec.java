@@ -3,6 +3,7 @@ package mtf.dm.cms.hhs.gov.jsonSpecs;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ExcelSheetSpec {
@@ -39,4 +40,52 @@ public class ExcelSheetSpec {
     public String toString() {
         return String.format("Sheet: %s, Columns: %s", sheetName, columnSpecs.toString());
     }
+
+    public void validateSheetDataByColumn(List<List<String>> dataByColumn) {
+        if (dataByColumn.size() != columnSpecs.size()) {
+            throw new RuntimeException(String.format(
+                    "Column specs size: %s & Data Columns size: %s do not match.\nSpec: %s\nData: %s",
+                    columnSpecs.size(),
+                    dataByColumn.size(),
+                    this.toString(),
+                    dataByColumn
+            ));
+        }
+        System.out.println("Columns size matches spec file");
+
+        for (int i = 0; i < dataByColumn.size(); i++) {
+            List<String> columnData = dataByColumn.get(i);
+
+            // The first row is the header
+            String header = columnData.get(0).trim();
+
+            if (!columnSpecs.containsKey(header)) {
+                throw new RuntimeException(String.format(
+                        "Unexpected or missing header: '%s'. Expected headers: %s",
+                        header,
+                        columnSpecs.keySet()
+                ));
+            }
+            System.out.println("Column headers match for header: " + header);
+
+            // Validate each cell in the column (skip the header row)
+            ExcelColumnSpec spec = columnSpecs.get(header);
+            for (int j = 1; j < columnData.size(); j++) {
+                String cellValue = columnData.get(j);
+                if (!spec.cellMatchesPattern(cellValue)) {
+                    throw new RuntimeException(String.format(
+                            "Validation failed for column '%s' at row %d: \nValue: '%s' \nSpec: %s",
+                            header,
+                            j + 1, // +1 for Excel's 1-based row numbering
+                            cellValue,
+                            this.toString()
+                    ));
+                }
+                System.out.println("Value matches for value: " + cellValue);
+            }
+            System.out.println("Column values match for column: " + header);
+        }
+    }
 }
+
+
