@@ -17,6 +17,7 @@ import java.util.Map;
 public class ExtentReportListener implements ConcurrentEventListener {
 
     private static ExtentReports extent;
+    private static ExtentTest currentTest;
     private static Map<String, ExtentTest> scenarioTestMap = new HashMap<>();
 
     static {
@@ -53,6 +54,7 @@ public class ExtentReportListener implements ConcurrentEventListener {
                 .assignAuthor(System.getProperty("tester.name", System.getProperty("user.name", "Unknown Tester")));
         test.info("Test Started: " + event.getTestCase().getName());
         scenarioTestMap.put(event.getTestCase().getId().toString(), test);
+        currentTest = test;
     }
 
     private void onTestStepFinished(TestStepFinished event) {
@@ -90,5 +92,10 @@ public class ExtentReportListener implements ConcurrentEventListener {
             MyLogger.endTestCase(ExceptionUtils.printStackTrace(e));
             return "Unknown Branch";
         }
+    }
+
+    // Helper method to get the current Test Case
+    public static ExtentTest getCurrentTest() {
+        return currentTest;
     }
 }

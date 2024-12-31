@@ -3,6 +3,7 @@ package mtf.dm.cms.hhs.gov.impl;
 import io.restassured.response.Response;
 import mtf.dm.cms.hhs.gov.utilities.ExcelUtils;
 import mtf.dm.cms.hhs.gov.utilities.SheetType;
+import mtf.dm.cms.hhs.gov.utilities.SuppressedStackTraceException;
 
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class DemoApi {
         return apiRequestClient.sendApiRequest(endpoint, method);
     }
 
-    public Response launchQueryDemoApiAndGetResponse(String endpoint, String queryParam, String method){
+    public Response launchQueryDemoApiAndGetResponse(String endpoint, String queryParam, String method) throws SuppressedStackTraceException {
         endpoint = endpoint + "?" + queryParam + "=" + ExcelUtils.getUserId(getTestScenarioClass().getTestCaseID());
         return apiRequestClient.sendApiRequest(endpoint, method);
     }

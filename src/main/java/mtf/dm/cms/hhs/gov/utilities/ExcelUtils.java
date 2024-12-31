@@ -17,7 +17,7 @@ public class ExcelUtils {
     private String filePath;
 
     // Constructor to initialize Excel file and sheet
-    public ExcelUtils(String filePath, String sheetName) {
+    public ExcelUtils(String filePath, String sheetName) throws SuppressedStackTraceException {
 
         this.filePath = filePath;
         try {
@@ -25,14 +25,16 @@ public class ExcelUtils {
             workbook = new XSSFWorkbook(fis);
             sheet = workbook.getSheet(sheetName);
             if (sheet == null) {
-                throw new RuntimeException("Sheet: " + sheetName + " does not exist in the file: " + filePath);
+                MyLogger.error("Sheet: " + sheetName + " does not exist in the file: " + filePath);
+                throw new SuppressedStackTraceException("Sheet: " + sheetName + " does not exist in the file: " + filePath);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load Excel file: " + e.getMessage());
+            MyLogger.error("Failed to load Excel file: " + filePath, e);
+            throw new SuppressedStackTraceException("Failed to load Excel file: " + filePath);
         }
     }
 
-    public static Row getRow(String testCase) {
+    public static Row getRow(String testCase) throws SuppressedStackTraceException {
         Row row = null;
 
         for (Row cells : sheet) {
@@ -56,7 +58,7 @@ public class ExcelUtils {
                 case BLANK:
                     continue; // Skip blank cells
                 default:
-                    throw new RuntimeException("Unsupported cell type: " + cell.getCellType());
+                    throw new SuppressedStackTraceException("Unsupported cell type: " + cell.getCellType());
             }
 
             // Compare cell value with the provided test case ID
@@ -66,19 +68,19 @@ public class ExcelUtils {
         }
 
         if (row == null) {
-            throw new RuntimeException("Row not found for test case: " + testCase);
+            throw new SuppressedStackTraceException("Row not found for test case: " + testCase);
         }
 
         return row;
     }
 
 
-    public static int getUserId(String testCase){
+    public static int getUserId(String testCase) throws SuppressedStackTraceException {
         Row row = getRow(testCase);
         return (int)row.getCell(1).getNumericCellValue();
     }
 
-    public static JSONObject getDataBasedOnTestCaseAndCallType(String testCase, String sheetType) throws Exception {
+    public static JSONObject getDataBasedOnTestCaseAndCallType(String testCase, String sheetType) throws SuppressedStackTraceException {
         JSONObject js = new JSONObject();
         Row row = getRow(testCase);
         if(Objects.nonNull(row)){
@@ -106,8 +108,6 @@ public class ExcelUtils {
                 case SINGLE_USER:
                 case SINGLE_RESOURCE:
                     break;
-                default:
-                    throw new Exception();
             }
         }
         MyLogger.info(js.toString());
@@ -164,12 +164,12 @@ public class ExcelUtils {
         return data;
     }
 
-    public List<List<String>> getSheetDataByColumn() {
+    public List<List<String>> getSheetDataByColumn() throws SuppressedStackTraceException {
         List<List<String>> dataByColumn = new ArrayList<>();
         Row headerRow = sheet.getRow(0); // Assuming the first row contains headers
 
         if (headerRow == null) {
-            throw new RuntimeException("Header row is missing in the sheet.");
+            throw new SuppressedStackTraceException("Header row is missing in the sheet.");
         }
 
         // Initialize columns based on the headers
@@ -228,7 +228,7 @@ public class ExcelUtils {
     }
 
     // Method to set data into a specific cell
-    public void setCellData(int rowNum, int colNum, String value) {
+    public void setCellData(int rowNum, int colNum, String value) throws SuppressedStackTraceException {
         Row row = sheet.getRow(rowNum);
         if (row == null) row = sheet.createRow(rowNum);
         Cell cell = row.getCell(colNum);
@@ -238,28 +238,31 @@ public class ExcelUtils {
     }
     // Method to save changes to the Excel file
 
-    private void save() {
+    private void save() throws SuppressedStackTraceException {
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             workbook.write(fos);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to save Excel file: " + e.getMessage());
+            MyLogger.error("Failed to load Excel file: " + filePath, e);
+            throw new SuppressedStackTraceException("Failed to save Excel file: " + filePath);
         }
     }
     // Method to close the workbook
 
-    public void close() {
+    public void close() throws SuppressedStackTraceException {
         try {
             workbook.close();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to close Excel workbook: " + e.getMessage());
+            MyLogger.error("Failed to load Excel file: " + workbook, e);
+            throw new SuppressedStackTraceException("Failed to close Excel workbook: " + workbook);
         }
     }
 
-    public String getStringCellData(String testCaseId, String attributeName) {
+    public String getStringCellData(String testCaseId, String attributeName) throws SuppressedStackTraceException {
         // Get the row for the testCaseId
         Row row = getRow(testCaseId);
         if (row == null) {
-            throw new RuntimeException("Test case ID not found: " + testCaseId);
+            MyLogger.error("Test case ID not found: " + testCaseId);
+            throw new SuppressedStackTraceException("Test case ID not found: " + testCaseId);
         }
 
         // Find the column index for the attribute name
@@ -273,7 +276,8 @@ public class ExcelUtils {
         }
 
         if (columnIndex == -1) {
-            throw new RuntimeException("Attribute name not found: " + attributeName);
+            MyLogger.error(String.format(attributeName + " column was not found in excel file %s for test case ID %s %n" ,filePath, testCaseId));
+            throw new SuppressedStackTraceException(String.format(attributeName + " column was not found in excel file %s for test case ID %s %n" ,filePath, testCaseId));
         }
 
         // Use getCellData to fetch the value
@@ -281,7 +285,7 @@ public class ExcelUtils {
         return getCellData(rowIndex, columnIndex);
     }
 
-    public static Map<String, String> getAllDataFromRow(String testCase) {
+    public static Map<String, String> getAllDataFromRow(String testCase) throws SuppressedStackTraceException {
         Map<String, String> dataMap = new HashMap<>();
         Row row = getRow(testCase);
 
@@ -322,7 +326,7 @@ public class ExcelUtils {
                 dataMap.put(key, value);
             }
         } else {
-            throw new RuntimeException("Row not found for test case: " + testCase);
+            throw new SuppressedStackTraceException("Row not found for test case: " + testCase);
         }
 
         return dataMap;
