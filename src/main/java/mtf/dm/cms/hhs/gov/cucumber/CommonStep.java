@@ -1,6 +1,7 @@
 package mtf.dm.cms.hhs.gov.cucumber;
 
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
+import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -93,6 +94,7 @@ public class CommonStep {
                 getTestScenarioClass().setUserID(ExcelUtils.getUserId(testCase));
             }
             //extentReports.createTest("Data Table").info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("REQUEST BODY", ExtentColor.BLUE));
             ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
 
         } catch (Exception e) {
@@ -141,6 +143,7 @@ public class CommonStep {
             String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
             JSONObject jsonObject = new JSONObject(body);
             getTestScenarioClass().setJsonObject(jsonObject);
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("INPUT JSON DATA", ExtentColor.BLUE));
             ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
         } catch (Exception e) {
             MyLogger.error("Failed to load JSON file: " + fileName, e);
@@ -231,6 +234,7 @@ public class CommonStep {
             MyLogger.error("Unable to load expected data from file: " + expectedFilePath, e);
             throw new SuppressedStackTraceException("Unable to load expected data from file: " + expectedFilePath);
         }
+        ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE DATA", ExtentColor.GREEN));
         ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
 
         // Ensure the expected data is valid
@@ -260,6 +264,8 @@ public class CommonStep {
 
             // Display results
             DBUtils.displayAllData();
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("DB DATA", ExtentColor.WHITE));
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(DBUtils.getAllDataAsMap()));
 
             // Close resources
             DBUtils.destroy();
@@ -281,6 +287,8 @@ public class CommonStep {
             // Retrieve all data from the row as a HashMap
             Map<String, String> testCaseData = ExcelUtils.getAllDataFromRow(testCase);
             getTestScenarioClass().setTestCaseData(testCaseData); // Save the data for subsequent steps
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("TEST DATA", ExtentColor.BLUE));
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(testCaseData));
 
             // Set other test context values
             getTestScenarioClass().setTestCaseID(testCase);

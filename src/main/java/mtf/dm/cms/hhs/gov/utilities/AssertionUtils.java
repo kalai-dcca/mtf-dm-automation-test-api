@@ -1,6 +1,7 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.StringUtils;
 
