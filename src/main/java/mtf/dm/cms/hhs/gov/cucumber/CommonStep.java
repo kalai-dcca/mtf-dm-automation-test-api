@@ -96,9 +96,10 @@ public class CommonStep {
             ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("REQUEST BODY", ExtentColor.BLUE));
             ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             MyLogger.error("Failed to setup test case: " + fileName, e);
-            throw new SuppressedStackTraceException("Failed to setup test case: " + fileName);
+            throw new SuppressedStackTraceException("Failed to setup test case for " + fileName + "\n" + e.getMessage());
         }
     }
 
