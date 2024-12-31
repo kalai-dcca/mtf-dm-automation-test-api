@@ -35,4 +35,8 @@ public class ExcelColumnSpec {
     public String toString() {
         return String.format("Type: %s, Format: %s, Pattern: %s, ErrorMessage: %s", type, format, pattern, errorMessage);
     }
+
+    public boolean cellMatchesPattern(String value) {
+        return value.matches(this.pattern);
+    }
 }
