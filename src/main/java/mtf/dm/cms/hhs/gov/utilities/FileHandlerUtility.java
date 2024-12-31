@@ -218,13 +218,6 @@ public class FileHandlerUtility {
 
     }
 
-    //DON'T NEED THIS CODE. REMOVE BEFORE COMMITTING
-    public static Map<String, Object> loadJsonSpecification(String jsonFilePath) throws IOException {
-        // Use a JSON library like Jackson or Gson to parse the specification
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File(jsonFilePath), new TypeReference<Map<String, Object>>() {});
-    }
-
     public static List<List<String>> transformResultSetToList(ResultSet resultSet, Map<String, ExcelColumnSpec> columnSpecMap, String expectedValue) throws SQLException {
         Map<String, Object> dbDataMap = new HashMap<>();
 
