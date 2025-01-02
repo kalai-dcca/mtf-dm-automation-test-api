@@ -7,7 +7,7 @@ Feature: Data Exchange MFP Excel File Ingestion
     # And the "dataExchange" file "mfpDemo.xlsx" follows the specification in "mfpDemo"
     And the "dataExchange" file "mfpDemo.xlsx" follows the specification in "mfpDemo" in sheet "MFP Pricing File - Data"
     # When the "dataExchange" microservice processes the file //WILL IMPLEMENT AFTER WE CONFIRM DEVELOPMENT IMPLEMENTATION
-    Then verify "mfpDemo.xlsx" data is in the "dataExchange" database
+    Then verify file data is in the "dataExchange" database
     Examples:
       | TestCaseId |
       | 1          |

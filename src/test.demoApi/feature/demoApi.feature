@@ -17,7 +17,7 @@ Feature: DEMO Create API Testing POST
     When Launch "/api/users", Method: "POST"
     Then Verify response values:
       | statusCode | message |
-      | 201        | 2024    |
+      | 201        | 2025    |
 
 
   Scenario: Validate both request and response from json file
@@ -40,7 +40,7 @@ Feature: DEMO Create API Testing POST
     When Launch "/api/users", Method: "PATCH"
     Then Verify response values:
       | statusCode | message |
-      | 200        | 2024    |
+      | 200        | 2025    |
     Examples:
       | TestCaseId    |
       | U-PATCH-TC001 |
@@ -61,7 +61,7 @@ Feature: DEMO Create API Testing POST
     When Launch "/api/users", Method: "PUT"
     Then Verify response values:
       | statusCode | message |
-      | 200        | 2024    |
+      | 200        | 2025    |
     Examples:
       | TestCaseId    |
       | U-PUT-TC001 |
