@@ -1,5 +1,8 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelColumnSpec;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -7,6 +10,9 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -210,6 +216,139 @@ public class FileHandlerUtility {
             e.getStackTrace();
         }
 
+    }
+
+    public static List<List<String>> transformResultSetToList(ResultSet resultSet, Map<String, ExcelColumnSpec> columnSpecMap, String expectedValue) throws SQLException {
+        Map<String, Object> dbDataMap = new HashMap<>();
+
+        resultSet.last(); // Moves to the last row
+        int rowCount = resultSet.getRow(); // Get the row count
+        System.out.println("Row count in ResultSet: " + rowCount);
+        resultSet.beforeFirst(); // Reset cursor to before the first row for iteration
+
+        System.out.println(columnSpecMap.toString());
+
+        // Initialize the list to hold column-wise data
+        List<List<String>> sqlDataByColumn = new ArrayList<>();
+
+        // Parse the expected column names from the expectedValue
+        String[] expectedColumns = expectedValue.split(",\\s*"); // Split by comma and optional spaces
+
+        // Initialize lists for each column with column names as the first element
+        for (String columnName : expectedColumns) {
+            List<String> columnData = new ArrayList<>();
+            columnData.add(columnName.trim()); // Add the column name as the first element
+            sqlDataByColumn.add(columnData); // Add the column list to the main list
+        }
+
+        // Iterate through the ResultSet
+        while (resultSet.next()) {
+            for (int i = 0; i < expectedColumns.length; i++) {
+                String columnName = expectedColumns[i].trim();
+
+                // Get the column spec for the current column
+                ExcelColumnSpec columnSpec = columnSpecMap.get(columnName);
+
+                // Fetch the column type and pattern from the columnSpec
+                String columnType = columnSpec.getType();
+                String pattern = columnSpec.getPattern();
+
+                // Retrieve the value from the ResultSet
+                Object value = resultSet.getObject(i + 1); // ResultSet column index starts from 1
+
+                // Format the value based on the pattern
+                String formattedValue = formatValue(value, columnType, pattern);
+
+                // Add the formatted value to the corresponding column list
+                sqlDataByColumn.get(i).add(formattedValue);
+            }
+        }
+
+        return sqlDataByColumn;
+
+    }
+
+    // Helper method to format values based on column type and pattern
+    private static String formatValue(Object value, String columnType, String pattern) {
+        if (value == null) {
+            return ""; // Handle null values
+        }
+
+        switch (columnType.toLowerCase()) {
+            case "string":
+                return value.toString().trim();
+            case "number":
+                // Format number with regex or required decimal places
+                return value.toString();
+            case "date":
+                // Format date (use SimpleDateFormat for custom formats)
+                if (value instanceof java.sql.Date || value instanceof java.util.Date) {
+                    SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+                    return sdf.format(value);
+                }
+                break;
+            case "dollar":
+                // Format as US currency
+                if (value instanceof Number) {
+                    return String.format("$%.2f", value);
+                }
+                break;
+            default:
+                return value.toString(); // Default formatting
+        }
+
+        // Return raw value if no specific format applied
+        return value.toString();
+    }
+
+    public static Boolean compareLists(List<List<String>> dataByColumn, List<List<String>> sqlDataByColumn) {
+        boolean isMatch = true; // Assume data matches until proven otherwise
+
+        // Iterate through the expected columns
+        for (List<String> expectedColumn : dataByColumn) {
+            String columnName = expectedColumn.get(0); // First element is the column name
+            List<String> expectedValues = expectedColumn.subList(1, expectedColumn.size()); // Skip the column name
+
+            // Find the matching column in the actual data
+            List<String> actualColumn = sqlDataByColumn.stream()
+                    .filter(column -> column.get(0).equals(columnName)) // Match by column name
+                    .findFirst()
+                    .orElse(null);
+
+            if (actualColumn == null) {
+                // Column is missing in actual data
+                System.out.println("Column was not included in SQL. Do not need to compare column data: " + columnName);
+                //isMatch = false;
+                continue;
+            }
+
+            // Get the actual values (excluding the column name)
+            List<String> actualValues = actualColumn.subList(1, actualColumn.size());
+
+            // Compare values between expected and actual
+            for (int i = 0; i < expectedValues.size(); i++) {
+                String expectedValue = expectedValues.get(i);
+                String actualValue = i < actualValues.size() ? actualValues.get(i) : "MISSING"; // Handle shorter actual values
+
+                if (!expectedValue.equals(actualValue)) {
+                    System.out.println("Mismatch in column: " + columnName);
+                    System.out.println("FAILED==>Expected: " + expectedValue + ", Actual: " + actualValue);
+                    isMatch = false;
+                } else{
+                    System.out.println("PASSED==>Expected: " + expectedValue + ", Actual: " + actualValue);
+                }
+
+            }
+        }
+
+        // Final status
+        if (isMatch) {
+            System.out.println("All columns and values match!");
+        } else {
+            System.out.println("There are mismatches in the data.");
+        }
+
+        return isMatch;
     }
 
     /**

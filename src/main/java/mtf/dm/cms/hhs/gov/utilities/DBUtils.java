@@ -354,6 +354,12 @@ public class DBUtils {
             return allRowListOfMap;
         }
 
+    public static ResultSet executeSqlQuery(String configFilePath, String sqlQuery) throws SQLException {
+        // Establish connection to the database and execute the query
+        DBUtils.createConnectionFromConfig(configFilePath);
+        return DBUtils.runQuery(sqlQuery);
+    }
+
     public static Object getAllDataAsMap() {
         Map<Integer,String> data = new HashMap<>();
         int row = 1;
