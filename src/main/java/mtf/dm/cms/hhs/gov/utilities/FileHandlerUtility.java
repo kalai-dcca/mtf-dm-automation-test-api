@@ -301,29 +301,6 @@ public class FileHandlerUtility {
         return value.toString();
     }
 
-    private static Object transformDatabaseValue(ResultSet resultSet, String columnName, String columnType, String pattern) throws SQLException {
-        Object value;
-
-        switch (columnType.toLowerCase()) {
-            case "string":
-                value = resultSet.getString(columnName);
-                break;
-            case "date":
-                value = resultSet.getDate(columnName).toString();
-                break;
-            case "dollar":
-                value = String.format("$%.2f", resultSet.getDouble(columnName));
-                break;
-            case "number":
-                value = resultSet.getInt(columnName);
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported column type: " + columnType);
-        }
-
-        return value; // Apply further transformation based on the pattern if needed
-    }
-
     public static Boolean compareLists(List<List<String>> dataByColumn, List<List<String>> sqlDataByColumn) {
         boolean isMatch = true; // Assume data matches until proven otherwise
 
