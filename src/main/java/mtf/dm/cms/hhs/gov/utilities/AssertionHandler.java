@@ -1,5 +1,6 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import org.assertj.core.api.SoftAssertions;
 
 import java.util.List;
@@ -20,10 +21,12 @@ public class AssertionHandler {
     public static void logAssertionError(Runnable assertion, String customMessage) throws SuppressedStackTraceException {
         try{
             assertion.run();
+            // Add custom message to Extent report
+            ExtentCucumberAdapter.addTestStepLog("<pre>" + customMessage + "</pre>");
         } catch (AssertionError e){
-            MyLogger.error(customMessage,e);
+            MyLogger.error("-- failure -- \n" + customMessage,e);
             // Throw assertion error
-            throw new SuppressedStackTraceException(customMessage);
+            throw new SuppressedStackTraceException("-- failure -- \n" + customMessage);
         }
     }
 

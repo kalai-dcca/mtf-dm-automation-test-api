@@ -29,8 +29,8 @@ public class AssertionUtils {
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.getStatusCode()).isEqualTo((expectedStatusCode));
-        },"-- failure -- \n" + "expected: " +  + expectedStatusCode + "\n" + "but was: " + response.getStatusCode());
-        //return status;
+        },"expected: " +  + expectedStatusCode + "\n" + "but was: " + response.getStatusCode());
+
 
     }
 
@@ -55,7 +55,7 @@ public class AssertionUtils {
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).isNotNull();
-        },"-- failure -- \n" + "Expecting actual: " + response.jsonPath().toString() + "\n" + "to contain: " + field);
+        },"Expecting actual: " + response.jsonPath().toString() + "\n" + "to contain: " + field);
         //return status;
     }
 
@@ -83,7 +83,7 @@ public class AssertionUtils {
 
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).isEqualTo(expectedValue);
-        },"-- failure -- \n" + "Expecting actual: " + field + "\n" + "to contain: " + expectedValue);
+        },"Expecting actual: " + field + "\n" + "to contain: " + expectedValue);
         //return status;
     }
 
@@ -103,7 +103,7 @@ public class AssertionUtils {
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.getTime()).isLessThanOrEqualTo(maxResponseTime);
-        },"-- failure -- \n" + "Response time exceeded: " + maxResponseTime);
+        },"Response time exceeded: " + maxResponseTime);
        // return status;
     }
 
@@ -126,7 +126,7 @@ public class AssertionUtils {
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).matches(regex);
-        },"-- failure -- \n" + "Expecting actual: " + field + "\n" + "to contain: " + regex);
+        },"Expecting actual: " + field + "\n" + "to contain: " + regex);
         //return status;
     }
 
@@ -255,7 +255,7 @@ public class AssertionUtils {
         // Compare sets
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(actualSet).containsExactlyInAnyOrderElementsOf(expectedSet);
-        },"-- failure -- \n" + "Expecting actual: " + actualSet + "\n" + "to contain: " + expectedSet);
+        },"Expecting actual: " + actualSet + "\n" + "to contain: " + expectedSet);
 
     }
 
