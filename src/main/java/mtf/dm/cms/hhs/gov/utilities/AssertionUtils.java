@@ -27,7 +27,7 @@ public class AssertionUtils {
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.getStatusCode()).isEqualTo((expectedStatusCode));
-        },"Expected: " +  + expectedStatusCode + "\n" + "actual was: " + response.getStatusCode());
+        },"FIELD NAME: " + "Status Code" +  "\n" + "Status Code" + " value in File: " +  + expectedStatusCode + "\n" + "Status Code" + " value in the Response: " + response.getStatusCode());
 
 
     }
@@ -147,15 +147,17 @@ public class AssertionUtils {
         List<String> customMessages = new ArrayList<>();
 
         Map<String, Object> actualEntries = response.jsonPath().getMap(mapField);
-        expectedEntries.forEach((key, value) -> {
+        for (Map.Entry<String, Object> entry : expectedEntries.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
             Object actualValue = response.jsonPath().get(key);
             soft.assertThat(actualValue).isEqualTo(value);
 
             // Create custom messages for each assertion
-            customMessages.add("Expected: " +  actualValue + "\n" + "actual was: " + value + "\n");
-        });
+            AssertionHandler.handleSoftAssertFailures(soft, "FIELD NAME: " + key + "\n" + key + " value in File: " + actualValue + "\n" + key + " value in the Response: " + value + "\n");
+        }
 
-        AssertionHandler.handleSoftAssertFailures(soft, customMessages);
+        //AssertionHandler.handleSoftAssertFailures(soft, customMessages);
         //return status;
     }
 
@@ -183,16 +185,17 @@ public class AssertionUtils {
         }
 
         SoftAssertions soft = new SoftAssertions();
-        List<String> customMessages = new ArrayList<>();
+        //List<String> customMessages = new ArrayList<>();
 
         soft.assertThat(response.getStatusCode()).isEqualTo((expectedStatusCode));
-        soft.assertThat(response.getBody().asString()).contains((expectedMessage));
-
         // Create custom messages for each assertion
-        customMessages.add("Expected: " +  expectedStatusCode + "\n" + "actual was: " + response.getStatusCode() + "\n");
-        customMessages.add("Expecting actual: " + "\n   " + response.getBody().asString() + "\n" + "to contain: " + "\n   " + expectedMessage + "\n");
+        AssertionHandler.handleSoftAssertFailures(soft, "FIELD NAME: " + "Status Code" + "\n" +  "Status Code" + " value in File: " +  expectedStatusCode + "\n" + "Status Code" + " value in the Response: " + response.getStatusCode() + "\n");
 
-        AssertionHandler.handleSoftAssertFailures(soft, customMessages);
+        soft.assertThat(response.getBody().asString()).contains((expectedMessage));
+        AssertionHandler.handleSoftAssertFailures(soft, "Expecting actual: " + "\n   " + response.getBody().asString() + "\n" + "to contain: " + "\n   " + expectedMessage + "\n");
+
+
+
     }
 
     public static void verifyStatusCodeAndAttributesFromExcel(String attributeNames) throws SuppressedStackTraceException {
@@ -219,19 +222,21 @@ public class AssertionUtils {
         List<String> customMessages = new ArrayList<>();
 
         //Loop through each attribute and then validate the result as a soft assert
-        attributeValues.forEach((attribute, expectedValue) -> {
+        for (Map.Entry<String, String> entry : attributeValues.entrySet()) {
+            String attribute = entry.getKey();
+            String expectedValue = entry.getValue();
             if (attribute.equals("STATUS_CODE")) {
                 soft.assertThat(response.getStatusCode()).isEqualTo((Integer.parseInt(expectedValue)));
                 // Create custom messages for each assertion
-                customMessages.add("Expected: " +  response.getStatusCode() + "\n" + "actual was: " + Integer.parseInt(expectedValue) + "\n");
-            } else{
+                AssertionHandler.handleSoftAssertFailures(soft, "FIELD NAME: " + "Status Code" + "\n" +  "Status Code" + " value in File: " + response.getStatusCode() + "\n" + "Status Code" + " value in the Response: " + Integer.parseInt(expectedValue) + "\n");
+            } else {
                 soft.assertThat(response.jsonPath().getString(attribute)).contains(expectedValue);
                 // Create custom messages for each assertion
-                customMessages.add("Expecting actual: " + "\n   " + response.jsonPath().getString(attribute) + "\n" + "to contain: " + "\n   " + expectedValue + "\n");
+                AssertionHandler.handleSoftAssertFailures(soft, "Expecting actual: " + "\n   " + response.jsonPath().getString(attribute) + "\n" + "to contain: " + "\n   " + expectedValue + "\n");
             }
-        });
+        }
 
-        AssertionHandler.handleSoftAssertFailures(soft, customMessages);
+        //AssertionHandler.handleSoftAssertFailures(soft, customMessages);
     }
 
     /**

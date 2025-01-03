@@ -24,10 +24,10 @@ public class AssertionHandler {
         try{
             assertion.run();
             // Add custom message to Extent report
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESULT", ExtentColor.GREEN));
             ExtentCucumberAdapter.addTestStepLog("<pre>" + customMessage + "</pre>");
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("VALUE MATCHED - TEST PASS", ExtentColor.GREEN));
         } catch (AssertionError e){
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESULT", ExtentColor.RED));
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("VALUE DID NOT MATCH - TEST FAIL", ExtentColor.RED));
             MyLogger.error(customMessage,e);
             // Throw assertion error
             throw new SuppressedStackTraceException(customMessage);
@@ -40,10 +40,10 @@ public class AssertionHandler {
      * @param soft           AssertJ SoftAssertions object
      * @param customMessages
      */
-    public static void handleSoftAssertFailures(SoftAssertions soft, List<String> customMessages) throws SuppressedStackTraceException {
+    public static void handleSoftAssertFailures(SoftAssertions soft, String customMessages) throws SuppressedStackTraceException {
         // Collect errors from soft assertions
         List<Throwable> failures = soft.errorsCollected();
-
+        System.out.println(failures);
         // Verify all soft assertions
         if (!failures.isEmpty()){
             // Extract and format failure messages
@@ -55,9 +55,9 @@ public class AssertionHandler {
             logAssertionError(soft::assertAll, "-- failure --" + failureMessages);
         }
         else{ // return all custom messages if all tests passes
-           String successMessages = String.join("\n", customMessages);
+           //String successMessages = String.join("\n", customMessages);
 
-            logAssertionError(soft::assertAll, successMessages);
+            logAssertionError(soft::assertAll, customMessages);
         }
 
     }
