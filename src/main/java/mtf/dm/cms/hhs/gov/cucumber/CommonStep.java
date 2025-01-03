@@ -145,8 +145,8 @@ public class CommonStep {
             String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
             JSONObject jsonObject = new JSONObject(body);
             getTestScenarioClass().setJsonObject(jsonObject);
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("INPUT JSON DATA", ExtentColor.BLUE));
-            ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
+            //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("INPUT JSON DATA", ExtentColor.BLUE));
+            //ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
         } catch (Exception e) {
             MyLogger.error("Failed to load JSON file: " + fileName, e);
             throw new SuppressedStackTraceException("Failed to load JSON file: " + fileName);
@@ -236,8 +236,8 @@ public class CommonStep {
             MyLogger.error("Unable to load expected data from file: " + expectedFilePath, e);
             throw new SuppressedStackTraceException("Unable to load expected data from file: " + expectedFilePath);
         }
-        ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE DATA", ExtentColor.GREEN));
-        ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
+        //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE DATA", ExtentColor.GREEN));
+        //ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
 
         // Ensure the expected data is valid
         assertNotNull(expectedData, "Expected data file is empty or invalid!");

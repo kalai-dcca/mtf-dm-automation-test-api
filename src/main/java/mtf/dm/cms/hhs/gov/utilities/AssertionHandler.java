@@ -24,28 +24,37 @@ public class AssertionHandler {
             // Add custom message to Extent report
             ExtentCucumberAdapter.addTestStepLog("<pre>" + customMessage + "</pre>");
         } catch (AssertionError e){
-            MyLogger.error("-- failure -- \n" + customMessage,e);
+            MyLogger.error(customMessage,e);
             // Throw assertion error
-            throw new SuppressedStackTraceException("-- failure -- \n" + customMessage);
+            throw new SuppressedStackTraceException(customMessage);
         }
     }
 
     /**
      * Reusable method to handle soft assert failures and log them
      *
-     * @param soft          AssertJ SoftAssertions object
+     * @param soft           AssertJ SoftAssertions object
+     * @param customMessages
      */
-    public static void handleSoftAssertFailures(SoftAssertions soft) throws SuppressedStackTraceException {
+    public static void handleSoftAssertFailures(SoftAssertions soft, List<String> customMessages) throws SuppressedStackTraceException {
         // Collect errors from soft assertions
         List<Throwable> failures = soft.errorsCollected();
 
-        // Extract and format failure messages
-        String failureMessages = failures.stream()
-                .map(Throwable::getMessage) // Get the message of the failure
-                .map(msg -> msg.split("at AssertionUtils")[0]) // Remove anything from "at AssertionUtils" onwards
-                .collect(Collectors.joining("-- failure --"));
-
         // Verify all soft assertions
-        logAssertionError(soft::assertAll, "-- failure --" + failureMessages);
+        if (!failures.isEmpty()){
+            // Extract and format failure messages
+            String failureMessages = failures.stream()
+                    .map(Throwable::getMessage) // Get the message of the failure
+                    .map(msg -> msg.split("at AssertionUtils")[0]) // Remove anything from "at AssertionUtils" onwards
+                    .collect(Collectors.joining("\n" + "-- failure --"));
+
+            logAssertionError(soft::assertAll, "-- failure --" + failureMessages);
+        }
+        else{ // return all custom messages if all tests passes
+           String successMessages = String.join("\n", customMessages);
+
+            logAssertionError(soft::assertAll, successMessages);
+        }
+
     }
 }
