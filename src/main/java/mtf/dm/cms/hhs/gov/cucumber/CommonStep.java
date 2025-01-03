@@ -145,8 +145,8 @@ public class CommonStep {
             String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
             JSONObject jsonObject = new JSONObject(body);
             getTestScenarioClass().setJsonObject(jsonObject);
-            //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("INPUT JSON DATA", ExtentColor.BLUE));
-            //ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("INPUT JSON DATA", ExtentColor.BLUE));
+            ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
         } catch (Exception e) {
             MyLogger.error("Failed to load JSON file: " + fileName, e);
             throw new SuppressedStackTraceException("Failed to load JSON file: " + fileName);

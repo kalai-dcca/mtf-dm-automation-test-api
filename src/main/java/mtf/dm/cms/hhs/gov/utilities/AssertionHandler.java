@@ -1,6 +1,8 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.assertj.core.api.SoftAssertions;
 
 import java.util.List;
@@ -22,8 +24,10 @@ public class AssertionHandler {
         try{
             assertion.run();
             // Add custom message to Extent report
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESULT", ExtentColor.GREEN));
             ExtentCucumberAdapter.addTestStepLog("<pre>" + customMessage + "</pre>");
         } catch (AssertionError e){
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESULT", ExtentColor.RED));
             MyLogger.error(customMessage,e);
             // Throw assertion error
             throw new SuppressedStackTraceException(customMessage);
