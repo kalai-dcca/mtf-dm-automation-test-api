@@ -17,7 +17,7 @@ Feature: Data Exchange MFP Excel File Ingestion
     Given the "dataExchange" file "mfpDemo.xlsx" follows the specification in "mfpDemo" in sheet "MFP Pricing File - Data"
     # When the "dataExchange" microservice processes the file //WILL IMPLEMENT AFTER WE CONFIRM DEVELOPMENT IMPLEMENTATION
     When "dataExchange" database is queried
-	 """
+      """
       SELECT
         ndc_9, ndc_11
       FROM
@@ -27,7 +27,7 @@ Feature: Data Exchange MFP Excel File Ingestion
       | ndc_9  | NDC-9  |
       | ndc_11 | NDC-11 |
     When "dataExchange" database is queried
-	 """
+      """
       SELECT
         ipay, ndc_brand_name, ndc_active_ingredient_name
       FROM
