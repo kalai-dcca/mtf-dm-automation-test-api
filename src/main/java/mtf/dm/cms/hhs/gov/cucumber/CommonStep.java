@@ -238,8 +238,8 @@ public class CommonStep {
             MyLogger.error("Unable to load expected data from file: " + expectedFilePath, e);
             throw new SuppressedStackTraceException("Unable to load expected data from file: " + expectedFilePath);
         }
-        ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE DATA", ExtentColor.GREEN));
-        ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
+        //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE DATA", ExtentColor.GREEN));
+        //ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
 
         // Ensure the expected data is valid
         assertNotNull(expectedData, "Expected data file is empty or invalid!");
