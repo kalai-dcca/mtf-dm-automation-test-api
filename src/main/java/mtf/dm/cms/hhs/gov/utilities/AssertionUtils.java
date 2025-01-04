@@ -1,5 +1,11 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.StringUtils;
 
@@ -246,7 +252,10 @@ public class AssertionUtils {
      * @param arrayField     The JSON path to the array (e.g., "data").
      * @param expectedEntries The list of expected objects (key-value pairs).
      */
-    public static void assertArrayContainsEntriesFromFile(Response response, String arrayField, List<Map<String, Object>> expectedEntries) throws SuppressedStackTraceException {
+    public static void assertArrayContainsEntriesFromFile(Response response, String arrayField, JsonNode expectedEntries) throws SuppressedStackTraceException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode actualData;
+
         if (Objects.isNull(response)) {
             throw new SuppressedStackTraceException("Error: Response is null");
         }
@@ -257,20 +266,13 @@ public class AssertionUtils {
             throw new SuppressedStackTraceException("Error: The array field named '" + arrayField + "' is empty or does not exist.");
         }
 
-        // Normalize actual and expected arrays: Convert maps to sorted strings for comparison
-        Set<String> actualSet = actualArray.stream()
-                .map(AssertionUtils::normalizeMap)
-                .collect(Collectors.toSet());
+        actualData = objectMapper.readTree(response.getBody().asString()).get(arrayField);
 
-        Set<String> expectedSet = expectedEntries.stream()
-                .map(AssertionUtils::normalizeMap)
-                .collect(Collectors.toSet());
-
-        // Compare sets
-        AssertionHandler.logAssertionError(() ->{
-            Assertions.assertThat(actualSet).containsExactlyInAnyOrderElementsOf(expectedSet);
-        },"Expecting actual: " + "\n   " + actualSet + "\n" + "to contain: " + "\n   " + expectedSet);
-
+        // Compare JSON Objects
+        SoftAssertions soft = new SoftAssertions();
+        compareJsonArrays(expectedEntries, actualData, soft);
+        soft.assertAll();
+        
     }
 
 
@@ -287,5 +289,67 @@ public class AssertionUtils {
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining(","));
     }
+
+    private static void compareJsonArrays(JsonNode expectedArray, JsonNode actualArray, SoftAssertions soft) {
+
+        // Validate the size of arrays
+        soft.assertThat(actualArray.size()).isEqualTo(expectedArray.size());
+        if (expectedArray.size() != actualArray.size()) {
+            ExtentCucumberAdapter.addTestStepLog("<pre>" + "Array size mismatch: Expected " + expectedArray.size() + ", but got " + actualArray.size() + "</pre>");
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE ARRAY SIZE NOT MATCHED - TEST FAIL", ExtentColor.RED));
+        }
+
+        // Iterate through the arrays
+        for (int i = 0; i < expectedArray.size(); i++) {
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("Validating for Resource "+ (i+1), ExtentColor.BLACK));
+            JsonNode expectedObject = expectedArray.get(i);
+            JsonNode actualObject = actualArray.get(i);
+
+            compareJsonObjects(expectedObject, actualObject, soft);
+
+        }
+    }
+
+    private static void compareJsonObjects(JsonNode expected, JsonNode actual, SoftAssertions soft) {
+
+        // Iterate through fields in the expected object
+        for (String key : IterableAsList(expected.fieldNames())) {
+            soft.assertThat(actual.has(key)).isTrue();
+            if (actual.has(key)) {
+                JsonNode expectedValue = expected.get(key);
+                JsonNode actualValue = actual.get(key);
+                ExtentCucumberAdapter.addTestStepLog("<pre>" + "FIELD NAME: "+ key + "\n" +
+                        key + " value in File : " + expectedValue + "\n" +
+                        key + " value in Response : " + actualValue + "</pre>");
+                soft.assertThat(actualValue).isEqualTo(expectedValue);
+                if (!expectedValue.equals(actualValue)) {
+                    ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("VALUE NOT MATCHED - TEST FAIL", ExtentColor.RED));
+                } else {
+                    ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("VALUE MATCHED - TEST PASS", ExtentColor.GREEN));
+                }
+            } else {
+                ExtentCucumberAdapter.addTestStepLog("<pre>" + "FIELD NAME :" + key + " is missing in actual response" + "</pre>");
+                ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("KEY MISSING - TEST FAIL", ExtentColor.RED));
+
+            }
+        }
+
+        // Check for extra keys in the actual object
+        for (String key : IterableAsList(actual.fieldNames())) {
+            soft.assertThat(expected.has(key)).isTrue();
+            if (!expected.has(key)) {
+                ExtentCucumberAdapter.addTestStepLog("<pre>" + "FIELD NAME :" + key + " is coming extra in actual response" + "</pre>");
+                ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("EXTRA KEY FOUND - TEST FAIL", ExtentColor.RED));
+            }
+        }
+    }
+
+    // Helper method to iterate through field names
+    private static Iterable<String> IterableAsList(Iterator<String> iterator) {
+        List<String> list = new ArrayList<>();
+        iterator.forEachRemaining(list::add);
+        return list;
+    }
+
 }
 

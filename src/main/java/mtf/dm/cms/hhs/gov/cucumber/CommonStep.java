@@ -4,6 +4,7 @@ import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -96,8 +97,8 @@ public class CommonStep {
                 getTestScenarioClass().setUserID(ExcelUtils.getUserId(testCase));
             }
             //extentReports.createTest("Data Table").info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("REQUEST BODY", ExtentColor.BLUE));
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
+            //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("REQUEST BODY", ExtentColor.BLUE));
+            //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
 
         }
         catch (Exception e) {
@@ -228,18 +229,15 @@ public class CommonStep {
 
         // Load expected values from the JSON file
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Map<String, Object>> expectedData;
+        JsonNode expectedData;
         String body;
         try {
             body = new String(Files.readAllBytes(Paths.get("src/test.demoApi/resources/response/" + expectedFilePath)));
-            expectedData = objectMapper.readValue(body,
-                    new TypeReference<List<Map<String, Object>>>() {});
+            expectedData = objectMapper.readTree(body);
         } catch (Exception e) {
             MyLogger.error("Unable to load expected data from file: " + expectedFilePath, e);
             throw new SuppressedStackTraceException("Unable to load expected data from file: " + expectedFilePath);
         }
-        //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE DATA", ExtentColor.GREEN));
-        //ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
 
         // Ensure the expected data is valid
         assertNotNull(expectedData, "Expected data file is empty or invalid!");
