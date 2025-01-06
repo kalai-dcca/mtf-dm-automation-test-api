@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test.demoApi/resources/environment/dev/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/impl/ApiImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/impl/ApiImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/feature/demoApi.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/resources/feature/demoApi.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/runners/TestRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/runners/TestRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/feature/administration.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/feature/administration.feature" afterDir="false" />
-    </list>
+    <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,7 +46,7 @@
     "Maven.mtf-dm-automation-test-api [test].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "mtf-dm-automation-farruh",
+    "git-widget-placeholder": "mtf-dm-automation-Farruh",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.demoApi/resources/environment/prod",
     "project.structure.last.edited": "Modules",
