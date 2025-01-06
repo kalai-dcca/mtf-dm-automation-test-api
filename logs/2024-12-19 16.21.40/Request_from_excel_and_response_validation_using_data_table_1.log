@@ -1,0 +1,12 @@
+2024-12-19 16:21:46,138 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started : Request_from_excel_and_response_validation_using_data_table
+2024-12-19 16:21:46,142 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:setup 13==>  Starting the test...
+2024-12-19 16:21:46,146 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/_rels/workbook.xml.rels
+2024-12-19 16:21:46,148 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet1.xml.rels
+2024-12-19 16:21:46,151 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet6.xml.rels
+2024-12-19 16:21:46,151 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /_rels/.rels
+2024-12-19 16:21:46,155 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
+2024-12-19 16:21:46,156 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
+2024-12-19 16:21:46,165 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.ExcelUtils:getDataBasedOnTestCaseAndCallType 85==>  {"name":"UserNameUpdatedA","job":"ManagerUpdated"}
+2024-12-19 16:21:46,424 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyResponseValuesWithDatatable 145==>  Verifying status code {200} and message {2024}
+2024-12-19 16:21:46,424 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyResponseValuesWithDatatable 151==>  Validation completed successfully for status code {200} and message {2024}
+2024-12-19 16:21:46,426 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:tearDown 18==>  Test execution completed.

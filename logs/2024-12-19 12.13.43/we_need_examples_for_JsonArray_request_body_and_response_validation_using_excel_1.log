@@ -1,0 +1,27 @@
+2024-12-19 12:13:48,974 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started : we_need_examples_for_JsonArray_request_body_and_response_validation_using_excel
+2024-12-19 12:13:48,979 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:setup 14==>  Starting the test...
+2024-12-19 12:13:48,984 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/_rels/workbook.xml.rels
+2024-12-19 12:13:48,987 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet1.xml.rels
+2024-12-19 12:13:48,987 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /_rels/.rels
+2024-12-19 12:13:48,992 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
+2024-12-19 12:13:49,217 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyStatusCode 99==>  Verifying status code {200}
+2024-12-19 12:13:49,217 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyStatusCode 105==>  Validation completed successfully for status code {200}
+2024-12-19 12:13:49,218 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:tearDown 19==>  Test execution completed.
+2024-12-19 12:13:49,241 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started : we_need_examples_for_JsonArray_request_body_and_response_validation_using_excel
+2024-12-19 12:13:49,242 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:setup 14==>  Starting the test...
+2024-12-19 12:13:49,253 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/_rels/workbook.xml.rels
+2024-12-19 12:13:49,255 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet1.xml.rels
+2024-12-19 12:13:49,257 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /_rels/.rels
+2024-12-19 12:13:49,275 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
+2024-12-19 12:13:49,514 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyStatusCode 99==>  Verifying status code {200}
+2024-12-19 12:13:49,515 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyStatusCode 105==>  Validation completed successfully for status code {200}
+2024-12-19 12:13:49,515 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:tearDown 19==>  Test execution completed.
+2024-12-19 12:13:49,532 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started : we_need_examples_for_JsonArray_request_body_and_response_validation_using_excel
+2024-12-19 12:13:49,532 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:setup 14==>  Starting the test...
+2024-12-19 12:13:49,541 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/_rels/workbook.xml.rels
+2024-12-19 12:13:49,543 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet1.xml.rels
+2024-12-19 12:13:49,546 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /_rels/.rels
+2024-12-19 12:13:49,560 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
+2024-12-19 12:13:49,820 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyStatusCode 99==>  Verifying status code {200}
+2024-12-19 12:13:49,821 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyStatusCode 105==>  Validation completed successfully for status code {200}
+2024-12-19 12:13:49,822 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:tearDown 19==>  Test execution completed.

@@ -1,6 +1,7 @@
-@REG-API-CREATE-POST @REG-API
+@REG-API @smoke
 Feature: DEMO Create API Testing POST
 
+  @smoke
   Scenario Outline: Validate request and response Expected values are passed excel file
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Create", TestCase-"<TestCaseId>"
     When Launch "/api/users", Method: "POST"
@@ -10,7 +11,7 @@ Feature: DEMO Create API Testing POST
       | C-TC001    |
 
 
-
+  @smoke
   Scenario Outline: Validate request and response Expected values from examples
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Create", TestCase-"<TestCaseId>"
     When Launch "/api/users", Method: "POST"

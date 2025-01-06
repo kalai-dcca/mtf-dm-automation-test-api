@@ -1,0 +1,60 @@
+2024-12-19 16:02:28,811 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started : Validate_request_and_response_Expected_values_are_passed_excel_file
+2024-12-19 16:02:28,836 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:setup 14==>  Starting the test...
+2024-12-19 16:02:28,935 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/_rels/workbook.xml.rels
+2024-12-19 16:02:28,939 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet1.xml.rels
+2024-12-19 16:02:28,942 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet6.xml.rels
+2024-12-19 16:02:28,944 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /_rels/.rels
+2024-12-19 16:02:29,074 [TRACE ] [SchemaTypeSystemImpl.java:196] - Loading type system org.apache.poi.schemas.ooxml.system.ooxml
+2024-12-19 16:02:29,078 [TRACE ] [SchemaTypeSystemImpl.java:196] - Loading type system org.apache.xmlbeans.metadata.system.sXMLCONFIG
+2024-12-19 16:02:29,080 [TRACE ] [SchemaTypeSystemImpl.java:196] - Loading type system org.apache.xmlbeans.metadata.system.sXMLLANG
+2024-12-19 16:02:29,082 [TRACE ] [SchemaTypeSystemImpl.java:196] - Loading type system org.apache.xmlbeans.metadata.system.sXMLSCHEMA
+2024-12-19 16:02:29,083 [TRACE ] [SchemaTypeSystemImpl.java:196] - Loading type system org.apache.xmlbeans.metadata.system.sXMLTOOLS
+2024-12-19 16:02:29,085 [TRACE ] [SchemaTypeSystemImpl.java:231] - Reading unresolved handles for type system org.apache.xmlbeans.metadata.system.sXMLTOOLS
+2024-12-19 16:02:29,099 [TRACE ] [SchemaTypeSystemImpl.java:206] - Finished loading type system org.apache.xmlbeans.metadata.system.sXMLTOOLS
+2024-12-19 16:02:29,100 [TRACE ] [SchemaTypeSystemImpl.java:231] - Reading unresolved handles for type system org.apache.xmlbeans.metadata.system.sXMLSCHEMA
+2024-12-19 16:02:29,103 [TRACE ] [SchemaTypeSystemImpl.java:206] - Finished loading type system org.apache.xmlbeans.metadata.system.sXMLSCHEMA
+2024-12-19 16:02:29,105 [TRACE ] [SchemaTypeSystemImpl.java:231] - Reading unresolved handles for type system org.apache.xmlbeans.metadata.system.sXMLLANG
+2024-12-19 16:02:29,106 [TRACE ] [SchemaTypeSystemImpl.java:206] - Finished loading type system org.apache.xmlbeans.metadata.system.sXMLLANG
+2024-12-19 16:02:29,107 [TRACE ] [SchemaTypeSystemImpl.java:231] - Reading unresolved handles for type system org.apache.xmlbeans.metadata.system.sXMLCONFIG
+2024-12-19 16:02:29,108 [TRACE ] [SchemaTypeSystemImpl.java:206] - Finished loading type system org.apache.xmlbeans.metadata.system.sXMLCONFIG
+2024-12-19 16:02:29,110 [TRACE ] [SchemaTypeSystemImpl.java:231] - Reading unresolved handles for type system org.apache.poi.schemas.ooxml.system.ooxml
+2024-12-19 16:02:29,171 [TRACE ] [SchemaTypeSystemImpl.java:206] - Finished loading type system org.apache.poi.schemas.ooxml.system.ooxml
+2024-12-19 16:02:29,172 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle sstf81fdoctype
+2024-12-19 16:02:29,213 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctsst44f3type
+2024-12-19 16:02:29,218 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctrsta472type
+2024-12-19 16:02:29,233 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle themefd26doctype
+2024-12-19 16:02:29,243 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle stylesheet5d8bdoctype
+2024-12-19 16:02:29,247 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctstylesheet4257type
+2024-12-19 16:02:29,250 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctfonts6623type
+2024-12-19 16:02:29,252 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctfont14d8type
+2024-12-19 16:02:29,256 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctfills2c6ftype
+2024-12-19 16:02:29,257 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctfill550ctype
+2024-12-19 16:02:29,259 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctborders0d66type
+2024-12-19 16:02:29,260 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctborderf935type
+2024-12-19 16:02:29,261 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctcellxfs1322type
+2024-12-19 16:02:29,262 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctxf97f7type
+2024-12-19 16:02:29,265 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctcellstylexfsa81ftype
+2024-12-19 16:02:29,266 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctdxfsb26atype
+2024-12-19 16:02:29,267 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle cttablestyles872ftype
+2024-12-19 16:02:29,269 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
+2024-12-19 16:02:29,270 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
+2024-12-19 16:02:29,271 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle workbookec17doctype
+2024-12-19 16:02:29,275 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctworkbook83c3type
+2024-12-19 16:02:29,279 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctsheets49fdtype
+2024-12-19 16:02:29,282 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctsheet4dbetype
+2024-12-19 16:02:29,284 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle strelationshipid1e94type
+2024-12-19 16:02:29,288 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle worksheetf539doctype
+2024-12-19 16:02:29,295 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctworksheet530dtype
+2024-12-19 16:02:29,300 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctsheetdata8408type
+2024-12-19 16:02:29,302 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctrowdd39type
+2024-12-19 16:02:29,304 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctcell842btype
+2024-12-19 16:02:29,310 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle stcellrefe4e0type
+2024-12-19 16:02:29,316 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctcols627ctype
+2024-12-19 16:02:29,320 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle ctcola95ftype
+2024-12-19 16:02:29,356 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle stxstringf179type
+2024-12-19 16:02:29,364 [TRACE ] [SchemaTypeSystemImpl.java:935] - Resolving type for handle stcelltypebf95type
+2024-12-19 16:02:31,073 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyResponseValuesFromExcelForAttributes 157==>  Starting validation for response attributes: {STATUS_CODE,createdAt}
+2024-12-19 16:02:31,075 [ERROR ] [MyLogger.java:80] - mtf.dm.cms.hhs.gov.utilities.AssertionUtils:verifyStatusCodeAndAttributesFromExcel 197==>  Retrieved attribute values from Excel: {{createdAt=2024, STATUS_CODE=201}}
+2024-12-19 16:02:32,281 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.AssertionUtils:verifyStatusCodeAndAttributesFromExcel 221==>  Validation passed for attribute '{createdAt}'. Expected to contain: {2024}
+2024-12-19 16:02:32,281 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyResponseValuesFromExcelForAttributes 162==>  Validation completed successfully for attributes: {STATUS_CODE,createdAt}
+2024-12-19 16:02:32,283 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:tearDown 19==>  Test execution completed.

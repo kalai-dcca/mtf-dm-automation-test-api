@@ -1,0 +1,4 @@
+2024-12-20 14:04:26,688 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started: Validate_request_and_response_Expected_values_from_example_table
+2024-12-20 14:04:26,934 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyResponseValuesWithDatatable 145==>  Verifying status code {201} and message {2024}
+2024-12-20 14:04:27,057 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.CommonStep:verifyResponseValuesWithDatatable 151==>  Validation completed successfully for status code {201} and message {2024}
+2024-12-20 14:04:27,061 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:endTestCase 20==>  Execution Ended: Validate request and response Expected values from example table
