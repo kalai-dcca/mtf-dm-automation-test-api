@@ -2,6 +2,7 @@ package mtf.dm.cms.hhs.gov.impl;
 
 import io.cucumber.core.internal.com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
+import mtf.dm.cms.hhs.gov.utilities.YamlReader;
 
 import java.io.File;
 
@@ -10,7 +11,7 @@ import static io.restassured.RestAssured.given;
 
 public class ApiImpl {
 
-    private String baseUrl = "https://reqres.in";  // Example base URL, should be parameterized or configurable.
+    private String baseUrl = YamlReader.getYamlProperties(System.getProperty("env"),"baseUrl");  // Example base URL, should be parameterized or configurable.
 
     // Method to send API requests (GET, POST, PUT, DELETE)
     public Response sendApiRequest(String endpoint, String method, String requestBodyFile) {
