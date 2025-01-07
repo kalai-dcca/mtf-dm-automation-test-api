@@ -1,9 +1,0 @@
-2024-12-20 11:44:00,518 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started: request_from_Excel_and_validate_response_Expected_values_from_json_file
-2024-12-20 11:44:00,530 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/_rels/workbook.xml.rels
-2024-12-20 11:44:00,531 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet1.xml.rels
-2024-12-20 11:44:00,533 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /xl/worksheets/_rels/sheet6.xml.rels
-2024-12-20 11:44:00,535 [DEBUG ] [PackageRelationshipCollection.java:309] - Parsing relationship: /_rels/.rels
-2024-12-20 11:44:00,545 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
-2024-12-20 11:44:00,546 [DEBUG ] [POIXMLFactory.java:65] - using default POIXMLDocumentPart for http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings
-2024-12-20 11:44:00,567 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.ExcelUtils:getDataBasedOnTestCaseAndCallType 85==>  {}
-2024-12-20 11:44:00,749 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:endTestCase 20==>  Execution Ended: request from Excel and validate response Expected values from json file

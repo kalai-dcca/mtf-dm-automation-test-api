@@ -1,2 +1,0 @@
-2024-12-23 09:59:06,150 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started: Validate_both_request_and_response_from_json_file
-2024-12-23 09:59:06,444 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:endTestCase 20==>  Execution Ended: Validate both request and response from json file

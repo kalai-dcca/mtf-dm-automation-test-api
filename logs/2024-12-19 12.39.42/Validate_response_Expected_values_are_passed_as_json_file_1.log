@@ -1,3 +1,0 @@
-2024-12-19 12:39:46,312 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.utilities.MyLogger:startTestCase 16==>  Execution Started : Validate_response_Expected_values_are_passed_as_json_file
-2024-12-19 12:39:46,315 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:setup 14==>  Starting the test...
-2024-12-19 12:39:46,544 [INFO  ] [MyLogger.java:97] - mtf.dm.cms.hhs.gov.cucumber.Hooks:tearDown 19==>  Test execution completed.
