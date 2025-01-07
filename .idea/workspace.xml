@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/feature/demoApi.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/resources/feature/demoApi.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/DataGenerator.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +53,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "mtf-dm-automation-Farruh",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.demoApi/resources/feature",
+    "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.demoApi/resources/testData",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -60,11 +62,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\testData" />
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\feature" />
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment\prod" />
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment\test" />
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment\local" />
-      <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment\impl" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources" />
@@ -180,6 +182,7 @@
               <list>
                 <option value="clean" />
                 <option value="test" />
+                <option value="-DFilter.tags=@fred" />
               </list>
             </option>
             <option name="multimoduleDir" />
