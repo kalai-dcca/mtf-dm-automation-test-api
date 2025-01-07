@@ -5,46 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/jsonSpecs/ExcelColumnSpec.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/jsonSpecs/ExcelSheetSpec.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/JsonUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/MyLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/SuppressedStackTraceException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.dataExchange/feature/mfpExcelDemo.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.dataExchange/resources/database/dataExchange.accdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.dataExchange/resources/database/dataExchange.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.dataExchange/resources/database/database.config.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.dataExchange/resources/filesToIngest/mfpDemo.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.dataExchange/resources/specifications/mfpDemo.specs.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.dataExchange/resources/testData/dataExchangeDemoData.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test.demoApi/resources/response/ExpectedResponse-Page-1.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/extent-config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/extent.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/pdf-config.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/CommonStep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/CommonStep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/Hooks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/cucumber/Hooks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/impl/DemoApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/impl/DemoApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/AssertionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/AssertionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/AssertionUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/AssertionUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/BaseClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/BaseClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/DBUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/DBUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/ExcelUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/ExcelUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/ExtentReportListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/ExtentReportListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/FileHandlerUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/FileHandlerUtility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/FileUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/LoggerUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/SheetType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/SheetType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/TestScenarioClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mtf/dm/cms/hhs/gov/utilities/TestScenarioClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/feature/demoApi.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/resources/feature/demoApi.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/json/TC1000.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/json/create.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/resources/request/create.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/testData/demoData.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/resources/testData/demoData.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/runners/CucumberRunnerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/runners/CucumberRunnerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +49,7 @@
     "Maven.mtf-dm-automation-test-api [test].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging mtf-dm-automation-Farruh",
+    "git-widget-placeholder": "mtf-dm-automation-Farruh",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api - Copy",
     "project.structure.last.edited": "Modules",
