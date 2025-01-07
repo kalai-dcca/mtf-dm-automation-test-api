@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3b0f5c3-3e34-460b-8c5b-389f10a1a3d8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test.demoApi/resources/feature/demoApi.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.demoApi/resources/feature/demoApi.feature" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +51,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "mtf-dm-automation-Farruh",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api - Copy",
+    "last_opened_file_path": "C:/Users/fosman/IdeaProjects/mtf-dm-automation-test-api/src/test.demoApi/resources/feature",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -61,11 +60,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\feature" />
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment\prod" />
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment\test" />
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment\local" />
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment\impl" />
-      <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources\environment" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\fosman\IdeaProjects\mtf-dm-automation-test-api\src\test.demoApi\resources" />
