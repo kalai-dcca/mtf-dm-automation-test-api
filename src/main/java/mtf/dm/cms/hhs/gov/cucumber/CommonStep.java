@@ -11,6 +11,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import mtf.dm.cms.hhs.gov.impl.DemoApi;
+import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelColumnSpec;
 import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelSheetSpec;
 import mtf.dm.cms.hhs.gov.utilities.*;
 import org.json.JSONObject;
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 import static mtf.dm.cms.hhs.gov.utilities.BaseClass.getTestScenarioClass;
+import static mtf.dm.cms.hhs.gov.utilities.DBUtils.executeSqlQuery;
+import static mtf.dm.cms.hhs.gov.utilities.FileHandlerUtility.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CommonStep {
@@ -296,6 +299,51 @@ public class CommonStep {
         } catch (Exception e) {
             MyLogger.error("Error during test case data setup: " + e.getMessage(), e);
             throw new SuppressedStackTraceException("Error during test case data setup: " + e.getMessage());
+        }
+    }
+
+    @Then("verify file data is in the {string} database")
+    public void verifyFileDataIsInDatabase(String directoryString) {
+        try {
+            // Step 1: Retrieve Test Case Data Setup
+            String testCaseId = getTestScenarioClass().getTestCaseID(); // Implement method to retrieve TestCase ID
+
+            Map<String, String> testCaseData = getTestScenarioClass().getTestCaseData();
+
+            String sheet = getTestScenarioClass().getSheet();
+
+            ExcelSheetSpec sheetSpec = (ExcelSheetSpec) BaseClass.getScenarioVariable("sheetSpecForFileData");
+            Map<String, ExcelColumnSpec> columnSpecs = sheetSpec.getColumnSpecs();
+
+            @SuppressWarnings("unchecked")
+            List<List<String>> dataByColumn = (List<List<String>>) BaseClass.getScenarioVariable("dataByColumnForFileToIngest");
+            System.out.println("Expected Data: " + dataByColumn.toString());
+
+            //Get database json file
+            String configFilePath = String.format("src/test.%s/resources/database/database.config.json", directoryString);
+
+
+            if (!testCaseData.containsKey("sql_query")) {
+                throw new IllegalArgumentException("SQL not found in Test Case Data.");
+            }
+
+            String sqlQuery = testCaseData.get("sql_query");
+            String expectedValue = testCaseData.get("expected_value");
+
+            // Step 2: Execute SQL Query
+            ResultSet resultSet = executeSqlQuery(configFilePath, sqlQuery);
+            // Display results
+            DBUtils.displayAllData();
+
+            // Step 3: Transform ResultSet to List<List<String>>
+            List<List<String>> sqlDataByColumn  = transformResultSetToList(resultSet, columnSpecs, expectedValue);
+            System.out.println("Actual Data: " + sqlDataByColumn);
+
+            // Step 4: Compare List<List<String>>
+            Boolean isMatch = compareLists(dataByColumn, sqlDataByColumn);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error verifying file data in database: " + e.getMessage(), e);
         }
     }
 

@@ -14,8 +14,8 @@ public abstract class BaseClass {
         scenarioVariables.put(variableName, value);
     }
 
-    public static void getScenarioVariable(String variableName) {
-        scenarioVariables.get(variableName);
+    public static Object getScenarioVariable(String variableName) {
+        return scenarioVariables.get(variableName);
     }
 
     public static final String reportPath = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss").format(new Date());
