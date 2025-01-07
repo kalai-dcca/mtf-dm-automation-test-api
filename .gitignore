@@ -7,3 +7,5 @@
 /.idea
 /reports
 test-output/
+logs
+reports
