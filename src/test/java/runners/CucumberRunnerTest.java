@@ -21,7 +21,8 @@ import static io.cucumber.junit.platform.engine.Constants.*;
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME,value = "mtf.dm.cms.hhs.gov.cucumber")
 @ConfigurationParameter(key = Constants.FEATURES_PROPERTY_NAME,value = "src/test.demoApi/resources/feature/demoApi.feature")
 @ConfigurationParameter(key = EXECUTION_DRY_RUN_PROPERTY_NAME,value = "false")
-@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME,value = "pretty, html:target/cucumber-report/cucumber.html, json:target/cucumber-reports/cucumber.json, mtf.dm.cms.hhs.gov.utilities.ExtentReportListener")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME,value = "pretty, html:target/cucumber-report/cucumber.html, json:target/cucumber-reports/cucumber.json")
+@ConfigurationParameter(key = PLUGIN_PROPERTY_NAME,value = "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:")
 
 
 public class CucumberRunnerTest {

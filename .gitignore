@@ -1,2 +1,9 @@
-target
-.idea
+/target/
+.idea/
+*.iml
+.idea/workspace.xml
+/.idea
+/logs
+/.idea
+/reports
+test-output/

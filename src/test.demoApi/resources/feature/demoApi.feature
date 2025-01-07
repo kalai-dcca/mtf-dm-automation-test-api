@@ -1,44 +1,48 @@
-@REG-API @smoke
+@REG-API-CREATE-POST @REG-API @smoke
 Feature: DEMO Create API Testing POST
 
-  @smoke
+  @Fred
   Scenario Outline: Validate request and response Expected values are passed excel file
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Create", TestCase-"<TestCaseId>"
     When Launch "/api/users", Method: "POST"
-    Then Verify status code 201 and message "2024"
+    Then Verify response values from Excel for attributes "STATUS_CODE,createdAt"
     Examples:
       | TestCaseId |
       | C-TC001    |
 
 
-  @smoke
-  Scenario Outline: Validate request and response Expected values from examples
-    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Create", TestCase-"<TestCaseId>"
+
+  Scenario: Validate request and response Expected values from example table
+    When TestCaseDataSetup
+      | userName | testUserName |
+      | userRole | Manager      |
     When Launch "/api/users", Method: "POST"
-    Then Verify status code 201 and message "2024"
+    Then Verify response values:
+      | statusCode | message |
+      | 201        | 2025   |
+
+
+  Scenario: Validate both request and response from json file
+    When TestCaseDataSetup, JSONFile-"create.json"
+    When Fetch all pages from "/api/users" with query param "page" and method "GET"
+    Then Verify status code 200 and the response array "data" matches expected values from "ExpectedResponse-Page-1.json"
+
+
+  Scenario Outline: request from Excel and validate response Expected values from json file
+    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"List-Users", TestCase-"<TestCaseId>"
+    When Fetch all pages from "/api/users" with query param "page" and method "GET"
+    Then Verify status code 200 and the response array "data" matches expected values from "<ExpectedJson>"
     Examples:
-      | TestCaseId |
-      | C-TC001    |
-      | C-TC002    |
-      | C-TC003    |
-      | C-TC004    |
+      | TestCaseId    | ExpectedJson |
+      | LU-TC001      |    ExpectedResponse-Page-1.json         |
 
 
-  Scenario Outline: Validate response Expected values are passed as json file
-    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"List users", TestCase-"<TestCaseId>"
-    When Launch "/api/users", QParam:"page" Method: "GET"
-    Then Verify status code 200
-    Examples:
-      | TestCaseId |
-      | LU-TC001   |
-      | LU-TC002   |
-      | LU-TC003   |
-      | LU-TC004   |
-
-  Scenario Outline: Validate request and response Expected values are passed as json file
+  Scenario Outline: Request from excel and  response validation using data table multi scenarios
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Update-PATCH", TestCase-"<TestCaseId>"
     When Launch "/api/users", Method: "PATCH"
-    Then Verify status code 200
+    Then Verify response values:
+      | statusCode | message |
+      | 200        | 2025    |
     Examples:
       | TestCaseId    |
       | U-PATCH-TC001 |
@@ -46,12 +50,20 @@ Feature: DEMO Create API Testing POST
       | U-PATCH-TC003 |
 
 
-  Scenario Outline: we need examples for JsonArray request body and response validation using excel
-    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Update-PATCH", TestCase-"<TestCaseId>"
-    When Launch "/api/users", Method: "PATCH"
-    Then Verify status code 200
+  Scenario Outline: Request from excel and validate response status only
+    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Delete", TestCase-"<TestCaseId>"
+    When Launch "/api/users", Method: "DELETE"
+    Then Verify status code 204
     Examples:
       | TestCaseId    |
-      | U-PATCH-TC001 |
-      | U-PATCH-TC002 |
-      | U-PATCH-TC003 |
+      | DEL-TC001 |
+
+  Scenario Outline: Request from excel and  response validation using data table
+    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Update-PUT", TestCase-"<TestCaseId>"
+    When Launch "/api/users", Method: "PUT"
+    Then Verify response values:
+      | statusCode | message |
+      | 200        | 2025    |
+    Examples:
+      | TestCaseId    |
+      | U-PUT-TC001 |

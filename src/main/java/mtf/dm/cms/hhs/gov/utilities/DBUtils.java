@@ -1,5 +1,9 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
 import java.sql.*;
 import java.util.*;
 
@@ -28,6 +32,39 @@ public class DBUtils {
             }
         }
 
+    /**
+     * Create Connection using a config file
+     *
+     * @param configFilePath path to config file
+     */
+    public static void createConnectionFromConfig(String configFilePath) {
+        try {
+            // Load the JSON file for the database
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Map<String, String>> config = objectMapper.readValue(new File(configFilePath), new TypeReference<>() {
+            });
+
+            // Get the configuration for the selected environment
+            String env = System.getProperty("env", "local"); // Default to 'local' if not provided
+            Map<String, String> dbConfig = config.get(env);
+            if (dbConfig == null) {
+                throw new RuntimeException("Environment not found in configuration: " + env);
+            }
+
+            // Extract connection details
+            String url = dbConfig.get("url");
+            String username = dbConfig.get("username");
+            String password = dbConfig.get("password");
+
+            // Connect to database
+            DBUtils.createConnection(url, username, password);
+
+            System.out.println("CONNECTION SUCCESSFUL");
+        } catch (Exception e) {
+            System.out.println("CONNECTION HAS FAILED " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 
         /**
          * Run the sql provided query and return ResultSet object
@@ -316,4 +353,23 @@ public class DBUtils {
             resetCursor();
             return allRowListOfMap;
         }
+
+    public static Object getAllDataAsMap() {
+        Map<Integer,String> data = new HashMap<>();
+        int row = 1;
+        int columnCount = getColumnCount();
+        resetCursor();
+        try {
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    data.put(row,resultSet.getString(i));
+                    row++;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR OCCURRED WHILE RUNNING displayAllData()  " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+        return data;
+    }
 }

@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import io.cucumber.core.exception.ExceptionUtils;
 import io.cucumber.plugin.ConcurrentEventListener;
 import io.cucumber.plugin.event.*;
 
@@ -16,6 +17,7 @@ import java.util.Map;
 public class ExtentReportListener implements ConcurrentEventListener {
 
     private static ExtentReports extent;
+    private static ExtentTest currentTest;
     private static Map<String, ExtentTest> scenarioTestMap = new HashMap<>();
 
     static {
@@ -52,6 +54,7 @@ public class ExtentReportListener implements ConcurrentEventListener {
                 .assignAuthor(System.getProperty("tester.name", System.getProperty("user.name", "Unknown Tester")));
         test.info("Test Started: " + event.getTestCase().getName());
         scenarioTestMap.put(event.getTestCase().getId().toString(), test);
+        currentTest = test;
     }
 
     private void onTestStepFinished(TestStepFinished event) {
@@ -80,14 +83,19 @@ public class ExtentReportListener implements ConcurrentEventListener {
 
 
     // Helper method to get the current Git branch name
-    private static String getGitBranch() {
+    public static String getGitBranch() {
         try {
             Process process = Runtime.getRuntime().exec("git rev-parse --abbrev-ref HEAD");
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             return reader.readLine().trim();
         } catch (Exception e) {
-            e.printStackTrace();
+            MyLogger.endTestCase(ExceptionUtils.printStackTrace(e));
             return "Unknown Branch";
         }
+    }
+
+    // Helper method to get the current Test Case
+    public static ExtentTest getCurrentTest() {
+        return currentTest;
     }
 }

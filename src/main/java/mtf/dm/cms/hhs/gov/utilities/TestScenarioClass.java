@@ -3,6 +3,9 @@ package mtf.dm.cms.hhs.gov.utilities;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 
+import java.util.List;
+import java.util.Map;
+
 public class TestScenarioClass extends BaseClass{
     private ExcelUtils excelUtils;
     private JSONObject jsonObject;
@@ -57,5 +60,15 @@ public class TestScenarioClass extends BaseClass{
 
     public void setSheet(String sheet) {
         this.sheet = sheet;
+    }
+
+    private List<Map<String, Object>> combinedData;
+
+    public List<Map<String, Object>> getCombinedData() {
+        return combinedData;
+    }
+
+    public void setCombinedData(List<Map<String, Object>> combinedData) {
+        this.combinedData = combinedData;
     }
 }

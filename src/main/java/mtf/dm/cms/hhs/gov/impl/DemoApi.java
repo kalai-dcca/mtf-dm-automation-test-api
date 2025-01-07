@@ -3,6 +3,9 @@ package mtf.dm.cms.hhs.gov.impl;
 import io.restassured.response.Response;
 import mtf.dm.cms.hhs.gov.utilities.ExcelUtils;
 import mtf.dm.cms.hhs.gov.utilities.SheetType;
+import mtf.dm.cms.hhs.gov.utilities.SuppressedStackTraceException;
+
+import java.util.Objects;
 
 import static mtf.dm.cms.hhs.gov.utilities.BaseClass.getTestScenarioClass;
 
@@ -24,15 +27,24 @@ public class DemoApi {
     }
 
     public Response launchDemoApiAndGetResponse(String endpoint, String method){
-        if(!getTestScenarioClass().getSheet().equalsIgnoreCase(SheetType.CREATE.getEnumData())){
-            endpoint = endpoint + "/" + getTestScenarioClass().getUserID();
+        if(Objects.nonNull(getTestScenarioClass().getSheet())){
+            if(!getTestScenarioClass().getSheet().equalsIgnoreCase(SheetType.CREATE.getEnumData())){
+                endpoint = endpoint + "/" + getTestScenarioClass().getUserID();
+            }
         }
         return apiRequestClient.sendApiRequest(endpoint, method);
     }
 
-    public Response launchQueryDemoApiAndGetResponse(String endpoint, String queryParam, String method){
+    public Response launchQueryDemoApiAndGetResponse(String endpoint, String queryParam, String method) throws SuppressedStackTraceException {
         endpoint = endpoint + "?" + queryParam + "=" + ExcelUtils.getUserId(getTestScenarioClass().getTestCaseID());
         return apiRequestClient.sendApiRequest(endpoint, method);
     }
 
+    public Response launchQueryDemoApiWithDynamicParam(String endpoint, String queryParam, String queryParamValue, String method) {
+        // Dynamically append the query parameter to the endpoint
+        String finalEndpoint = endpoint + "?" + queryParam + "=" + queryParamValue;
+
+        // Reuse existing 'sendApiRequest' method for sending the request
+        return apiRequestClient.sendApiRequest(finalEndpoint, method);
+    }
 }

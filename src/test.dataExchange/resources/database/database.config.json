@@ -1,0 +1,7 @@
+{
+  "local": {
+    "url": "jdbc:ucanaccess://src/test.dataExchange/resources/database/dataExchange.accdb",
+    "username": "",
+    "password": ""
+  }
+}

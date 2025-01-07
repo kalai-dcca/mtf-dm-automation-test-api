@@ -6,7 +6,7 @@ public enum SheetType {
     UPDATE_PATCH("Update-PATCH"),
     DELETE("Delete"),
     SINGLE_RESOURCE("Single Resource"),
-    LIST_USERS("List users"),
+    LIST_USERS("List-Users"),
     SINGLE_USER("Single User");
 
     public String enumData;
