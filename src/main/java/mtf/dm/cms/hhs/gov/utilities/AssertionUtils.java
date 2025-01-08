@@ -270,7 +270,15 @@ public class AssertionUtils {
 
         // Compare JSON Objects
         SoftAssertions soft = new SoftAssertions();
-        compareJsonArrays(expectedEntries, actualData, soft);
+        if(expectedEntries.isArray() && actualData.isArray()){
+            compareJsonArrays(expectedEntries, actualData, soft);
+        }
+        else if (expectedEntries.isObject() && actualData.isObject()){
+            compareJsonObjects(expectedEntries, actualData, soft);
+        }else{
+            soft.assertThat(actualData.getNodeType()).isEqualTo(expectedEntries.getNodeType());
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE TYPE NOT MATCHED - TEST FAIL", ExtentColor.RED));
+        }
         soft.assertAll();
         
     }
