@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class YamlReader {
 
-    public static String getYamlProperties(String env, String key) {
-        String yamlFilePath = "src/test.demoApi/resources/environment/"+env+"/application.yml";
+    public static String getYamlProperties(String project, String env, String key) {
+        String yamlFilePath = "src/test."+project+"/resources/environment/"+env+"/application.yml";
 
 
         try(InputStream inputStream = new FileInputStream(new File(yamlFilePath))){
@@ -34,7 +34,7 @@ public class YamlReader {
 
     @Test
     public void testing(){
-        String a = getYamlProperties("dev", "baseUrl");
+        String a = getYamlProperties("anExampleApi","dev", "baseUrl");
         System.out.println(a);
     }
 }

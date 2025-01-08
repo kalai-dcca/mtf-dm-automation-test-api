@@ -3,12 +3,10 @@ package mtf.dm.cms.hhs.gov.utilities;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelColumnSpec;
-import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelSheetSpec;
+import mtf.dm.cms.hhs.gov.utilities.fileHandlerUtilities.ExcelSheetSpec;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class JsonUtils {

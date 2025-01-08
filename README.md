@@ -25,28 +25,7 @@ mvn test -Dsurefire.includeJUnit5Engines=cucumber -Dcucumber.plugin=pretty -Dcuc
 
 ## API Steps
 
-### Prep Data
+follow the example 'src/test.demoApi/resources/feature/demoApi.feature' to write scenarios. 
 
-read data and prep request body from excel and specific Sheet based on test case Id
-```cucumber
-TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Create", TestCase-"<TestCaseId>"
-```
 
-read data and prep request body from Cucumber example data table on test case Id
-```cucumber
-TestCaseDataSetup
-      | userName | testUserName |
-      | userRole | Manager      |
-```
-
-read data and prep request body from Json file
-```cucumber
-TestCaseDataSetup, JSONFile-"create.json"
-```
-
-### Sent request
-
-send requst with endpoint and Method
-```cucumber
-Launch "/api/users", Method: "POST"
-```
+more steps: 

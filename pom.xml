@@ -44,12 +44,11 @@
                     <test>
                         runners.CucumberRunnerTest
                     </test>
-                    <includes>
-                        <include>**/*Runner.java</include>
-                    </includes>
                     <systemPropertyVariables>
                         <!--suppress UnresolvedMavenProperty -->
                         <env>${env}</env>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <projectName>${projectName}</projectName>
                     </systemPropertyVariables>
                 </configuration>
                 <dependencies>
