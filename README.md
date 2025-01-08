@@ -29,15 +29,7 @@ authservice: Use to grab the auth bearer token
 
 ## Execution
 Make sure to provide the values for the following environment variables
-- PenvName: we have added multiple environments in maven profile, so for any env execution use -Pdev
 
-If you have to provide all three env values:
-
-```shell
-mvn clean test -Pdev
-```
-
-more configs we can do with it:
 
 ```shell
 mvn clean test -Denv=dev -DprojectName=anExampleApi -Dcucumber.filter.tags=@T1 -Dcucumber.features=src/test.anExampleApi/resources/feature/exampleApi.feature
