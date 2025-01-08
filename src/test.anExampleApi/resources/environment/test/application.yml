@@ -1,6 +1,6 @@
 
 # Base URL of the API
-base.url:
+baseUrl:
   
 #Authentication Token
 auth.token: your-auth-token-here

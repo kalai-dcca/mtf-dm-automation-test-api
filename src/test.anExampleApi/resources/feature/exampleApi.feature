@@ -2,6 +2,8 @@
 Feature: Example feature file to create scenario
 
 #  complex validation of attribute and Json array in the response
+
+  @T1
   Scenario Outline: request from Excel and validate response Expected values from json file
     When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"List-Users", TestCase-"<TestCaseId>"
     When Fetch all pages from "/api/users" with query param "page" and method "GET"

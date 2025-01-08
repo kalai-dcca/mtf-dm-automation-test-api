@@ -1,6 +1,6 @@
 
 # Base URL of the API
-base.url: https://reqres.in
+baseUrl: https://reqres.in
   
 #Authentication Token
 auth.token: your-auth-token-here
