@@ -3,9 +3,11 @@
 *.iml
 .idea/workspace.xml
 /.idea
-/logs
+/test_output/logs
 /.idea
-/reports
+/test_output/reports
 test-output/
-logs
-reports
+test_output/logs
+test_output/reports
+src/test/resources/config.yml
+
