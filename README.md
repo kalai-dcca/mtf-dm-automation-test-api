@@ -28,11 +28,16 @@ authservice: Use to grab the auth bearer token
 4. Scneario tier 3: @module-smoke, @module-regression, @module-endtoend
 
 ## Execution
+Make sure to have unique tags for each scneario and feature file
 Make sure to provide the values for the following environment variables
+When using Maven, tags can be provided from the CLI using the **groups** and **excludedGroups** parameters.
+
+any tags need to execute, use: `-Dgroups=tag`
+any tags need to be excluded, use: `-DexcludedGroups=tag`
 
 
 ```shell
-mvn clean test -Denv=dev -DprojectName=anExampleApi -Dcucumber.filter.tags=@T1 -Dcucumber.features=src/test.anExampleApi/resources/feature/exampleApi.feature
+mvn clean test -Denv=dev -DprojectName=anExampleApi -Dgroups=example
 ```
 
 ## PR Rejection If

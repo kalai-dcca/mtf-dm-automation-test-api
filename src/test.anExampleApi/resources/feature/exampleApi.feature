@@ -5,10 +5,11 @@ Feature: Example feature file to create scenario
 
   @T1
   Scenario Outline: request from Excel and validate response Expected values from json file
-    When TestCaseDataSetup, File-"demoData.xlsx", Sheet-"List-Users", TestCase-"<TestCaseId>"
+    Given TestCaseDataSetup, File-"demoData.xlsx", Sheet-"List-Users", TestCase-"<TestCaseId>"
     When Fetch all pages from "/api/users" with query param "page" and method "GET"
     Then Verify status code 200 and the response array "data" matches expected values from "<ExpectedJson>"
     Then Validate the attribute "support.url" equals to "https://contentcaddy.io?utm_source=reqres&utm_medium=json&utm_campaign=referral"
+    Then Validate multi attributes "page, per_page, total, total_pages" equals to "2, 6, 12, 2"
     Then Validate the array "data" has size of "6"
     Then Validate the attribute "support.text" contains "Tired of writing endless"
 

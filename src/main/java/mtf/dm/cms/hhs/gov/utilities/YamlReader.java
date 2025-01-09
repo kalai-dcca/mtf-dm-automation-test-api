@@ -31,10 +31,4 @@ public class YamlReader {
 
     }
 
-
-    @Test
-    public void testing(){
-        String a = getYamlProperties("anExampleApi","dev", "baseUrl");
-        System.out.println(a);
-    }
 }
