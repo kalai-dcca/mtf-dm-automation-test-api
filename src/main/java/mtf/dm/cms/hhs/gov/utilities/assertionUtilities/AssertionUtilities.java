@@ -338,7 +338,7 @@ public class AssertionUtilities {
     }
 
     private static void compareJsonArrays(JsonNode expectedArray, JsonNode actualArray, SoftAssertions soft) {
-
+        ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("Validating for JSONArray with size: "+ expectedArray.size(), ExtentColor.BLACK));
         // Validate the size of arrays
         soft.assertThat(actualArray.size()).isEqualTo(expectedArray.size());
         if (expectedArray.size() != actualArray.size()) {
@@ -348,7 +348,6 @@ public class AssertionUtilities {
 
         // Iterate through the arrays
         for (int i = 0; i < expectedArray.size(); i++) {
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("Validating for Resource "+ (i+1), ExtentColor.BLACK));
             JsonNode expectedObject = expectedArray.get(i);
             JsonNode actualObject = actualArray.get(i);
 
@@ -358,7 +357,7 @@ public class AssertionUtilities {
     }
 
     private static void compareJsonObjects(JsonNode expected, JsonNode actual, SoftAssertions soft) {
-
+        ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("Validating for JSONObject", ExtentColor.BLACK));
         // Iterate through fields in the expected object
         for (String key : IterableAsList(expected.fieldNames())) {
             soft.assertThat(actual.has(key)).isTrue();
