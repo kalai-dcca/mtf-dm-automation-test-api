@@ -1,5 +1,5 @@
 # Base URL of the API
-baseUrl: 
+baseUrl: "string"
   
 ##Authentication Token
 #auth.token: your-auth-token-here
