@@ -38,20 +38,10 @@ public class CommonStep {
     private Response apiResponse;
     private final RestImpl apiRequestClient = new RestImpl();
 
-    @When("Launch Demo API service and Review API service with test data from the testcase file {string}")
-    public void launchApiService(String testcaseFile) {
-        // Read TestCaseId and data from Excel
-        String testCaseId = ExcelUtils.readTestCaseIdFromExcel(testcaseFile);
-        String jsonFile = ExcelUtils.readJsonFileForTestCase(testCaseId);
 
-        // Fetch API endpoint, HTTP method, and expected values from the test case
-        String endpoint = ExcelUtils.getEndpointFromTestCase(testCaseId);
-        String method = ExcelUtils.getHttpMethodFromTestCase(testCaseId);
-
-        // Launch API request
-        apiResponse = apiRequestClient.sendApiRequest(endpoint, method, jsonFile);
-    }
-
+    /*
+    read test data from Sheet name for a test case ID
+     */
     @Then("Read test data from the sheet {string} for the {string}")
     public void readTestDataFromExcel(String sheetName, String testCaseId) {
         // Validate the test data read from the Excel file (for demonstration purposes)
@@ -65,13 +55,11 @@ public class CommonStep {
         apiResponse = apiRequestClient.sendApiRequest(endpoint, method, jsonFile);
     }
 
-    //@Then("Verify status code {int} and message {string}")
-    //public void verifyStatusCodeAndMessage(int expectedStatusCode, String expectedMessage) {
-    // Validate the status code and response message
-    //  assertEquals(expectedStatusCode, apiResponse.getStatusCode(), "Status code mismatch");
-    // assertTrue(apiResponse.containsMessage(expectedMessage), "Response message mismatch");
-    //}
 
+    /*
+    Verify Status code match with given int
+    Verify response message contains expected string
+     */
     @Then("Verify status code {int} and message {string}")
     public void verifyStatusCodeAndMessage(int expectedStatusCode, String expectedMessage) throws SuppressedStackTraceException {
 
@@ -88,6 +76,9 @@ public class CommonStep {
     }
 
 
+    /*
+    Data setup for Given test case ID from Excel file and sheet name
+     */
     @When("TestCaseDataSetup, File-{string}, Sheet-{string}, TestCase-{string}")
     public void testcasedatasetupFileSheetTestCase(String fileName, String sheet, String testCase) throws SuppressedStackTraceException {
         try{
@@ -109,6 +100,10 @@ public class CommonStep {
         }
     }
 
+
+    /*
+    send API request with endpoint provided and Method
+     */
     @When("Launch {string}, Method: {string}")
     public void demoapiLaunchMethod(String url, String APICall) {
 
@@ -120,6 +115,10 @@ public class CommonStep {
         getTestScenarioClass().setResponse(apiRequestClient.sendApiRequest(url, APICall));
     }
 
+
+    /*
+    Verify Status code match with given Int
+     */
     @Then("Verify status code {int}")
     public void verifyStatusCode(int expectedStatusCode) throws SuppressedStackTraceException {
 
@@ -133,12 +132,19 @@ public class CommonStep {
         MyLogger.info(String.format("Validation completed successfully for status code {%s}", expectedStatusCode));
     }
 
+    /*
+    Send API request with endpoint and query parameter and Method
+     */
     @When("Launch {string}, QParam:{string} Method: {string}")
     public void demoapiLaunchQParamMethod(String url, String queryParam, String APICall) throws SuppressedStackTraceException {
         url = url + "?" + queryParam + "=" + ExcelUtils.getUserId(getTestScenarioClass().getTestCaseID());
         getTestScenarioClass().setResponse(apiRequestClient.sendApiRequest(url, APICall));
     }
 
+
+    /*
+    Test data setup from Scenario data table
+     */
     @When("TestCaseDataSetup")
     public void testcasedatasetup(Map<String,String> keyValueMap) {
         JSONObject jsonObject = new JSONObject();
@@ -148,6 +154,9 @@ public class CommonStep {
         getTestScenarioClass().setJsonObject(jsonObject);
     }
 
+    /*
+    Test data setup from given Json file
+     */
     @When("TestCaseDataSetup, JSONFile-{string}")
     public void testcasedatasetupJSONFile(String fileName) throws SuppressedStackTraceException {
         try{
@@ -163,6 +172,9 @@ public class CommonStep {
         }
     }
 
+    /*
+    Verify response value based on scenarios data table
+     */
     @Then("Verify response values:")
     public void verifyResponseValuesWithDatatable(DataTable dataTable) throws SuppressedStackTraceException {
         List<Map<String, String>> data = dataTable.asMaps(String.class, String.class);
@@ -183,6 +195,9 @@ public class CommonStep {
         }
     }
 
+    /*
+    Verify Attributes and status code provided in excel
+     */
     @Then("Verify response values from Excel for attributes {string}")
     public void verifyResponseValuesFromExcelForAttributes(String attributeNames) throws SuppressedStackTraceException {
         MyLogger.info(String.format("Starting validation for response attributes: {%s}", attributeNames));
@@ -193,6 +208,10 @@ public class CommonStep {
         MyLogger.info(String.format("Validation completed successfully for attributes: {%s}", attributeNames));
     }
 
+
+    /*
+    Fetch send API for pagination API with query param
+     */
     @When("Fetch all pages from {string} with query param {string} and method {string}")
     public void fetchAllPages(String endpoint, String queryParam, String method) {
         //MyLogger.error("Fetching all pages from endpoint '{}' using query param '{}'", endpoint, queryParam);
@@ -221,6 +240,9 @@ public class CommonStep {
         //MyLogger.error("Fetched all pages successfully. Total records: {}", allPagesData.size());
     }
 
+    /*
+    Verify status code and response Array located at ArrayField vs actual Json Expected Array
+     */
     @Then("Verify status code {int} and the response array {string} matches expected values from {string}")
     public void validateResponseArrayFromFile(int expectedStatusCode, String arrayField, String expectedFilePath) throws Exception {
 
@@ -252,6 +274,7 @@ public class CommonStep {
         //LoggerUtil.logger.info("Validation completed successfully for status code {} and response array '{}'",
                 //expectedStatusCode, arrayField);
     }
+
 
     @Then("verify {string} data is in the {string} database")
     public void verify_data_is_in_the_database(String dataString, String directoryString) throws SuppressedStackTraceException {
@@ -300,6 +323,7 @@ public class CommonStep {
             throw new SuppressedStackTraceException("Error during test case data setup: " + e.getMessage());
         }
     }
+
 
     @Then("verify file data is in the {string} database")
     public void verifyFileDataIsInDatabase(String directoryString) {
@@ -388,6 +412,10 @@ public class CommonStep {
         System.out.println("Validation successful for sheet: " + sheetName);
     }
 
+
+    /*
+    Validate Given attribute equals to expected value
+     */
     @Then("Validate the attribute {string} equals to {string}")
     public void validateTheAttributeEqualsTo(String attribute, String expectValue) throws SuppressedStackTraceException {
         Response response = getTestScenarioClass().getResponse();
@@ -396,6 +424,10 @@ public class CommonStep {
 
     }
 
+
+    /*
+   Validate Given attribute contains to expected value
+    */
     @Then("Validate the attribute {string} contains {string}")
     public void validateTheAttributeContains(String attribute, String expectValue) throws SuppressedStackTraceException {
 
@@ -404,6 +436,10 @@ public class CommonStep {
         AssertionUtilities.assertFieldContainsValue(response, attribute, expectValue);
     }
 
+
+    /*
+   Validate Given ArrayFiled Array size equal to given int
+    */
     @Then("Validate the array {string} has size of {string}")
     public void validateTheArrayHasSizeOf(String attribute, String expectValue) throws SuppressedStackTraceException {
         Response response = getTestScenarioClass().getResponse();

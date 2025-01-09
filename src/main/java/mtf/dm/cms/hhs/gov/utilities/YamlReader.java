@@ -1,6 +1,5 @@
 package mtf.dm.cms.hhs.gov.utilities;
 
-import org.junit.Test;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -31,10 +30,4 @@ public class YamlReader {
 
     }
 
-
-    @Test
-    public void testing(){
-        String a = getYamlProperties("anExampleApi","dev", "baseUrl");
-        System.out.println(a);
-    }
 }
