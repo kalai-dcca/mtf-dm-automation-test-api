@@ -394,17 +394,11 @@ public class CommonStep {
 
     @Then("Validate the attribute {string} contains {string}")
     public void validateTheAttributeContains(String attribute, String expectValue) throws SuppressedStackTraceException {
-
-        Response response = getTestScenarioClass().getResponse();
-
-        AssertionUtilities.assertFieldContainsValue(response, attribute, expectValue);
+        AssertionUtilities.assertFieldContainsValue(getTestScenarioClass().getResponse(), attribute, expectValue);
     }
 
     @Then("Validate the array {string} has size of {string}")
     public void validateTheArrayHasSizeOf(String attribute, String expectValue) throws SuppressedStackTraceException {
-        Response response = getTestScenarioClass().getResponse();
-
-        AssertionUtilities.assertArrayContainsElementsCount(response, attribute, Integer.parseInt(expectValue));
-
+        AssertionUtilities.assertArrayContainsElementsCount(getTestScenarioClass().getResponse(), attribute, Integer.parseInt(expectValue));
     }
 }
