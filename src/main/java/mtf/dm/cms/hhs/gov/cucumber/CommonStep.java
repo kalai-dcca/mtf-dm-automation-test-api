@@ -3,7 +3,7 @@ package mtf.dm.cms.hhs.gov.cucumber;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -100,12 +100,13 @@ public class CommonStep {
                 getTestScenarioClass().setUserID(ExcelUtils.getUserId(testCase));
             }
             //extentReports.createTest("Data Table").info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("REQUEST BODY", ExtentColor.BLUE));
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
+            //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("REQUEST BODY", ExtentColor.BLUE));
+            //ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(getTestScenarioClass().getJsonObject()));
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             MyLogger.error("Failed to setup test case: " + fileName, e);
-            throw new SuppressedStackTraceException("Failed to setup test case: " + fileName);
+            throw new SuppressedStackTraceException("Failed to setup test case for " + fileName + "\n" + e.getMessage());
         }
     }
 
@@ -226,17 +227,15 @@ public class CommonStep {
 
         // Load expected values from the JSON file
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Map<String, Object>> expectedData;
-        String body = new String(Files.readAllBytes(Paths.get("src/test."+System.getProperty("projectName")+"/resources/response/" + expectedFilePath)));
+        JsonNode expectedData;
+        String body;
         try {
-            expectedData = objectMapper.readValue(body,
-                    new TypeReference<List<Map<String, Object>>>() {});
+            body = new String(Files.readAllBytes(Paths.get("src/test."+System.getProperty("projectName")+"/resources/response/" + expectedFilePath)));
+            expectedData = objectMapper.readTree(body);
         } catch (Exception e) {
             MyLogger.error("Unable to load expected data from file: " + expectedFilePath, e);
             throw new SuppressedStackTraceException("Unable to load expected data from file: " + expectedFilePath);
         }
-        ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("RESPONSE DATA", ExtentColor.GREEN));
-        ExtentCucumberAdapter.addTestStepLog("<pre>"+ body + "</pre>");
 
         // Ensure the expected data is valid
         assertNotNull(expectedData, "Expected data file is empty or invalid!");
@@ -246,7 +245,7 @@ public class CommonStep {
         AssertionUtilities.verifyStatusCode(response, expectedStatusCode);
 
         // Validate the response array matches the expected values
-        AssertionUtilities.assertArrayContainsEntriesFromFile(response, arrayField, expectedData);
+        AssertionUtilities.assertResponseFromFile(response, arrayField, expectedData);
 
         // Log successful completion of the validation
         //LoggerUtil.logger.info("Validation completed successfully for status code {} and response array '{}'",
@@ -390,25 +389,16 @@ public class CommonStep {
 
     @Then("Validate the attribute {string} equals to {string}")
     public void validateTheAttributeEqualsTo(String attribute, String expectValue) throws SuppressedStackTraceException {
-        Response response = getTestScenarioClass().getResponse();
-
-        AssertionUtilities.assertFieldValue(response, attribute, expectValue);
-
+        AssertionUtilities.assertFieldValue(getTestScenarioClass().getResponse(), attribute, expectValue);
     }
 
     @Then("Validate the attribute {string} contains {string}")
     public void validateTheAttributeContains(String attribute, String expectValue) throws SuppressedStackTraceException {
-
-        Response response = getTestScenarioClass().getResponse();
-
-        AssertionUtilities.assertFieldContainsValue(response, attribute, expectValue);
+        AssertionUtilities.assertFieldContainsValue(getTestScenarioClass().getResponse(), attribute, expectValue);
     }
 
     @Then("Validate the array {string} has size of {string}")
     public void validateTheArrayHasSizeOf(String attribute, String expectValue) throws SuppressedStackTraceException {
-        Response response = getTestScenarioClass().getResponse();
-
-        AssertionUtilities.assertArrayContainsElementsCount(response, attribute, Integer.parseInt(expectValue));
-
+        AssertionUtilities.assertArrayContainsElementsCount(getTestScenarioClass().getResponse(), attribute, Integer.parseInt(expectValue));
     }
 }
