@@ -63,7 +63,7 @@ public class AssertionUtilities {
         }
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).isNotNull();
-        },"Expecting actual: " + "\n   " + response.jsonPath().toString() + "\n" + "to contain: " + "\n   " + field);
+        },"Expecting actual " + response.jsonPath().toString() + "\n" + "to contain: " + "\n   " + field);
         //return status;
     }
 
@@ -91,8 +91,8 @@ public class AssertionUtilities {
 
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).isEqualTo(expectedValue);
-        },"Expecting actual: " + "\n   " + field + "\n" + "to contain: " + "\n   " + expectedValue);
-        //return status;
+        },"Expecting actual \"" + field + "\" : "+response.jsonPath().getString(field) +"\n" + "to equal \"" + expectedValue + "\"");
+
     }
 
 
@@ -119,7 +119,7 @@ public class AssertionUtilities {
 
         AssertionHandler.logAssertionError(() ->{
             Assertions.assertThat(response.jsonPath().getString(field)).contains(expectedValue);
-        },"-- failure -- \n" + "Expecting actual: " + field + "\n" + "to contain: " + expectedValue);
+        }, "Expecting actual \"" + field + "\" : " +response.jsonPath().getString(field)+"\n" + "to contain \"" + expectedValue + "\"");
         //return status;
     }
 
@@ -136,12 +136,11 @@ public class AssertionUtilities {
             throw new SuppressedStackTraceException(String.format("Error: Actual[%s]::Expected[%s]::Status[%s]%n",
                     "",expectedValue,false));
         }
-
+        List<Map<String, Object>> actualArray = response.jsonPath().getList(field);
+        int actualSize = actualArray.size();
         AssertionHandler.logAssertionError(() ->{
-            List<Map<String, Object>> actualArray = response.jsonPath().getList(field);
-            Assertions.assertThat(actualArray.size()).isEqualTo(expectedValue);
-        },"-- failure -- \n" + "Expecting actual: " + field + "\n" + "to equal: " + expectedValue);
-        //return status;
+            Assertions.assertThat(actualSize).isEqualTo(expectedValue);
+        },"Expecting actual \"" + field + "\" size : "+actualSize+"\n" + "to equal \"" + expectedValue + "\"" );
     }
     /**
      * Validates that the response time is within the acceptable limit.
@@ -304,7 +303,7 @@ public class AssertionUtilities {
      * @param arrayField     The JSON path to the array (e.g., "data").
      * @param expectedEntries The list of expected objects (key-value pairs).
      */
-    public static void assertArrayContainsEntriesFromFile(Response response, String arrayField, JsonNode expectedEntries) throws SuppressedStackTraceException, JsonProcessingException {
+    public static void assertResponseFromFile(Response response, String arrayField, JsonNode expectedEntries) throws SuppressedStackTraceException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode actualData;
 
@@ -312,13 +311,16 @@ public class AssertionUtilities {
             throw new SuppressedStackTraceException("Error: Response is null");
         }
 
-        // Fetch the array as a list of maps
-        List<Map<String, Object>> actualArray = response.jsonPath().getList(arrayField);
-        if (actualArray == null || actualArray.isEmpty()) {
-            throw new SuppressedStackTraceException("Error: The array field named '" + arrayField + "' is empty or does not exist.");
+        try {
+            actualData = objectMapper.readTree(response.getBody().asString()).get(arrayField);
+            if (actualData == null) {
+                throw new SuppressedStackTraceException("The specified arrayField is missing or null in the response.");
+            }
+        } catch (JsonProcessingException e) {
+            throw new SuppressedStackTraceException("Failed to parse JSON response: " + e.getMessage());
+        } catch (Exception e) {
+            throw new SuppressedStackTraceException("An unexpected error occurred: " + e.getMessage());
         }
-
-        actualData = objectMapper.readTree(response.getBody().asString()).get(arrayField);
 
         // Compare JSON Objects
         SoftAssertions soft = new SoftAssertions();
@@ -333,21 +335,6 @@ public class AssertionUtilities {
         }
         soft.assertAll();
         
-    }
-
-
-    /**
-     * Converts a map into a normalized string for consistent comparison.
-     *
-     * @param map The map to normalize.
-     * @return A string representation of the map with sorted keys and values.
-     */
-    private static String normalizeMap(Map<String, Object> map) {
-        return map.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByKey())
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining(","));
     }
 
     private static void compareJsonArrays(JsonNode expectedArray, JsonNode actualArray, SoftAssertions soft) {

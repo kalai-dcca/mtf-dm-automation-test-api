@@ -3,7 +3,6 @@ package mtf.dm.cms.hhs.gov.cucumber;
 import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.datatable.DataTable;
@@ -246,7 +245,7 @@ public class CommonStep {
         AssertionUtilities.verifyStatusCode(response, expectedStatusCode);
 
         // Validate the response array matches the expected values
-        AssertionUtilities.assertArrayContainsEntriesFromFile(response, arrayField, expectedData);
+        AssertionUtilities.assertResponseFromFile(response, arrayField, expectedData);
 
         // Log successful completion of the validation
         //LoggerUtil.logger.info("Validation completed successfully for status code {} and response array '{}'",
@@ -390,10 +389,7 @@ public class CommonStep {
 
     @Then("Validate the attribute {string} equals to {string}")
     public void validateTheAttributeEqualsTo(String attribute, String expectValue) throws SuppressedStackTraceException {
-        Response response = getTestScenarioClass().getResponse();
-
-        AssertionUtilities.assertFieldValue(response, attribute, expectValue);
-
+        AssertionUtilities.assertFieldValue(getTestScenarioClass().getResponse(), attribute, expectValue);
     }
 
     @Then("Validate the attribute {string} contains {string}")
