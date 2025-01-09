@@ -1,0 +1,30 @@
+
+# Base URL of the API
+baseUrl: https://reqres.in
+  
+#Authentication Token
+auth.token: your-auth-token-here
+  
+# Timeouts (in milliseconds)
+request.timeout: 5000
+response.timeout: 5000
+  
+# Logging level
+log.level: INFO
+  
+# Environment
+env: dev
+  
+# Additional configurations
+default.content.type: application/json
+
+
+
+
+dbConfig:
+  url: jdbc:postgresql://localhost:5432/your_database
+  username: testuser
+  password: testpassword
+
+FILE-SERVICE.API.URL: http://10.130.197.210/file-service/
+

@@ -16,10 +16,10 @@ import static io.cucumber.junit.platform.engine.Constants.*;
  */
 @Suite
 @IncludeEngines("cucumber")
-@SelectClasspathResource("feature")
+//@SelectClasspathResource("feature")
 //@IncludeTags("smoke")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME,value = "mtf.dm.cms.hhs.gov.cucumber")
-@ConfigurationParameter(key = Constants.FEATURES_PROPERTY_NAME,value = "src/test.demoApi/resources/feature/demoApi.feature")
+//@ConfigurationParameter(key = Constants.FEATURES_PROPERTY_NAME,value = "src/test.anExampleApi/resources/feature/exampleApi.feature")
 @ConfigurationParameter(key = EXECUTION_DRY_RUN_PROPERTY_NAME,value = "false")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME,value = "pretty, html:target/cucumber-report/cucumber.html, json:target/cucumber-reports/cucumber.json")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME,value = "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:")

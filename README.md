@@ -1,52 +1,46 @@
 # Set up
 
 ## Installation
-
 Please install the project dependencies and required JDK 21
 
-## Executing tests
+## Folder Structure -Main
+src/main/....[other than Module] : Use for any common methods used across the application.It should be used by API Lead and Test leads
 
+## Folder Structure -Main/Module
+src/main/Module: Every team should use their corresponding folders for customized methods if you want to implement for the microservice
+
+## Folder Structure -Test
+testrunner : Use for executing the test
+authservice: Use to grab the auth bearer token
+
+## How to add feature file for your testing
+1. Check the folder test.AExampleAPI
+2. Go over the steps in the feature file which has already been added in the file. There are many combinations already provided to read the request from data tables, excel and json etc
+   Utilize as much as possible and if any customized steps needed please implement within your module
+3. Add testcaseId and testcasedescription for every test
+6. Add positive and negative test
+7. Use N_ for any negative scenarios
+
+## Tags
+1. Feature - @module-featurename
+2. Scenario tier 1: @module-api, @module-db
+3. Scenario tier 2: @module-component
+4. Scneario tier 3: @module-smoke, @module-regression, @module-endtoend
+
+## Execution
 Make sure to provide the values for the following environment variables
 
-- PenvName: we have added multiple environments in maven profile, so for any env execution use -Pdev
-
-If you have to provide all three env values:
 
 ```shell
-mvn clean test -Pdev
+mvn clean test -Denv=dev -DprojectName=anExampleApi -Dcucumber.filter.tags=@T1 -Dcucumber.features=src/test.anExampleApi/resources/feature/exampleApi.feature
 ```
 
-more configs we can do with it:
+## PR Rejection If
+1. common methods are not utlized
+2. features are not grouped properly
+3. tags are not added correctly
+4. failing tests
+5. code that doesn't adhere to project guidelines
+6. incomplete features
+7. merge conflicts
 
-```shell
-mvn test -Dsurefire.includeJUnit5Engines=cucumber -Dcucumber.plugin=pretty -Dcucumber.features=path/to/example.feature:10 
-```
-
-
-## API Steps
-
-### Prep Data
-
-read data and prep request body from excel and specific Sheet based on test case Id
-```cucumber
-TestCaseDataSetup, File-"demoData.xlsx", Sheet-"Create", TestCase-"<TestCaseId>"
-```
-
-read data and prep request body from Cucumber example data table on test case Id
-```cucumber
-TestCaseDataSetup
-      | userName | testUserName |
-      | userRole | Manager      |
-```
-
-read data and prep request body from Json file
-```cucumber
-TestCaseDataSetup, JSONFile-"create.json"
-```
-
-### Sent request
-
-send requst with endpoint and Method
-```cucumber
-Launch "/api/users", Method: "POST"
-```

@@ -11,29 +11,33 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import mtf.dm.cms.hhs.gov.impl.DemoApi;
-import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelColumnSpec;
-import mtf.dm.cms.hhs.gov.jsonSpecs.ExcelSheetSpec;
+import mtf.dm.cms.hhs.gov.base.BaseClass;
+import mtf.dm.cms.hhs.gov.impl.DbImpl;
+import mtf.dm.cms.hhs.gov.impl.RestImpl;
+import mtf.dm.cms.hhs.gov.utilities.assertionUtilities.AssertionUtilities;
+import mtf.dm.cms.hhs.gov.utilities.fileHandlerUtilities.ExcelColumnSpec;
+import mtf.dm.cms.hhs.gov.utilities.fileHandlerUtilities.ExcelSheetSpec;
 import mtf.dm.cms.hhs.gov.utilities.*;
+import mtf.dm.cms.hhs.gov.utilities.FileUtility;
+import mtf.dm.cms.hhs.gov.utilities.loggerUtilities.MyLogger;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import static mtf.dm.cms.hhs.gov.utilities.BaseClass.getTestScenarioClass;
-import static mtf.dm.cms.hhs.gov.utilities.DBUtils.executeSqlQuery;
-import static mtf.dm.cms.hhs.gov.utilities.FileHandlerUtility.*;
+import static mtf.dm.cms.hhs.gov.base.BaseClass.getTestScenarioClass;
+import static mtf.dm.cms.hhs.gov.impl.DbImpl.executeSqlQuery;
+import static mtf.dm.cms.hhs.gov.utilities.FileUtility.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CommonStep {
-    private DemoApi demoApiMethods = new DemoApi();
     private Response apiResponse;
+    private final RestImpl apiRequestClient = new RestImpl();
 
     @When("Launch Demo API service and Review API service with test data from the testcase file {string}")
     public void launchApiService(String testcaseFile) {
@@ -46,7 +50,7 @@ public class CommonStep {
         String method = ExcelUtils.getHttpMethodFromTestCase(testCaseId);
 
         // Launch API request
-        apiResponse = demoApiMethods.launchDemoApi(endpoint, method, jsonFile);
+        apiResponse = apiRequestClient.sendApiRequest(endpoint, method, jsonFile);
     }
 
     @Then("Read test data from the sheet {string} for the {string}")
@@ -59,7 +63,7 @@ public class CommonStep {
     @When("DemoAPI: Launch {string}, Method: {string}, request params: File {string}")
     public void launchApiWithParams(String endpoint, String method, String jsonFile) {
         // Launch the API using the DemoApiMethods
-        apiResponse = demoApiMethods.launchDemoApi(endpoint, method, jsonFile);
+        apiResponse = apiRequestClient.sendApiRequest(endpoint, method, jsonFile);
     }
 
     //@Then("Verify status code {int} and message {string}")
@@ -76,7 +80,7 @@ public class CommonStep {
         MyLogger.info(String.format("Verifying status code {%s} and message {%s}", expectedStatusCode, expectedMessage));
 
         // Validate the status code and response message using the AssertionUtils method
-        AssertionUtils.verifyStatusCodeAndMessage(getTestScenarioClass().getResponse(), expectedStatusCode, expectedMessage);
+        AssertionUtilities.verifyStatusCodeAndMessage(getTestScenarioClass().getResponse(), expectedStatusCode, expectedMessage);
 
         // Comment about closing state
         MyLogger.info(String.format("Validation completed successfully for status code {%s} and message {%s}",
@@ -109,7 +113,13 @@ public class CommonStep {
 
     @When("Launch {string}, Method: {string}")
     public void demoapiLaunchMethod(String url, String APICall) {
-        getTestScenarioClass().setResponse(demoApiMethods.launchDemoApiAndGetResponse(url, APICall));
+
+        if(Objects.nonNull(getTestScenarioClass().getSheet())){
+            if(!getTestScenarioClass().getSheet().equalsIgnoreCase(SheetType.CREATE.getEnumData())){
+                url = url + "/" + getTestScenarioClass().getUserID();
+            }
+        }
+        getTestScenarioClass().setResponse(apiRequestClient.sendApiRequest(url, APICall));
     }
 
     @Then("Verify status code {int}")
@@ -119,7 +129,7 @@ public class CommonStep {
         MyLogger.info(String.format("Verifying status code {%s}", expectedStatusCode));
 
         // Validate the status code
-        AssertionUtils.verifyStatusCode(getTestScenarioClass().getResponse(), expectedStatusCode);
+        AssertionUtilities.verifyStatusCode(getTestScenarioClass().getResponse(), expectedStatusCode);
 
         // Comment about closing state
         MyLogger.info(String.format("Validation completed successfully for status code {%s}", expectedStatusCode));
@@ -127,8 +137,8 @@ public class CommonStep {
 
     @When("Launch {string}, QParam:{string} Method: {string}")
     public void demoapiLaunchQParamMethod(String url, String queryParam, String APICall) throws SuppressedStackTraceException {
-
-        getTestScenarioClass().setResponse(demoApiMethods.launchQueryDemoApiAndGetResponse(url,queryParam,APICall));
+        url = url + "?" + queryParam + "=" + ExcelUtils.getUserId(getTestScenarioClass().getTestCaseID());
+        getTestScenarioClass().setResponse(apiRequestClient.sendApiRequest(url, APICall));
     }
 
     @When("TestCaseDataSetup")
@@ -143,7 +153,7 @@ public class CommonStep {
     @When("TestCaseDataSetup, JSONFile-{string}")
     public void testcasedatasetupJSONFile(String fileName) throws SuppressedStackTraceException {
         try{
-            String fileLocation = "src/test.demoApi/resources/request/" + fileName;
+            String fileLocation = "src/test."+System.getProperty("projectName")+"/resources/request/" + fileName;
             String body = new String(Files.readAllBytes(Paths.get(fileLocation)));
             JSONObject jsonObject = new JSONObject(body);
             getTestScenarioClass().setJsonObject(jsonObject);
@@ -168,7 +178,7 @@ public class CommonStep {
             MyLogger.info(String.format("Verifying status code {%s} and message {%s}", expectedStatusCode, expectedMessage));
 
             // Validate the status code and response message using the AssertionUtils method
-            AssertionUtils.verifyStatusCodeAndMessage(getTestScenarioClass().getResponse(), expectedStatusCode, expectedMessage);
+            AssertionUtilities.verifyStatusCodeAndMessage(getTestScenarioClass().getResponse(), expectedStatusCode, expectedMessage);
 
             // Comment about closing state
             MyLogger.info(String.format("Validation completed successfully for status code {%s} and message {%s}", expectedStatusCode, expectedMessage));
@@ -180,7 +190,7 @@ public class CommonStep {
         MyLogger.info(String.format("Starting validation for response attributes: {%s}", attributeNames));
 
         // Delegate validation to a helper method
-        AssertionUtils.verifyStatusCodeAndAttributesFromExcel(attributeNames);
+        AssertionUtilities.verifyStatusCodeAndAttributesFromExcel(attributeNames);
 
         MyLogger.info(String.format("Validation completed successfully for attributes: {%s}", attributeNames));
     }
@@ -190,33 +200,22 @@ public class CommonStep {
         //MyLogger.error("Fetching all pages from endpoint '{}' using query param '{}'", endpoint, queryParam);
 
         List<Map<String, Object>> allPagesData = new ArrayList<>();
-        int currentPage = 1;
-        int totalPages;
+        int currentPage = getTestScenarioClass().getUserID();
 
-        do {
-            // Send the request for the current page
-            getTestScenarioClass().setResponse(
-                    demoApiMethods.launchQueryDemoApiWithDynamicParam(endpoint, queryParam, String.valueOf(currentPage), method)
-            );
-            Response response = getTestScenarioClass().getResponse();
+        // Dynamically append the query parameter to the endpoint
+        String finalEndpoint = endpoint + "?" + queryParam + "=" + String.valueOf(currentPage);
 
-            // Log the current page response
-            //MyLogger.error("Fetched page {}: {}", currentPage, response.getBody().asString());
+        // Send the request for the current page
+        getTestScenarioClass().setResponse(
+                apiRequestClient.sendApiRequest(finalEndpoint, method)
+        );
+        Response response = getTestScenarioClass().getResponse();
 
-            // Retrieve total pages from the response (only on the first page)
-            if (currentPage == 1) {
-                totalPages = response.jsonPath().getInt("total_pages");
-                //MyLogger.error("Total pages: {}", totalPages);
-            } else {
-                totalPages = getTestScenarioClass().getResponse().jsonPath().getInt("total_pages");
-            }
+        // Extract the 'data' array from the current page and add it to allPagesData
+        List<Map<String, Object>> currentPageData = response.jsonPath().getList("data");
+        allPagesData.addAll(currentPageData);
 
-            // Extract the 'data' array from the current page and add it to allPagesData
-            List<Map<String, Object>> currentPageData = response.jsonPath().getList("data");
-            allPagesData.addAll(currentPageData);
 
-            currentPage++;
-        } while (currentPage <= totalPages);
 
         // Store the combined data in the scenario class for validation
         getTestScenarioClass().setCombinedData(allPagesData);
@@ -232,7 +231,7 @@ public class CommonStep {
         JsonNode expectedData;
         String body;
         try {
-            body = new String(Files.readAllBytes(Paths.get("src/test.demoApi/resources/response/" + expectedFilePath)));
+            body = new String(Files.readAllBytes(Paths.get("src/test."+System.getProperty("projectName")+"/resources/response/" + expectedFilePath)));
             expectedData = objectMapper.readTree(body);
         } catch (Exception e) {
             MyLogger.error("Unable to load expected data from file: " + expectedFilePath, e);
@@ -244,10 +243,10 @@ public class CommonStep {
 
         // Validate the status code
         Response response = getTestScenarioClass().getResponse();
-        AssertionUtils.verifyStatusCode(response, expectedStatusCode);
+        AssertionUtilities.verifyStatusCode(response, expectedStatusCode);
 
         // Validate the response array matches the expected values
-        AssertionUtils.assertArrayContainsEntriesFromFile(response, arrayField, expectedData);
+        AssertionUtilities.assertArrayContainsEntriesFromFile(response, arrayField, expectedData);
 
         // Log successful completion of the validation
         //LoggerUtil.logger.info("Validation completed successfully for status code {} and response array '{}'",
@@ -259,18 +258,18 @@ public class CommonStep {
         String configFilePath = String.format("src/test.%s/resources/database/database.config.json", directoryString);
         try {
             // Create the database connection
-            DBUtils.createConnectionFromConfig(configFilePath);
+            DbImpl.createConnectionFromConfig(configFilePath);
 
             // Run query against database
-            ResultSet resultSet = DBUtils.runQuery("SELECT * FROM price_eff_dt");
+            ResultSet resultSet = DbImpl.runQuery("SELECT * FROM price_eff_dt");
 
             // Display results
-            DBUtils.displayAllData();
+            DbImpl.displayAllData();
             ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createLabel("DB DATA", ExtentColor.WHITE));
-            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(DBUtils.getAllDataAsMap()));
+            ExtentCucumberAdapter.getCurrentStep().info(MarkupHelper.createJsonCodeBlock(DbImpl.getAllDataAsMap()));
 
             // Close resources
-            DBUtils.destroy();
+            DbImpl.destroy();
         } catch (Exception e) {
             MyLogger.error("Error verifying data in the database: " + e.getMessage(), e);
             throw new SuppressedStackTraceException("Error verifying data in the database: " + e.getMessage());
@@ -333,7 +332,7 @@ public class CommonStep {
             // Step 2: Execute SQL Query
             ResultSet resultSet = executeSqlQuery(configFilePath, sqlQuery);
             // Display results
-            DBUtils.displayAllData();
+            DbImpl.displayAllData();
 
             // Step 3: Transform ResultSet to List<List<String>>
             List<List<String>> sqlDataByColumn  = transformResultSetToList(resultSet, columnSpecs, expectedValue);
@@ -350,7 +349,7 @@ public class CommonStep {
     @Given("the {string} file {string} follows the specification in {string}")
     public void the_file_follows_the_specification_in(String directoryName, String fileToValidate, String specsFileName) throws SuppressedStackTraceException {
         String specsFilePath = String.format("src/test.%s/resources/specifications/%s.specs.json", directoryName, specsFileName);
-        String fileExtension = FileHandlerUtility.getFileExtension(fileToValidate);
+        String fileExtension = FileUtility.getFileExtension(fileToValidate);
 
         Map<String, Map<String, Object>> specsJson = JsonUtils.readJsonFile(specsFilePath);
 
@@ -387,5 +386,29 @@ public class CommonStep {
         sheetSpec.validateSheetDataByColumn(dataByColumn);
 
         System.out.println("Validation successful for sheet: " + sheetName);
+    }
+
+    @Then("Validate the attribute {string} equals to {string}")
+    public void validateTheAttributeEqualsTo(String attribute, String expectValue) throws SuppressedStackTraceException {
+        Response response = getTestScenarioClass().getResponse();
+
+        AssertionUtilities.assertFieldValue(response, attribute, expectValue);
+
+    }
+
+    @Then("Validate the attribute {string} contains {string}")
+    public void validateTheAttributeContains(String attribute, String expectValue) throws SuppressedStackTraceException {
+
+        Response response = getTestScenarioClass().getResponse();
+
+        AssertionUtilities.assertFieldContainsValue(response, attribute, expectValue);
+    }
+
+    @Then("Validate the array {string} has size of {string}")
+    public void validateTheArrayHasSizeOf(String attribute, String expectValue) throws SuppressedStackTraceException {
+        Response response = getTestScenarioClass().getResponse();
+
+        AssertionUtilities.assertArrayContainsElementsCount(response, attribute, Integer.parseInt(expectValue));
+
     }
 }
